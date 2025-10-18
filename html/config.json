@@ -1,8 +1,6 @@
 {
-  "_googleMapsKey": "AIzaSyAwDzP7HofpNJAaKqW99-42OcFkvYSY2QQ",
-  "_googleMapsKeyProxy": "AIzaSyB0E9DnO1Z1QUcjBjgCJnbRoaiUFCXijbo",
-  "googleMapsKey": "AIzaSyD3rcoeuHCNeHGBGHGTdsKXVS0sprwWp4o",
-  "googleMapsKeyProxy": "AIzaSyD3rcoeuHCNeHGBGHGTdsKXVS0sprwWp4o",
+  "googleMapsKey": "AIzaSyAwDzP7HofpNJAaKqW99-42OcFkvYSY2QQ",
+  "googleMapsKeyProxy": "AIzaSyB0E9DnO1Z1QUcjBjgCJnbRoaiUFCXijbo",
   "defaultMapCenter": {
     "lat": 42.697713,
     "lng": 23.321844

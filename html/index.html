@@ -34,8 +34,8 @@
   <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="index.html">
-      <img src="img/logo_icn.png" alt="Atlantify"/>
-      Atlantify
+      <img src="img/logo_icn.png" alt="Ambulance Patrol"/>
+      Ambulance Patrol
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse">
       <span class="navbar-toggler-icon"></span>
@@ -45,32 +45,959 @@
 
 <!-- Begin page content -->
 <main role="main" class="container">
-  <ul class="breadcrumb">
-    <li>
-      <a href="#">Начало</a>
-    </li>
-    <li>
-      <span>Приложения</span>
-    </li>
-  </ul>
   <div class="head">
-    <h2>Приложения</h2>
+    <h2>Ambulance</h2>
+
+    <ul class="controls">
+      <li>
+        <div data-id="create-accident" style="display: none;">
+          <button class="btn btn-danger" onclick="Sosa.createAccident();">
+            <i class="material-icons">whatshot</i>
+            Създай инцидент
+          </button>
+        </div>
+      </li>
+
+      <li>
+        <div data-id="simulation-play" style="display: none;">
+          <button class="btn btn-default" onclick="Sosa.playPause();">
+            <i class="material-icons">pause</i>
+            Спри симулацията
+          </button>
+        </div>
+
+        <div data-id="simulation-pause" style="display: none;">
+          <button class="btn btn-default" onclick="Sosa.playPause();">
+            <i class="material-icons">play_arrow</i>
+            Пусни симулацията
+          </button>
+        </div>
+      </li>
+
+      <li>
+        <div data-id="create-ambulance" style="display: none;">
+          <button class="btn btn-default" onclick="Sosa.createAmbulances();">
+            <i class="material-icons">add</i>
+            Добави линейка
+          </button>
+        </div>
+      </li>
+    </ul>
   </div>
-  <ul class="cards">
-    <li>
-      <a href="sosa.html">
-        <span class="sosa icn"></span>
-        <span class="name">Demo</span>
-      </a>
-    </li>
-    <li>
-      <a href="gps-list.html">
-        <span class="instruments icn"></span>
-        <span class="name">Инструменти</span>
-      </a>
+
+  <ul class="map-items">
+    <li class="notify-label">Започни като добавш линейка</li>
+    <li id="ambulanceTemplate" style="display: none;">
+      <div class="dropdown show">
+        <a class="btn btn-link dropdown-toggle" href="#" data-toggle="dropdown">
+          <i class="material-icons">more_vert</i>
+        </a>
+
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="javascript:;" data-trigger="remove">Изтрий</a>
+        </div>
+      </div>
+      <span class="item-name" data-placeholder="name"></span>
+      <span class="item-speed" data-placeholder="speed"></span>
+      <span class="item-label" data-placeholder="label"></span>
+      <button data-trigger="send" class="btn btn-primary">Изпрати</button>
     </li>
   </ul>
 </main>
 
+<div class="sosa-map">
+  <div id="map" style="height: 100%;"></div>
+
+  <div class="live-stats" data-id="live-stat" style="display: none;">
+    <div class="head-data">
+      <span>Временна скорост</span>
+      <span data-info="speed" class="speed">--</span>
+      <span>км/ч</span>
+    </div>
+    <ul class="body-data">
+      <li>
+        <strong data-info="left-time">--:--</strong>
+        минути до пристигане на място
+      </li>
+      <li>
+        <strong data-info="speed" class="speed">--</strong>
+        км/ч временна скорост
+      </li>
+      <li>
+        <strong data-info="average-speed">--</strong>
+        км/ч средна скорост
+      </li>
+      <li>
+        <strong data-info="street">--</strong>
+        последна локация
+      </li>
+      <li>
+        <strong data-info="plate">--</strong>
+        регистрация
+      </li>
+      <li>
+        <strong data-info="people">-</strong>
+        човека на борда
+      </li>
+    </ul>
+  </div>
+
+  <ul class="notifications">
+    <li class="directions" id="notificationTemplate" style="display: none;">
+      <i class="material-icons" data-id="icon"></i>
+      <p>
+        <i class="material-icons">airport_shuttle</i>
+        <strong data-id="name">-</strong>
+        <span data-id="text">-</span>
+      </p>
+    </li>
+  </ul>
+</div><!-- end sosa map -->
+
+<script>
+  let TimePolygon = function (map, color) {
+    this.map = map;
+    this.color = color || '#ff0000';
+
+    this.centerLat = null;
+    this.centerLng = null;
+
+    this.requiredTime = 60 * 3; // sec
+    this.pointsDistance = 200; // meters
+    this.pointsRepeates = 3;
+    this.rotateAngleStep = 20; // (10, 20, 30, 40, 60)
+
+    this.points = [];
+    this.poligonPath = {};
+    this.currentDegrees = 0;
+
+    // Create polygon
+    this.polygon = new google.maps.Polygon({
+      map: this.map,
+      zIndex: 1,
+      paths: [],
+      strokeColor: this.color,
+      strokeOpacity: 0,
+      strokeWeight: 0,
+      fillColor: this.color,
+      fillOpacity: 0.5
+    });
+
+    // Create test points
+    for (let i = 1; i <= this.pointsRepeates; i++) {
+      this.points.push({
+        distance: this.pointsDistance * i,
+        marker: new google.maps.Marker({
+          map: this.map,
+          zIndex: 2,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            strokeOpacity: 0.5,
+            strokeWeight: 1,
+            strokeColor: this.color,
+            fillColor: this.color,
+            fillOpacity: 0,
+            scale: 3
+          }
+        }),
+        road: new google.maps.Polyline({
+          map: this.map,
+          strokeOpacity: 0.3,
+          strokeWeight: 1.4,
+          strokeColor: this.color
+        })
+      });
+    }
+
+    // Start syncinc
+    this.syncPoints();
+  };
+
+  TimePolygon.prototype.updatePosition = function (lat, lng) {
+    this.centerLat = lat;
+    this.centerLng = lng;
+  };
+
+  TimePolygon.prototype.syncPoints = function () {
+    // if (this.syncPoints.timer) {
+    //     clearTimeout(this.syncPoints.timer);
+    // }
+
+    if (!this.centerLat || !this.centerLng) {
+      this.syncPoints.timer = setTimeout(this.syncPoints.bind(this), 500);
+
+      return;
+    }
+
+    if (!Sosa.isPlayed) {
+      this.syncPoints.timer = setTimeout(this.syncPoints.bind(this), 500);
+
+      return;
+    }
+
+    this.currentDegrees = (this.currentDegrees + this.rotateAngleStep) % 360;
+
+    // Set position by degrees
+    for (let i = 0; i < this.points.length; i++) {
+      let rLat = (this.points[i].distance / 6378135) * (180 / Math.PI);
+      let rLng = rLat / Math.cos(this.centerLat * (Math.PI / 180));
+      let pointRadians = this.currentDegrees * (Math.PI / 180);
+
+      let lat = parseFloat(this.centerLat + (rLat * Math.sin(pointRadians)));
+      let lng = parseFloat(this.centerLng + (rLng * Math.cos(pointRadians)));
+
+      this.points[i].marker.setPosition({lat: lat, lng: lng});
+    }
+
+    // Request points
+    let promises = [];
+
+    for (let i = 0; i < this.points.length; i++) {
+      let lat = this.points[i].marker.getPosition().lat();
+      let lng = this.points[i].marker.getPosition().lng();
+
+      // promises.push(Promise.resolve({status: 'test'}));
+      promises.push(MyMap.directionRequest(this.centerLat, this.centerLng, lat, lng));
+    }
+
+    Promise.all(promises).then(function (values) {
+      // Set position
+      let tmp = [];
+
+      for (let i = 0; i < values.length; i++) {
+        if (values[i].status === 'OK') {
+          let path = values[i].routes[0].overview_path;
+
+          this.points[i].marker.setPosition(path[path.length - 1]);
+          this.points[i].road.setPath(path);
+
+          tmp.push({
+            position: path[path.length - 1],
+            duration: values[i].routes[0].legs[0].duration.value
+          });
+        }
+      }
+
+      // Update polygon
+      if (tmp.length) {
+        tmp.sort(function (a, b) {
+          let durationA = Math.abs(this.requiredTime - a.duration);
+          let durationB = Math.abs(this.requiredTime - b.duration);
+
+          if (durationA > durationB) {
+            return 1;
+          } else if (durationA < durationB) {
+            return -1;
+          } else {
+            return 0;
+          }
+        }.bind(this));
+
+        this.setPolygonPoint(this.currentDegrees, tmp[0].position);
+      }
+
+      this.syncPoints.timer = setTimeout(this.syncPoints.bind(this), 50);
+    }.bind(this)).catch(function (error) {
+      console.error(error);
+      this.syncPoints.timer = setTimeout(this.syncPoints.bind(this), 500);
+    }.bind(this));
+  };
+
+  TimePolygon.prototype.setPolygonPoint = function (index, position) {
+    let center = new google.maps.LatLng(this.centerLat, this.centerLng);
+
+    this.poligonPath[index] = position;
+    this.poligonPath[index].angle = google.maps.geometry.spherical.computeHeading(center, position);
+
+    let path = Object.values(this.poligonPath);
+
+    path.sort(function (a, b) {
+      return a.angle - b.angle;
+    });
+
+    this.polygon.setPath(path);
+  };
+
+  TimePolygon.prototype.destroy = function () {
+    for (let i = 0; i < this.points.length; i++) {
+      if (this.points[i].marker) {
+        this.points[i].marker.setMap(null);
+      }
+
+      if (this.points[i].road) {
+        this.points[i].road.setMap(null);
+      }
+
+      if (this.polygon) {
+        this.polygon.setMap(null);
+      }
+
+      if (this.syncPoints.timer) {
+        clearTimeout(this.syncPoints.timer);
+      }
+
+      this.syncPoints = function () {
+        return false;
+      };
+    }
+  };
+</script>
+
+<script>
+  let Sosa = {};
+
+  Sosa.map = null;
+
+  Sosa.ambulanceBlanks = [];
+  Sosa.ambulanceTemplate = null;
+
+  Sosa.accidentMarker = null;
+  Sosa.accidentAmbulanceId = null;
+
+  Sosa.ambulances = {};
+
+  Sosa.speedHumanMultiplier = 50;
+
+  Sosa.isPlayed = true;
+
+  Sosa.init = function () {
+    MyMap.create('#map').then(function (map) {
+      Sosa.map = map;
+
+      Sosa.ambulanceTemplate = $('#ambulanceTemplate').remove();
+      Sosa.ambulanceBlanks = Config.get('ambulanceBlanks').slice();
+
+      Sosa.notificationsTemplate = $('#notificationTemplate').remove();
+
+      setInterval(Sosa.moveAmbulances, 100);
+      setInterval(Sosa.setAmbulanceSpeed, 1000);
+
+      Sosa.controlVisibility();
+    });
+  };
+
+  Sosa.updateAccidentLines = function () {
+    if (Sosa.updateAccidentLines.timer) {
+      clearTimeout(Sosa.updateAccidentLines.timer);
+    }
+
+    Sosa.updateAccidentLines.timer = setTimeout(Sosa.updateAccidentLines, 5000);
+
+    if (!Sosa.accidentMarker || !Sosa.accidentMarker.getPosition()) {
+      return;
+    }
+
+    if (!Sosa.isPlayed) {
+      return;
+    }
+
+    $.each(Sosa.ambulances, function () {
+      let ambulance = this;
+
+      if (ambulance.stopUpdate === 2) {
+        return;
+      } else if (ambulance.stopUpdate === 1) {
+        Sosa.notify(ambulance.plate, 'thumb_up', 'пристигна на инцидента');
+
+        ambulance.stopUpdate = 2;
+      }
+
+      if (!ambulance.ambulanceMarker || !ambulance.ambulanceMarker.getPosition()) {
+        return;
+      }
+
+      let directionPromise = MyMap.directionRequest(ambulance.ambulanceMarker.getPosition().lat(), ambulance.ambulanceMarker.getPosition().lng(), Sosa.accidentMarker.getPosition().lat(), Sosa.accidentMarker.getPosition().lng());
+      directionPromise.then(function (response) {
+        if (response.status === 'OK' && response.routes.length) {
+          if (Sosa.accidentAmbulanceId !== ambulance.id) {
+            let path = response.routes[0].overview_path;
+
+            // Draw road
+            if (ambulance.accidentLine) {
+              ambulance.accidentLine.setPath(path);
+            } else {
+              ambulance.accidentLine = new google.maps.Polyline({
+                path: path,
+                strokeOpacity: 0.4,
+                strokeWeight: 3,
+                strokeColor: ambulance.color,
+                map: Sosa.map
+              });
+            }
+          }
+
+          // Add info
+          ambulance.accidentDistance = response.routes[0].legs[0].distance.value;
+          ambulance.accidentDuration = response.routes[0].legs[0].duration.value;
+          ambulance.accidentCurrentAddress = response.routes[0].legs[0].start_address;
+
+          ambulance.accidentCurrentAddress = ambulance.accidentCurrentAddress.replace(/,.*/g, '');
+
+          Sosa.ambulanceInfo(ambulance.id);
+        }
+      }).catch(function (error) {
+        console.error(error);
+      });
+    });
+  };
+
+  Sosa.moveAmbulances = function () {
+    if (!Sosa.isPlayed) {
+      return;
+    }
+
+    $.each(Sosa.ambulances, function () {
+      let ambulance = this;
+
+      if (ambulance.waitReverse) {
+        return;
+      }
+
+
+      if (!ambulance.ambulanceMarker.getMap()) {
+        ambulance.ambulanceMarker.setMap(Sosa.map);
+      }
+
+      if (!ambulance.speedStep) {
+        ambulance.speedStep = +1;
+      }
+
+      // Increment move index
+      if (ambulance.travelDistance === null) {
+        ambulance.travelDistance = 0;
+      } else {
+        ambulance.travelDistance += ambulance.speed;
+      }
+
+      // Set move marker position
+      let movePosition;
+
+      if (Sosa.accidentAmbulanceId === ambulance.id) {
+        let totalDistance = MyMap.calcDistance(MyMap.pathToArray(ambulance.accidentLine.getPath()));
+
+        // Stay on the accident when comes last point
+        if (ambulance.travelDistance >= totalDistance) {
+          ambulance.travelDistance = totalDistance;
+
+          if (!ambulance.stopUpdate) {
+            ambulance.stopUpdate = 1;
+          }
+        }
+
+        movePosition = MyMap.calcPointAtDistance(MyMap.pathToArray(ambulance.accidentLine.getPath()), ambulance.travelDistance);
+      } else {
+        if (ambulance.patrolLine && ambulance.patrolLine.getPath()) {
+          let totalDistance = MyMap.calcDistance(MyMap.pathToArray(ambulance.patrolLine.getPath()));
+
+          if (ambulance.travelDistance > totalDistance) {
+            ambulance.travelDistance = totalDistance;
+          }
+
+          movePosition = MyMap.calcPointAtDistance(MyMap.pathToArray(ambulance.patrolLine.getPath()), ambulance.travelDistance);
+
+          // Reverse direction
+          if (ambulance.travelDistance >= totalDistance) {
+            let startPosition = ambulance.endMarker.getPosition();
+            let endPosition = ambulance.startMarker.getPosition();
+
+            ambulance.startMarker.setPosition(startPosition);
+            ambulance.endMarker.setPosition(endPosition);
+            Sosa.relocatePoints(ambulance.id);
+
+            ambulance.waitReverse = true;
+            ambulance.travelDistance = null;
+          }
+        }
+      }
+
+      if (movePosition) {
+        ambulance.ambulanceMarker.setPosition(movePosition);
+
+        ambulance.timePolygon.updatePosition(movePosition.lat(), movePosition.lng());
+      }
+
+      Sosa.ambulanceInfo(ambulance.id);
+    });
+
+    Sosa.controlVisibility();
+  };
+
+  Sosa.setAmbulanceSpeed = function () {
+    let from = 0.5;
+    let to = 2.5;
+
+    $.each(Sosa.ambulances, function () {
+      let ambulance = this;
+
+      if (ambulance.stopUpdate) {
+        return;
+      }
+
+      let time = new Date();
+
+      if (!ambulance.nextSpeedChange || ambulance.nextSpeedChange <= time) {
+        ambulance.nextSpeedChange = new Date();
+        ambulance.nextSpeedChange.setSeconds(ambulance.nextSpeedChange.getSeconds() + Sosa.rand(4, 8));
+
+        ambulance.speed = Sosa.rand(from * 10, to * 10) / 10;
+      }
+    });
+  };
+
+  Sosa.createAccident = function () {
+    if (Sosa.accidentMarker) {
+      return;
+    }
+
+    Sosa.accidentMarker = new google.maps.Marker({
+      position: {
+        lat: Sosa.map.getCenter().lat(),
+        lng: Sosa.map.getCenter().lng()
+      },
+      animation: google.maps.Animation.DROP,
+      draggable: true,
+      map: Sosa.map
+    });
+
+    google.maps.event.addListener(Sosa.accidentMarker, 'dragend', function () {
+      if (Sosa.accidentAmbulanceId) {
+        Sosa.ambulances[Sosa.accidentAmbulanceId].travelDistance = null;
+      }
+    });
+
+    Sosa.updateAccidentLines();
+
+    Sosa.controlVisibility();
+  };
+
+  Sosa.createAmbulances = function () {
+    let ambulance = {};
+    ambulance.color = Sosa.ambulanceBlanks.shift();
+    ambulance.plate = Sosa.randomPlate();
+    ambulance.id = ambulance.plate.replace(/ /gi, '');
+    ambulance.people = Sosa.rand(3, 6);
+    ambulance.travelDistance = null;
+    ambulance.speed = 1;
+
+    ambulance.timePolygon = new TimePolygon(Sosa.map, ambulance.color);
+
+    // Html
+    ambulance.html = Sosa.ambulanceTemplate.clone();
+    ambulance.html.prependTo($('.map-items'));
+    ambulance.html.hide().fadeIn();
+
+    // Color
+    ambulance.html.attr('id', 'ambulance-' + ambulance.id);
+    $('html > head').append($('<style>#ambulance-' + ambulance.id + ':after { background-color: ' + ambulance.color + '; }</style>'));
+
+    // Get nodes
+    ambulance.nodeRemove = ambulance.html.find('[data-trigger="remove"]');
+    ambulance.nodeName = ambulance.html.find('[data-placeholder="name"]');
+    ambulance.nodeSpeed = ambulance.html.find('[data-placeholder="speed"]');
+    ambulance.nodeLabel = ambulance.html.find('[data-placeholder="label"]');
+    ambulance.nodeSend = ambulance.html.find('[data-trigger="send"]');
+
+    // Nodes behaviour
+    ambulance.nodeRemove.click(Sosa.removeAmbulance.bind({}, ambulance.id));
+    ambulance.nodeName.html(ambulance.plate);
+    ambulance.nodeLabel.html('&nbsp;');
+    ambulance.nodeSend.click(Sosa.sendAmbulanceToAccident.bind({}, ambulance.id));
+
+    // Ambulance move marker
+    ambulance.ambulanceMarker = new google.maps.Marker({
+      zIndex: 3,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        strokeOpacity: 1,
+        strokeWeight: 1.5,
+        strokeColor: ambulance.color,
+        fillColor: ambulance.color,
+        fillOpacity: 0.3,
+        scale: 17
+      }
+    });
+
+    // Start/end markers
+    let zones = Sosa.generateZones(2, 3);
+    let zone = zones[Object.keys(Sosa.ambulances).length % zones.length];
+    let halfX = (zone.endX - zone.startX) / 2;
+    let halfY = (zone.endY - zone.startY) / 2;
+
+    let startEndMarker = {
+      map: Sosa.map,
+      draggable: true,
+      animation: google.maps.Animation.DROP,
+      zIndex: 4,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        strokeOpacity: 0,
+        fillColor: ambulance.color,
+        fillOpacity: 1,
+        scale: 5
+      }
+    };
+
+    // Start marker
+    ambulance.startMarker = new google.maps.Marker($.extend(startEndMarker, {
+      position: {
+        lat: Sosa.rand(zone.startX * 100000, (zone.endX - halfX) * 100000) / 100000,
+        lng: Sosa.rand(zone.startY * 100000, (zone.endY - halfY) * 100000) / 100000
+      }
+    }));
+    google.maps.event.addListener(ambulance.startMarker, 'dragend', Sosa.relocatePoints.bind({}, ambulance.id));
+
+    // End marker
+    ambulance.endMarker = new google.maps.Marker($.extend(startEndMarker, {
+      position: {
+        lat: Sosa.rand((zone.startX + halfX) * 100000, zone.endX * 100000) / 100000,
+        lng: Sosa.rand((zone.startY + halfY) * 100000, zone.endY * 100000) / 100000
+      }
+    }));
+    google.maps.event.addListener(ambulance.endMarker, 'dragend', Sosa.relocatePoints.bind({}, ambulance.id));
+
+    // Register it
+    Sosa.ambulances[ambulance.id] = ambulance;
+
+    // Relocate points
+    Sosa.relocatePoints(ambulance.id);
+
+    // Finish
+    Sosa.controlVisibility();
+
+    // Notification
+    Sosa.notify(ambulance.plate, 'repeat', 'започна да патрулира');
+  };
+
+  Sosa.sendAmbulanceToAccident = function (ambulanceId) {
+    if (!Sosa.accidentMarker) {
+      return;
+    }
+
+    if (!Sosa.ambulances[ambulanceId]) {
+      return;
+    }
+
+    Sosa.accidentAmbulanceId = ambulanceId;
+
+    let ambulance = Sosa.ambulances[ambulanceId];
+
+    ambulance.accidentLine.setOptions({
+      strokeOpacity: 1,
+      strokeWeight: 4
+    });
+
+    ambulance.travelDistance = null;
+
+    Sosa.accidentMarker.setDraggable(false);
+
+    Sosa.notify(ambulance.plate, 'trending_up', 'е на път към инцидента');
+
+    Sosa.controlVisibility();
+  };
+
+  Sosa.generateZones = function (totalX, totalY) {
+    let startX = Sosa.map.getBounds().getNorthEast().lat();
+    let startY = Sosa.map.getBounds().getNorthEast().lng();
+    let endX = Sosa.map.getBounds().getSouthWest().lat();
+    let endY = Sosa.map.getBounds().getSouthWest().lng();
+
+    let stepX = (endX - startX) / totalX;
+    let stepY = (endY - startY) / totalY;
+
+    let zones = [];
+    for (let x = 1; x <= totalX; x++) {
+      for (let y = 1; y <= totalY; y++) {
+        let endX = startX + (x * stepX);
+        let endY = startY + (y * stepY);
+
+        zones.push({
+          startX: endX - stepX,
+          startY: endY - stepY,
+          endX: endX,
+          endY: endY
+        });
+      }
+    }
+
+    return zones;
+  };
+
+  Sosa.relocatePoints = function (ambulanceId) {
+    if (!Sosa.ambulances[ambulanceId]) {
+      return;
+    }
+
+    let ambulance = Sosa.ambulances[ambulanceId];
+
+    let directionPromise = MyMap.directionRequest(ambulance.startMarker.position.lat(), ambulance.startMarker.position.lng(), ambulance.endMarker.position.lat(), ambulance.endMarker.position.lng());
+    directionPromise.then(function (response) {
+      if (response.status === 'OK' && response.routes.length) {
+        let path = response.routes[0].overview_path;
+
+        // Draw road
+        if (ambulance.patrolLine) {
+          ambulance.patrolLine.setPath(path);
+        } else {
+          ambulance.patrolLine = new google.maps.Polyline({
+            path: path,
+            strokeOpacity: 0,
+            icons: [{
+              icon: {
+                path: 'M 0,-1 0,1',
+                strokeOpacity: 1,
+                strokeColor: ambulance.color,
+                scale: 1.1
+              },
+              repeat: '9px'
+            }],
+            map: Sosa.map
+          });
+        }
+
+        // Mark ambulance as reversed
+        setTimeout(function () {
+          ambulance.waitReverse = false;
+        }, 200);
+
+        // Snap markers
+        ambulance.startMarker.setPosition(path[0]);
+        ambulance.endMarker.setPosition(path[path.length - 1]);
+      }
+    }).catch(function (error) {
+      console.error(error);
+    });
+  };
+
+  Sosa.removeAmbulance = function (ambulanceId) {
+    if (!Sosa.ambulances[ambulanceId]) {
+      return;
+    }
+
+    let ambulance = Sosa.ambulances[ambulanceId];
+
+    ambulance.html.remove();
+
+    if (ambulance.ambulanceMarker) {
+      ambulance.ambulanceMarker.setMap(null);
+    }
+
+    if (ambulance.startMarker) {
+      ambulance.startMarker.setMap(null);
+    }
+
+    if (ambulance.endMarker) {
+      ambulance.endMarker.setMap(null);
+    }
+
+    if (ambulance.patrolLine) {
+      ambulance.patrolLine.setMap(null);
+    }
+
+    if (ambulance.accidentLine) {
+      ambulance.accidentLine.setMap(null);
+    }
+
+    if (ambulance.timePolygon) {
+      ambulance.timePolygon.destroy();
+    }
+
+    Sosa.ambulanceBlanks.push(ambulance.color);
+
+    if (Sosa.accidentAmbulanceId === ambulanceId) {
+      Sosa.accidentAmbulanceId = null;
+    }
+
+    delete Sosa.ambulances[ambulanceId];
+
+    Sosa.controlVisibility();
+  };
+
+  Sosa.ambulanceInfo = function (ambulanceId) {
+    if (!Sosa.ambulances[ambulanceId]) {
+      return;
+    }
+
+    let ambulance = Sosa.ambulances[ambulanceId];
+    let leftMin = Sosa.secToHumanMin(ambulance.accidentDuration);
+    let distance = (ambulance.accidentDistance / 1000).toFixed(2);
+    let speed = parseInt(ambulance.speed * Sosa.speedHumanMultiplier);
+
+    // Average speed
+    if (!ambulance.speedRegistry) {
+      ambulance.speedRegistry = [];
+      ambulance.speedRegistry.push(speed);
+    } else if (ambulance.speedRegistry[ambulance.speedRegistry.length - 1] !== speed) {
+      ambulance.speedRegistry.push(speed);
+    }
+
+    let averageSpeed = 0;
+    for (let i = 0; i < ambulance.speedRegistry.length; i++) {
+      averageSpeed += ambulance.speedRegistry[i];
+    }
+    averageSpeed = averageSpeed / ambulance.speedRegistry.length;
+
+    // Ambulance speed
+    ambulance.nodeSpeed.html(speed + ' км/ч.');
+
+    // Ambulance label
+    if (!isNaN(distance)) {
+      let label = leftMin + ' <small>мин.</small>';
+      label += ' <span class="distance">/ ' + distance + ' км.</span>';
+      ambulance.nodeLabel.html(label);
+    }
+
+    // Live stats
+    if (Sosa.accidentAmbulanceId === ambulance.id) {
+      $('[data-info="speed"]').html(speed);
+      $('[data-info="average-speed"]').html(parseInt(averageSpeed));
+      $('[data-info="left-time"]').html(leftMin);
+      $('[data-info="street"]').html(ambulance.accidentCurrentAddress);
+      $('[data-info="plate"]').html(ambulance.plate);
+      $('[data-info="people"]').html(ambulance.people);
+    }
+  };
+
+  Sosa.controlVisibility = function () {
+    // Create new ambulance
+    if (Sosa.ambulanceBlanks.length) {
+      $('[data-id="create-ambulance"]').fadeIn();
+    } else {
+      $('[data-id="create-ambulance"]').hide();
+    }
+
+    // Accident
+    if (Sosa.accidentMarker) {
+      $('[data-id="create-accident"]').fadeOut();
+    } else if (Object.keys(Sosa.ambulances).length) {
+      $('[data-id="create-accident"]').fadeIn();
+    } else {
+      $('[data-id="create-accident"]').fadeOut();
+    }
+
+    // Play/pause
+    if (!Object.keys(Sosa.ambulances).length) {
+      $('[data-id="simulation-pause"]').hide();
+      $('[data-id="simulation-play"]').hide();
+    } else {
+      if (Sosa.isPlayed) {
+        $('[data-id="simulation-pause"]').hide();
+        $('[data-id="simulation-play"]').fadeIn();
+      } else {
+        $('[data-id="simulation-pause"]').fadeIn();
+        $('[data-id="simulation-play"]').hide();
+      }
+    }
+
+    // Send button
+    $.each(Sosa.ambulances, function () {
+      let ambulance = this;
+
+      if (Sosa.accidentMarker && !Sosa.accidentAmbulanceId && ambulance.accidentLine) {
+        ambulance.nodeSend.show();
+      } else {
+        ambulance.nodeSend.hide();
+      }
+    });
+
+    // Live stat
+    if (Sosa.accidentAmbulanceId) {
+      $('[data-id="live-stat"]').fadeIn();
+    } else {
+      $('[data-id="live-stat"]').hide();
+    }
+
+    // Closest ambulance
+    if (Sosa.accidentMarker) {
+      let closestAmbulance = null;
+
+      $.each(Sosa.ambulances, function () {
+        let ambulance = this;
+
+        ambulance.html.removeClass('closest');
+
+        if (typeof ambulance.accidentDuration === 'undefined') {
+          return;
+        }
+
+        if (closestAmbulance === null) {
+          closestAmbulance = ambulance;
+          return;
+        }
+
+        if (closestAmbulance.accidentDuration > ambulance.accidentDuration) {
+          closestAmbulance = ambulance;
+        }
+      });
+
+      if (closestAmbulance) {
+        closestAmbulance.html.addClass('closest');
+      }
+    }
+  };
+
+  Sosa.playPause = function () {
+    Sosa.isPlayed = !Sosa.isPlayed;
+    Sosa.controlVisibility();
+  };
+
+  Sosa.notify = function (name, icon, text) {
+    let html = Sosa.notificationsTemplate.clone();
+
+    html.find('[data-id="name"]').html(name);
+    html.find('[data-id="icon"]').html(icon);
+    html.find('[data-id="text"]').html(text);
+
+    html.appendTo($('.notifications'));
+    html.slideDown().fadeIn();
+
+    setTimeout(function () {
+      html.slideUp().fadeOut(function () {
+        $(this).remove();
+      });
+    }, 5000);
+  };
+
+  Sosa.randomPlate = function () {
+    if (!Sosa.randomPlate._plates) {
+      Sosa.randomPlate._plates = {};
+    }
+
+    while (true) {
+      let plate = 'C';
+      plate += ['', 'A', 'B'][Sosa.rand(0, 2)];
+      plate += ' ';
+      plate += Sosa.rand(0, 9);
+      plate += Sosa.rand(0, 9);
+      plate += Sosa.rand(0, 9);
+      plate += Sosa.rand(0, 9);
+      plate += ' ';
+      plate += ['E', 'T', 'O', 'P', 'A', 'H', 'K', 'X', 'B', 'M'][Sosa.rand(0, 9)];
+      plate += ['E', 'T', 'O', 'P', 'A', 'H', 'K', 'X', 'B', 'M'][Sosa.rand(0, 9)];
+
+      if (!Sosa.randomPlate._plates[plate]) {
+        Sosa.randomPlate._plates[plate] = true;
+        return plate;
+      }
+    }
+  };
+
+  Sosa.rand = function (min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
+
+  Sosa.secToHumanMin = function (time) {
+    function strPadLeft(string, pad, length) {
+      return (new Array(length + 1).join(pad) + string).slice(-length);
+    }
+
+    let minutes = Math.floor(time / 60);
+    let seconds = time - minutes * 60;
+
+    return strPadLeft(minutes, '0', 2) + ':' + strPadLeft(seconds, '0', 2);
+
+  };
+
+  App.ready(Sosa.init);
+</script>
 </body>
 </html>
