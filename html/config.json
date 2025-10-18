@@ -1,0 +1,143 @@
+{
+  "_googleMapsKey": "AIzaSyAwDzP7HofpNJAaKqW99-42OcFkvYSY2QQ",
+  "_googleMapsKeyProxy": "AIzaSyB0E9DnO1Z1QUcjBjgCJnbRoaiUFCXijbo",
+  "googleMapsKey": "AIzaSyD3rcoeuHCNeHGBGHGTdsKXVS0sprwWp4o",
+  "googleMapsKeyProxy": "AIzaSyD3rcoeuHCNeHGBGHGTdsKXVS0sprwWp4o",
+  "defaultMapCenter": {
+    "lat": 42.697713,
+    "lng": 23.321844
+  },
+  "googleDirectionProxies": [
+    "./proxy.php"
+  ],
+  "ambulanceBlanks": [
+    "#f26522",
+    "#744be8",
+    "#32caa1",
+    "#6dcff2",
+    "#ffca28",
+    "#AD1457"
+  ],
+  "gpsList": [
+    {
+      "id": 12451,
+      "plate": "СА 3346 АХ",
+      "size": "300 KB",
+      "date": "2018-03-14",
+      "geoJsonFile": "db/gps-list/file1.json",
+      "statOriginalPoints": 43,
+      "statSpatiallyAdjusted": 110,
+      "statMissingPoints": 57,
+      "statOriginalPrecision": 21,
+      "statSubsequentPrecision": 98.4
+    },
+    {
+      "id": 12452,
+      "plate": "СА 2346 АХ",
+      "size": "200 KB",
+      "date": "2018-03-14",
+      "geoJsonFile": "db/gps-list/file2.json",
+      "statOriginalPoints": 41,
+      "statSpatiallyAdjusted": 910,
+      "statMissingPoints": 47,
+      "statOriginalPrecision": 11,
+      "statSubsequentPrecision": 78.4
+    },
+    {
+      "id": 12453,
+      "plate": "С 1336 HB",
+      "size": "100 KB",
+      "date": "2018-03-14",
+      "geoJsonFile": "db/gps-list/file3.json",
+      "statOriginalPoints": 42,
+      "statSpatiallyAdjusted": 810,
+      "statMissingPoints": 57,
+      "statOriginalPrecision": 21,
+      "statSubsequentPrecision": 88.4
+    },
+    {
+      "id": 12454,
+      "plate": "С 1336 HB",
+      "size": "400 KB",
+      "date": "2018-03-14",
+      "geoJsonFile": "db/gps-list/file1.json",
+      "statOriginalPoints": 43,
+      "statSpatiallyAdjusted": 710,
+      "statMissingPoints": 47,
+      "statOriginalPrecision": 31,
+      "statSubsequentPrecision": 91.4
+    },
+    {
+      "id": 12455,
+      "plate": "СА 5346 АХ",
+      "size": "500 KB",
+      "date": "2018-03-14",
+      "geoJsonFile": "db/gps-list/file1.json",
+      "statOriginalPoints": 44,
+      "statSpatiallyAdjusted": 610,
+      "statMissingPoints": 55,
+      "statOriginalPrecision": 41,
+      "statSubsequentPrecision": 92.4
+    },
+    {
+      "id": 12458,
+      "plate": "СА 8346 АХ",
+      "size": "800 KB",
+      "date": "2018-03-14",
+      "geoJsonFile": "db/gps-list/file1.json",
+      "statOriginalPoints": 45,
+      "statSpatiallyAdjusted": 510,
+      "statMissingPoints": 65,
+      "statOriginalPrecision": 51,
+      "statSubsequentPrecision": 93.4
+    },
+    {
+      "id": 12459,
+      "plate": "СА 6346 АХ",
+      "size": "600 KB",
+      "date": "2018-03-14",
+      "geoJsonFile": "db/gps-list/file1.json",
+      "statOriginalPoints": 46,
+      "statSpatiallyAdjusted": 510,
+      "statMissingPoints": 86,
+      "statOriginalPrecision": 61,
+      "statSubsequentPrecision": 94.4
+    },
+    {
+      "id": 12461,
+      "plate": "С 1336 HB",
+      "size": "700 KB",
+      "date": "2018-03-14",
+      "geoJsonFile": "db/gps-list/file1.json",
+      "statOriginalPoints": 47,
+      "statSpatiallyAdjusted": 410,
+      "statMissingPoints": 23,
+      "statOriginalPrecision": 71,
+      "statSubsequentPrecision": 95.4
+    },
+    {
+      "id": 12463,
+      "plate": "СB 1346 АХ",
+      "size": "110 KB",
+      "date": "2018-03-14",
+      "geoJsonFile": "db/gps-list/file1.json",
+      "statOriginalPoints": 88,
+      "statSpatiallyAdjusted": 310,
+      "statMissingPoints": 97,
+      "statOriginalPrecision": 81,
+      "statSubsequentPrecision": 96.4
+    },
+    {
+      "id": 12466,
+      "plate": "СА 3346 АХ",
+      "size": "900 KB",
+      "date": "2018-03-14",
+      "geoJsonFile": "db/gps-list/file1.json",
+      "statOriginalPoints": 99,
+      "statSpatiallyAdjusted": 210,
+      "statMissingPoints": 12,
+      "statOriginalPrecision": 91,
+      "statSubsequentPrecision": 97.4
+    }
+  ]
+}

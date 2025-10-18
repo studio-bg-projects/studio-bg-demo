@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="img/kite_fav.png">
+
+  <title>Ambulance</title>
+
+  <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&amp;subset=cyrillic" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- JS -->
+  <script src="js/lib/jquery.min.js"></script>
+  <script src="js/lib/popper.min.js"></script>
+  <script src="js/lib/bootstrap.min.js"></script>
+
+  <script src="js/app/app.js"></script>
+  <script src="js/app/load-config.js"></script>
+  <script src="js/app/myMap.js"></script>
+</head>
+
+<body>
+
+<header>
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="index.html">
+      <img src="img/logo_icn.png" alt="Atlantify"/>
+      Atlantify
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+</header>
+
+<!-- Begin page content -->
+<main role="main" class="container">
+  <ul class="breadcrumb">
+    <li>
+      <a href="index.html">Начало</a>
+    </li>
+    <li>
+      <a href="index.html">Приложения</a>
+    </li>
+    <li>
+      <a href="gps-list.html">Инструменти</a>
+    </li>
+    <li>
+      <span>Пакет #
+        <i data-placeholder="id">-</i>
+      </span>
+    </li>
+  </ul>
+  <div class="head">
+    <h2>Инструменти</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-7">
+      <h1>
+        <a href="gps-list.html" class="go-back">
+          <i class="material-icons">arrow_back</i>
+        </a>
+        Пакет #
+        <span data-placeholder="id">-</span>
+      </h1>
+      <p>Получените GPS данни от линейката и получените координати след изчисленията.</p>
+    </div>
+
+    <div class="col-md-5">
+      <ul class="meta-list">
+        <li>
+          <div class="meta-box">
+            <span>Линейка &num;</span>
+            <strong>
+              <i data-placeholder="plate">-</i>
+            </strong>
+          </div>
+        </li>
+        <li>
+          <div class="meta-box">
+            <span>Размер</span>
+            <strong>
+              <i data-placeholder="size">-</i>
+            </strong>
+          </div>
+        </li>
+        <li>
+          <div class="meta-box">
+            <span>Дата</span>
+            <strong>
+              <i data-placeholder="date">-</i>
+            </strong>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<div class="package-map">
+  <div id="map" style="height: 100%;"></div>
+
+  <div class="container">
+    <div class="legend">
+      <ul class="checks">
+        <li class="original-gps">
+          <input type="checkbox" id="original-gps" class="check" checked/>
+          <label for="original-gps">
+            <i class="material-icons">panorama_fish_eye</i>
+            Оригинални GPS данни
+          </label>
+          <p>Координати генерирани от GPS приемници.</p>
+        </li>
+        <li class="snapped-gps">
+          <input type="checkbox" id="snapped-gps" class="check" checked/>
+          <label for="snapped-gps">
+            <i class="material-icons">panorama_fish_eye</i>
+            Пространствена корекция
+          </label>
+          <p>Корекция на географското местоположение на координати генерирани от GPS приемници с точност 95%-99%</p>
+        </li>
+      </ul>
+      <div class="stats">
+        <h5>Статистика</h5>
+        <ul class="stats-list">
+          <li>
+            <span>Оригинални точки</span>
+            <i data-placeholder="originalPoints">-</i>
+          </li>
+          <li>
+            <span>Пространствено коригирани</span>
+            <i data-placeholder="spatiallyAdjusted">-</i>
+          </li>
+          <li>
+            <span>Добавени / Липсващи точки</span>
+            <i data-placeholder="missingPoints">-</i>
+          </li>
+          <li>
+            <span>Оригинална прецизност</span>
+            <i data-placeholder="originalPrecision">-</i>
+            %
+          </li>
+          <li>
+            <span>Последваща прецизност</span>
+            <i data-placeholder="subsequentPrecision">-</i>
+            %
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let GpsSnap = {};
+
+  GpsSnap.map = null;
+  GpsSnap.gpsData = null;
+  GpsSnap.geoJson = null;
+
+  GpsSnap.originalObjects = [];
+  GpsSnap.snappedObjects = [];
+
+  GpsSnap.init = function () {
+    MyMap.create('#map').then(function (map) {
+      GpsSnap.map = map;
+
+      GpsSnap.getGpsData();
+      GpsSnap.loadGeoJson();
+    });
+
+    $('#original-gps, #snapped-gps').change(GpsSnap.togglePaths);
+  };
+
+  GpsSnap.getGpsData = function () {
+    GpsSnap.gpsData = Config.get('gpsList')[App.getQuery('key')];
+
+    if (!GpsSnap.gpsData) {
+      document.location = 'gps-list.html';
+      return;
+    }
+
+    $('[data-placeholder="id"]').html(GpsSnap.gpsData.id);
+    $('[data-placeholder="plate"]').html(GpsSnap.gpsData.plate);
+    $('[data-placeholder="size"]').html(GpsSnap.gpsData.size);
+    $('[data-placeholder="date"]').html(GpsSnap.gpsData.date);
+
+    $('[data-placeholder="originalPoints"]').html(GpsSnap.gpsData.statOriginalPoints);
+    $('[data-placeholder="spatiallyAdjusted"]').html(GpsSnap.gpsData.statSpatiallyAdjusted);
+    $('[data-placeholder="missingPoints"]').html(GpsSnap.gpsData.statMissingPoints);
+    $('[data-placeholder="originalPrecision"]').html(GpsSnap.gpsData.statOriginalPrecision);
+    $('[data-placeholder="subsequentPrecision"]').html(GpsSnap.gpsData.statSubsequentPrecision);
+  };
+
+  GpsSnap.loadGeoJson = function () {
+    $.ajax({
+      url: GpsSnap.gpsData.geoJsonFile,
+      success: function (data) {
+        if (!data.type || !data.features) {
+          alert('There is a problem with Geo JSON load');
+          return;
+        }
+
+        GpsSnap.geoJson = data;
+
+        MyMap.ready(GpsSnap.createPolylines);
+        MyMap.ready(GpsSnap.snapPolylines);
+      },
+      error: function () {
+        alert('There is a problem with Geo JSON load');
+      }
+    });
+  };
+
+  GpsSnap.createPolylines = function () {
+    let bounds = new google.maps.LatLngBounds();
+
+    $.each(GpsSnap.geoJson.features, function () {
+      if (this.geometry.type !== 'LineString') {
+        return;
+      }
+
+      let linePath = [];
+
+      $.each(this.geometry.coordinates, function () {
+        let coordinate = {lat: this[1], lng: this[0]};
+        bounds.extend(coordinate);
+        linePath.push(coordinate);
+
+        let marker = new google.maps.Marker({
+          position: coordinate,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            strokeOpacity: 0,
+            fillColor: '#ec193e',
+            fillOpacity: 1,
+            scale: 4
+          },
+          map: GpsSnap.map
+        });
+
+        GpsSnap.originalObjects.push(marker);
+      });
+
+      let path = new google.maps.Polyline({
+        path: linePath,
+        strokeOpacity: 0,
+        icons: [
+          {
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE,
+              strokeOpacity: 0,
+              fillColor: '#ec193e',
+              fillOpacity: 1,
+              scale: 1.3
+            },
+            offset: '0',
+            repeat: '6px'
+          }
+        ],
+        map: GpsSnap.map
+      });
+
+      GpsSnap.originalObjects.push(path);
+    });
+
+    GpsSnap.map.fitBounds(bounds);
+  };
+
+  GpsSnap.snapPolylines = function () {
+    $.each(GpsSnap.geoJson.features, function () {
+      let requestPath = [];
+
+      $.each(this.geometry.coordinates, function () {
+        requestPath.push(this[1] + ',' + this[0]);
+      });
+
+      let url = 'https://roads.googleapis.com/v1/snapToRoads';
+      url += '?key=' + Config.get('googleMapsKey');
+      url += '&path=' + requestPath.join('|');
+      url += '&interpolate=true';
+
+      $.ajax({
+        url: url,
+        dataType: 'json',
+        success: function (data) {
+          let linePath = [];
+
+          $.each(data.snappedPoints, function () {
+            linePath.push({lat: this.location.latitude, lng: this.location.longitude});
+          });
+
+          let path = new google.maps.Polyline({
+            path: linePath,
+            strokeOpacity: 0.3,
+            strokeWeight: 2,
+            strokeColor: '#32caa1',
+            icons: [
+              {
+                icon: {
+                  path: google.maps.SymbolPath.CIRCLE,
+                  strokeOpacity: 1,
+                  strokeWeight: 2,
+                  strokeColor: '#32caa1',
+                  fillColor: '#7bf5d4',
+                  fillOpacity: 1,
+                  scale: 4
+                },
+                offset: '0',
+                repeat: '15px'
+              }
+            ],
+            map: GpsSnap.map
+          });
+
+          GpsSnap.snappedObjects.push(path);
+        }
+      });
+    });
+  };
+
+  GpsSnap.togglePaths = function () {
+    let originalMap = $('#original-gps').prop('checked') ? GpsSnap.map : null;
+    let snappedlMap = $('#snapped-gps').prop('checked') ? GpsSnap.map : null;
+
+    $.each(GpsSnap.originalObjects, function () {
+      this.setMap(originalMap);
+    });
+
+    $.each(GpsSnap.snappedObjects, function () {
+      this.setMap(snappedlMap);
+    });
+  };
+
+  App.ready(GpsSnap.init);
+</script>
+
+</body>
+</html>
