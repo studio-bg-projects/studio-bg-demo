@@ -266,6 +266,6 @@
       Аз съм програмист и искам да планирам нещата, точно и ясно.
     `);
 
-    // projectManagerApp.startConnectionAndMicrophone();
+    projectManagerApp.startConnectionAndMicrophone();
   </script>
 @endsection
