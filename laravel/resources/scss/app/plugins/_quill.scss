@@ -1,0 +1,29 @@
+.ql-snow {
+  &.ql-container {
+    border-color: $card-border-color;
+    border-bottom-left-radius: $border-radius-sm;
+    border-bottom-right-radius: $border-radius-sm;
+
+    .ql-editor {
+      // Placeholder
+      &.ql-blank:before {
+        @extend .text-body;
+      }
+    }
+  }
+
+  &.ql-snow.ql-toolbar {
+    border-color: $card-border-color;
+    border-top-left-radius: $border-radius-sm;
+    border-top-right-radius: $border-radius-sm;
+
+  }
+
+  .ql-stroke {
+    stroke: $body-quaternary-color;
+  }
+
+  .ql-picker {
+    color: $body-quaternary-color;
+  }
+}

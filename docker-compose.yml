@@ -2,12 +2,84 @@ name: $PREFIX$SUFFIX
 
 services:
   nginx:
-    container_name: $PREFIX-web$SUFFIX
-    image: php:8.2-apache
+    container_name: $PREFIX-nginx$SUFFIX
+    depends_on:
+      - php-fpm
+    image: $PREFIX/nginx:latest
+    build: ./docker-images/nginx
     restart: ${SERVICES_RESTART:-no}
     ports:
-      - ${PORT_HTTP:-80}:80
+      - ${PORT_NGINX_HTTP:-80}:80
+      - ${PORT_NGINX_HTTPS:-443}:443
     environment:
       TZ: ${TZ:-UTC}
     volumes:
-      - ./html:/var/www/html
+      - ./laravel:/var/www/html
+    links:
+      - php-fpm
+
+  php-fpm:
+    container_name: $PREFIX-php-fpm$SUFFIX
+    image: $PREFIX/php-fpm:latest
+    build: ./docker-images/php-fpm
+    restart: ${SERVICES_RESTART:-no}
+    environment:
+      TZ: ${TZ:-UTC}
+    volumes:
+      - ./laravel:/var/www/html
+      - ./.tmp:/tmp-php
+
+  mysql-main:
+    container_name: $PREFIX-mysql-main$SUFFIX
+    image: $PREFIX/mysql:latest
+    build: ./docker-images/mysql
+    restart: ${SERVICES_RESTART:-no}
+    ports:
+      - ${PORT_MYSQL_MAIN:-3306}:3306
+    volumes:
+      - ${VOLUME_MYSQL_MAIN}
+    environment:
+      TZ: ${TZ:-UTC}
+      MYSQL_ROOT_PASSWORD: ${DB_MAIN_PASSWORD-pass}
+      MYSQL_DATABASE: ${DB_MAIN_DATABASE-$PREFIX}
+      MYSQL_USER: ${DB_MAIN_USERNAME-$PREFIX}
+      MYSQL_PASSWORD: ${DB_MAIN_PASSWORD-pass}
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  mysql-data:
+    container_name: $PREFIX-mysql-data$SUFFIX
+    image: $PREFIX/mysql:latest
+    build: ./docker-images/mysql
+    restart: ${SERVICES_RESTART:-no}
+    ports:
+      - ${PORT_MYSQL_DATA:-3306}:3306
+    volumes:
+      - ${VOLUME_MYSQL_DATA}
+    environment:
+      TZ: ${TZ:-UTC}
+      MYSQL_ROOT_PASSWORD: ${DB_DATA_PASSWORD-pass}
+      MYSQL_DATABASE: ${DB_DATA_DATABASE-$PREFIX}
+      MYSQL_USER: ${DB_DATA_USERNAME-$PREFIX}
+      MYSQL_PASSWORD: ${DB_DATA_PASSWORD-pass}
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  redis:
+    container_name: $PREFIX-redis$SUFFIX
+    image: $PREFIX/redis:latest
+    build: ./docker-images/redis
+    restart: ${SERVICES_RESTART:-no}
+    environment:
+      TZ: ${TZ:-UTC}
+    volumes:
+      - ${VOLUME_REDIS}
+    command: redis-server --save 20 1 --loglevel warning
+
+  node:
+    container_name: $PREFIX-node$SUFFIX
+    image: $PREFIX/build:latest
+    build: ./docker-images/node
+    restart: no
+    volumes:
+      - ./laravel/:/app
+    environment:
+      TZ: ${TZ:-UTC}

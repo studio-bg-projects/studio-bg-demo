@@ -1,0 +1,58 @@
+// Theme
+@import '../fonts/google-nunito-sans/nunito-sans.css';
+@import 'theme';
+
+// Components
+@import 'flatpickr';
+
+@import '../../node_modules/@agavazov/fontawesome-pro/css/fontawesome.css';
+@import '../../node_modules/@agavazov/fontawesome-pro/css/regular.css';
+@import '../../node_modules/@agavazov/fontawesome-pro/css/solid.css';
+
+@import '../../node_modules/quill/dist/quill.snow.css';
+@import "../../node_modules/select2/src/scss/core";
+
+@import '../../node_modules/glightbox/dist/css/glightbox.css';
+
+// Custom app style
+@import 'app/plugins/dropzone';
+@import 'app/plugins/quill';
+@import 'app/plugins/select2';
+
+@import 'app/animations';
+@import 'app/form';
+@import 'app/scrollbar';
+@import 'app/table';
+@import 'app/nav-content';
+@import 'app/sortable';
+
+// Misc (to be moved)
+.nav-link-text {
+  font-weight: $lead-font-weight;
+}
+
+.dropdown-indicator-icon {
+  .fa-angle-up {
+    transition: 0.5s ease transform;
+  }
+
+  &[aria-expanded="true"] .fa-angle-up {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes pulse-red {
+  0% {
+    box-shadow: 0 0 1px rgba(255, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(255, 0, 0, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 1px rgba(255, 0, 0, 0.4);
+  }
+}
+
+.pulse-red {
+  animation: pulse-red 1.5s ease-out infinite;
+}

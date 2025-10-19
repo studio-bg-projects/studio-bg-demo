@@ -1,0 +1,47 @@
+// Form style
+.app-form-label {
+  @extend .form-label;
+  //font-size: 0.8rem;
+  //font-weight: 700;
+  //text-transform: uppercase;
+  //color: #808080;
+}
+
+label.required::after {
+  content: " *";
+  color: var(--studio-bg-form-invalid-color);
+  font-weight: bold;
+}
+
+// Password toggle
+[data-app-password-toggle] {
+  padding-top: 0.4rem !important;
+}
+
+.form-floating {
+  [data-app-password-toggle] {
+    padding-top: 0.78rem !important;
+  }
+}
+
+[data-app-password-toggle] {
+  .hide {
+    margin-top: 1px;
+    margin-right: -1px;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  &.show-password {
+    .hide {
+      display: block;
+    }
+
+    .show {
+      display: none;
+    }
+  }
+}
+

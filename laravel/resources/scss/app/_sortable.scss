@@ -1,0 +1,10 @@
+.sortable-place {
+  min-height: 10rem;
+  border: 2px dashed $gray-200;
+  border-radius: $border-radius;
+  transition: all 0.4s ease-in-out;
+
+  &.sortable-hover:hover {
+    border-color: $gray-400;
+  }
+}
