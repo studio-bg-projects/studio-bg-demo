@@ -13,16 +13,16 @@
               @if (isset($noRsTitle))
                 {{ $noRsTitle }}
               @else
-                Няма намерени резултати
+                No results found
               @endif
             </h3>
             <p class="text-body-tertiary">
               @if (isset($noRsSubTitle))
                 {{ $noRsSubTitle }}
               @else
-                Резултатите може да отсъстват или да има
-                <span class="@if (request()->filter) text-primary @endif">зададени филтри</span>
-                , които да ги скриват.
+                Results may be absent or there may be
+                <span class="@if (request()->filter) text-primary @endif">filters set</span>
+                that hide them.
               @endif
             </p>
           </div>

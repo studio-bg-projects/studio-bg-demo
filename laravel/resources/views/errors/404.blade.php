@@ -12,11 +12,11 @@
           <div class="col-12 col-lg-6 text-center text-lg-start">
             <img class="img-fluid mb-6 w-50 w-lg-75 d-dark-none" src="{{ asset('/img/spot-illustrations/404.png') }}" alt=""/>
             <img class="img-fluid mb-6 w-50 w-lg-75 d-light-none" src="{{ asset('/img/spot-illustrations/dark_404.png') }}" alt=""/>
-            <h2 class="text-body-secondary fw-bolder mb-3">Страницата липсва!</h2>
+            <h2 class="text-body-secondary fw-bolder mb-3">The page is missing!</h2>
             <p class="text-body mb-5">
-              Но няма място за притеснение! Нашият щраус търси навсякъде,
+              But there's no need to worry! Our ostrich is searching everywhere,
               <br class="d-none d-sm-block"/>
-              докато вие чакате на сигурно.
+              while you wait in safety.
             </p>
 
             @if ($exception && $exception->getMessage())
@@ -25,7 +25,7 @@
               </div>
             @endif
 
-            <a class="btn btn-lg btn-primary" href="{{ url('/') }}">Към началната страница</a>
+            <a class="btn btn-lg btn-primary" href="{{ url('/') }}">Go to the homepage</a>
           </div>
         </div>
       </div>

@@ -12,11 +12,11 @@
           <div class="col-12 col-lg-6 text-center text-lg-start">
             <img class="img-fluid mb-6 w-50 w-lg-75 d-dark-none" src="{{ asset('/img/spot-illustrations/403.png') }}" alt=""/>
             <img class="img-fluid mb-6 w-50 w-lg-75 d-light-none" src="{{ asset('/img/spot-illustrations/dark_403.png') }}" alt=""/>
-            <h2 class="text-body-secondary fw-bolder mb-3">Достъпът е отказан!</h2>
+            <h2 class="text-body-secondary fw-bolder mb-3">Access denied!</h2>
             <p class="text-body mb-5">
-              Ти се осмели да прекрачиш границите на своите права.
+              You dared to overstep the boundaries of your rights.
               <br class="d-none d-sm-block"/>
-              Само достойните могат да влязат в това царство.
+              Only the worthy can enter this kingdom.
             </p>
 
             @if ($exception && $exception->getMessage())
@@ -25,7 +25,7 @@
               </div>
             @endif
 
-            <a class="btn btn-lg btn-primary" href="{{ url('/auth/login') }}">Отиди към вход</a>
+            <a class="btn btn-lg btn-primary" href="{{ url('/auth/login') }}">Go to login</a>
           </div>
         </div>
       </div>

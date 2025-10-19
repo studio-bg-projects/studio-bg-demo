@@ -8,7 +8,7 @@
               <i class="fa-regular fa-house"></i>
             </span>
             <span class="nav-link-text-wrapper">
-              <span class="nav-link-text">Начало</span>
+              <span class="nav-link-text">Home</span>
             </span>
           </div>
         </a>

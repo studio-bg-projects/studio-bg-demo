@@ -47,7 +47,7 @@ export class Uploader {
           const msg = response?.message && response.message !== '' ? response.message : (response.exception || typeof response === 'string' ? response : '');
 
           const $errorMsg = $(file.previewElement).find('[data-dz-errormessage]');
-          $errorMsg.html(`Възникна грешка при качване${msg ? `: ${msg}` : ''}!`);
+          $errorMsg.html(`An upload error occurred${msg ? `: ${msg}` : ''}!`);
 
           const $errorWrapper = $errorMsg.parent();
           $errorWrapper.fadeIn();

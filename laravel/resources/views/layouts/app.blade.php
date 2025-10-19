@@ -24,7 +24,7 @@
             {{-- .uil-arrow-from-right used ftom laravel/resources/scss/theme/_navbar-vertical.scss --}}
             <i class="fa-regular fa-arrow-right-from-line uil-arrow-from-right"></i>
           </span>
-          <span class="navbar-vertical-footer-text ms-2">Прибран изглед</span>
+          <span class="navbar-vertical-footer-text ms-2">Collapsed view</span>
         </button>
       </div>
     </nav>
@@ -48,14 +48,14 @@
         <ul class="navbar-nav navbar-nav-icons flex-row">
           @if (session()->has('impersonateAdminId'))
             <li class="nav-item anim anim-pulse" data-bs-theme="dark">
-              <a href="{{ url('/erp/impersonate/stop') }}" class="btn btn-subtle-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Върни се като стария потребител">
+              <a href="{{ url('/erp/impersonate/stop') }}" class="btn btn-subtle-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Go back as the old user">
                 <i class="fa-regular fa-eyes fs-8"></i>
               </a>
             </li>
           @endif
           <li class="nav-item dropdown">
             <div class="theme-control-toggle px-2" data-bs-toggle="dropdown" data-bs-display="static" id="bd-theme">
-              <div class="mb-0 theme-control-toggle-label theme-control-toggle-light" style="height: 40px;width: 40px;" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Избор на тема">
+              <div class="mb-0 theme-control-toggle-label theme-control-toggle-light" style="height: 40px;width: 40px;" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Choose a theme">
                 <i class="fa-regular fa-lightbulb theme-icon-active fs-8"></i>
               </div>
             </div>
@@ -63,19 +63,19 @@
               <li>
                 <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light">
                   <i class="fa-regular fa-lightbulb me-2"></i>
-                  Светло
+                  Light
                 </button>
               </li>
               <li>
                 <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark">
                   <i class="fa-regular fa-sunglasses me-2"></i>
-                  Тъмно
+                  Dark
                 </button>
               </li>
               <li>
                 <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto">
                   <i class="fa-regular fa-sun-bright me-2"></i>
-                  Автоматично
+                  Auto
                 </button>
               </li>
             </ul>

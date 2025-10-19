@@ -10,7 +10,7 @@
             <img class="img-fluid w-md-50 w-lg-100 d-light-none" src="{{ asset('/img/spot-illustrations/dark_16.png') }}" alt="" width="400"/>
           </div>
           <div class="col-12 col-lg-6 text-center text-lg-start">
-            <h2 class="text-body-secondary fw-bolder mb-3">Възникна грешка!</h2>
+            <h2 class="text-body-secondary fw-bolder mb-3">An error occurred!</h2>
             <p class="text-body mb-5">{{ $exception->getMessage() }}</p>
           </div>
         </div>

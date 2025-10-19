@@ -12,8 +12,8 @@
           <div class="col-12 col-lg-6 text-center text-lg-start">
             <img class="img-fluid mb-6 w-50 w-lg-75 d-dark-none" src="{{ asset('/img/spot-illustrations/500.png') }}" alt=""/>
             <img class="img-fluid mb-6 w-50 w-lg-75 d-light-none" src="{{ asset('/img/spot-illustrations/dark_500.png') }}" alt=""/>
-            <h2 class="text-body-secondary fw-bolder mb-3">Вътрешна грешка на сървъра!</h2>
-            <p class="text-body mb-5">Но не се притеснявай! Нашето коте е тук, за да ти изсвири малко музика.</p>
+            <h2 class="text-body-secondary fw-bolder mb-3">Internal server error!</h2>
+            <p class="text-body mb-5">But don't worry! Our kitty is here to play you some music.</p>
 
             @if ($exception && $exception->getMessage())
               <div class="mb-5">
@@ -21,7 +21,7 @@
               </div>
             @endif
 
-            <a class="btn btn-lg btn-primary" href="{{ url('/') }}">Към начало</a>
+            <a class="btn btn-lg btn-primary" href="{{ url('/') }}">Go to the homepage</a>
           </div>
         </div>
       </div>
