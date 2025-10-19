@@ -3,7 +3,50 @@
 @section('content')
   <h1>AI Project Manager by Studio.bg</h1>
 
+  <form id="user-form">
+    <label for="user-name">Please enter your name before starting the session:</label>
+    <input type="text" id="user-name" name="user-name" placeholder="Your name" required>
+    <button type="submit" id="start-session">Start Session</button>
+  </form>
+
   <pre id="log"></pre>
+
+  <script>
+    const nameInput = document.getElementById('user-name');
+    const userForm = document.getElementById('user-form');
+    const startButton = document.getElementById('start-session');
+
+    const storedName = localStorage.getItem('userName');
+    if (storedName) {
+      nameInput.value = storedName;
+    }
+
+    function enableNameForm() {
+      nameInput.disabled = false;
+      startButton.disabled = false;
+    }
+
+    function disableNameForm() {
+      nameInput.disabled = true;
+      startButton.disabled = true;
+    }
+
+    window.vpmNameForm = {
+      enable: enableNameForm,
+      disable: disableNameForm
+    };
+
+    userForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const name = nameInput.value.trim();
+      if (!name) {
+        nameInput.focus();
+        return;
+      }
+      localStorage.setItem('userName', name);
+      window.dispatchEvent(new CustomEvent('vpm:name-submitted', {detail: {name}}));
+    });
+  </script>
 
   <script>
     // Зареждане на задачите и последното ID от localStorage
@@ -156,6 +199,8 @@
       }
     };
 
+    let connectionStarted = false;
+
     dataChannel.addEventListener('open', (ev) => {
       console.log('Opening data channel', ev);
       configureData();
@@ -187,44 +232,63 @@
       }
     });
 
-    // Capture microphone
-    navigator.mediaDevices.getUserMedia({audio: true}).then((stream) => {
-      // Add microphone to PeerConnection
-      stream.getTracks().forEach((track) => peerConnection.addTransceiver(track, {direction: 'sendrecv'}));
+    function startConnection() {
+      if (connectionStarted) {
+        return;
+      }
+      connectionStarted = true;
+      if (window.vpmNameForm) {
+        window.vpmNameForm.disable();
+      }
 
-      peerConnection.createOffer().then((offer) => {
-        peerConnection.setLocalDescription(offer);
+      navigator.mediaDevices.getUserMedia({audio: true}).then((stream) => {
+        // Add microphone to PeerConnection
+        stream.getTracks().forEach((track) => peerConnection.addTransceiver(track, {direction: 'sendrecv'}));
 
-        session()
-          //.then((tokenResponse) => tokenResponse.json())
-          .then((data) => {
-            const EPHEMERAL_KEY = data.result.client_secret.value;
-            const baseUrl = 'https://api.openai.com/v1/realtime';
-            // const model = 'gpt-4o-realtime-preview';
-            const model = 'gpt-realtime-mini';
-            fetch(`${baseUrl}?model=${model}`, {
-              method: 'POST',
-              body: offer.sdp,
-              headers: {
-                Authorization: `Bearer ${EPHEMERAL_KEY}`,
-                'Content-Type': 'application/sdp'
-              }
-            })
-              .then((r) => r.text())
-              .then((answer) => {
-                // Accept answer from Realtime WebRTC API
-                peerConnection.setRemoteDescription({
-                  sdp: answer,
-                  type: 'answer'
+        peerConnection.createOffer().then((offer) => {
+          peerConnection.setLocalDescription(offer);
+
+          session()
+            //.then((tokenResponse) => tokenResponse.json())
+            .then((data) => {
+              const EPHEMERAL_KEY = data.result.client_secret.value;
+              const baseUrl = 'https://api.openai.com/v1/realtime';
+              // const model = 'gpt-4o-realtime-preview';
+              const model = 'gpt-realtime-mini';
+              fetch(`${baseUrl}?model=${model}`, {
+                method: 'POST',
+                body: offer.sdp,
+                headers: {
+                  Authorization: `Bearer ${EPHEMERAL_KEY}`,
+                  'Content-Type': 'application/sdp'
+                }
+              })
+                .then((r) => r.text())
+                .then((answer) => {
+                  // Accept answer from Realtime WebRTC API
+                  peerConnection.setRemoteDescription({
+                    sdp: answer,
+                    type: 'answer'
+                  });
                 });
-              });
-          })
-          .catch((error) => {
-            log('Session creation failed', error.message);
-          });
+            })
+            .catch((error) => {
+              log('Session creation failed', error.message);
+            });
 
-        // Send WebRTC Offer to Workers Realtime WebRTC API Relay
+          // Send WebRTC Offer to Workers Realtime WebRTC API Relay
+        });
+      }).catch((error) => {
+        connectionStarted = false;
+        log('Microphone access failed', error.message);
+        if (window.vpmNameForm) {
+          window.vpmNameForm.enable();
+        }
       });
+    }
+
+    window.addEventListener('vpm:name-submitted', () => {
+      startConnection();
     });
 
   </script>
