@@ -16,7 +16,7 @@ return [
   |
   */
 
-  'name' => env('APP_NAME', 'Inside Trading - ERP'),
+  'name' => env('APP_NAME', 'Gavazov.net - Demo'),
 
   /*
   |--------------------------------------------------------------------------

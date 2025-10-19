@@ -90,15 +90,5 @@ return [
       'port' => env('REDIS_PORT', '6379'),
       'database' => env('REDIS_CACHE_DB', '1'),
     ],
-
-    'shop' => [
-      'url' => env('SHOP_REDIS_URL'),
-      'host' => env('SHOP_REDIS_HOST', '127.0.0.1'),
-      'username' => env('SHOP_REDIS_USERNAME'),
-      'password' => env('SHOP_REDIS_PASSWORD'),
-      'port' => env('SHOP_REDIS_PORT', '6379'),
-      'database' => env('SHOP_REDIS_CACHE_DB', '0'),
-      'prefix' => env('SHOP_REDIS_PREFIX', null),
-    ],
   ],
 ];

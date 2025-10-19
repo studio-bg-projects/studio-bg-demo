@@ -31,9 +31,4 @@ return [
     'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
   ],
 
-  'icecat' => [
-    'username' => env('ICECAT_USERNAME'),
-    'password' => env('ICECAT_PASSWORD'),
-  ],
-
 ];

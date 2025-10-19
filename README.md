@@ -1,4 +1,4 @@
-# IT ERP
+# Studio.bg Demo
 
 ## Setup dev environment
 

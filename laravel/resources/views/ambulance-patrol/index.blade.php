@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-  ambulance-patrol
+  HELLO WORLD
 @endsection

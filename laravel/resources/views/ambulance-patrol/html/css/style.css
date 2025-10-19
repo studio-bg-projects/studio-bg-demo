@@ -648,7 +648,7 @@ ul.map-items li span.item-label {
   font-weight: 700;
   color: #e9256f;
   letter-spacing: -.5px;
-  background: url(../img/ambulance_icn.png) 0 5px no-repeat;
+  background: url(../img/ambulance-icn.png) 0 5px no-repeat;
 }
 
 ul.map-items li span.item-label .distance {

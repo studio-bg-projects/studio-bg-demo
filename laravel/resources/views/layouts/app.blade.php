@@ -39,7 +39,7 @@
           <a class="navbar-brand me-1 me-sm-3" href="{{ url('/erp/') }}">
             <div class="d-flex align-items-center">
               <div class="d-flex align-items-center">
-                <img src="{{ asset('/img/logo-white.svg') }}" alt="Inside Trading" style="height: 40px;"/>
+                <img src="{{ asset('/img/logo-white.svg') }}" alt="Gavazov.net - Demo" style="height: 40px;"/>
               </div>
             </div>
           </a>
@@ -90,12 +90,12 @@
       <footer class="footer position-absolute">
         <div class="row g-0 justify-content-between align-items-center h-100">
           <div class="col-12 col-sm-auto text-center">
-            <p class="mb-0 mt-2 mt-sm-0 text-body">Inside Trading &mdash; ERP
+            <p class="mb-0 mt-2 mt-sm-0 text-body">Gavazov.net &mdash; Demo
               <span class="d-none d-sm-inline-block"></span>
               <br class="d-sm-none"/>{{ date('Y') }} &copy;
               <span class="d-none d-sm-inline-block mx-1">|</span>
               Developed by
-              <a class="mx-1" href="https://studio.bg" target="_blank">Studio.bg</a>
+              <a class="mx-1" href="https://gavazov.net" target="_blank">Gavazov.net</a>
             </p>
           </div>
         </div>
