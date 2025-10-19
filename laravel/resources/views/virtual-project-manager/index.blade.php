@@ -7,23 +7,35 @@
 
   <script>
     class VirtualProjectManagerApp {
-      constructor() {
+      model = 'gpt-realtime-mini';
+      tools = [];
+      instructions = '';
+
+      constructor(options) {
+        this.csrfToken = options.csrfToken;
+
         this.loadState();
+
         this.logNode = document.getElementById('log');
+
         this.functionHandlers = {
           getAllTasks: this.handleGetAllTasks.bind(this),
           changePriority: this.handleChangePriority.bind(this),
           addTask: this.handleAddTask.bind(this),
           deleteTask: this.handleDeleteTask.bind(this)
         };
+
         this.peerConnection = new RTCPeerConnection();
+
         this.peerConnection.ontrack = (event) => {
           const audioElement = document.createElement('audio');
           audioElement.srcObject = event.streams[0];
           audioElement.autoplay = audioElement.controls = true;
           document.body.appendChild(audioElement);
         };
+
         this.dataChannel = this.peerConnection.createDataChannel('oai-events');
+
         this.registerDataChannelEvents();
       }
 
@@ -75,56 +87,12 @@
         return {success: false, error: 'Invalid task ID'};
       }
 
-      getTools() {
-        return [
-          {
-            type: 'function',
-            name: 'getAllTasks',
-            description: 'Връща наличните задачи'
-          },
-          {
-            type: 'function',
-            name: 'changePriority',
-            description: 'Смяна на приоритета на задача',
-            parameters: {
-              type: 'object',
-              properties: {
-                id: {type: 'integer', description: 'ID-то на задачата която ще и променим приоритета'},
-                priority: {type: 'integer', description: 'Задаване на стойност на приоритета за дадена задача'}
-              }
-            }
-          },
-          {
-            type: 'function',
-            name: 'addTask',
-            description: 'Добавяне на нова задача',
-            parameters: {
-              type: 'object',
-              properties: {
-                text: {type: 'string', description: 'Текст на задачата'},
-                priority: {type: 'integer', description: 'Приоритет на новата задача'}
-              }
-            }
-          },
-          {
-            type: 'function',
-            name: 'deleteTask',
-            description: 'Изтриване на задача',
-            parameters: {
-              type: 'object',
-              properties: {
-                id: {type: 'integer', description: 'ID-то на задачата която ще бъде изтрита'}
-              }
-            }
-          }
-        ];
+      setToos(tools) {
+        this.toolls = tools;
       }
 
-      getDefaultInstructions() {
-        return `
-      Ти си Project Manager, аз съм Алекс. Ще ми помагаш да си планирам задачите. Ще взимаш мнение и участие в планирането. Ще ми даваш съвети и активно ще ме разпитваш за дтайли, за да съм сигурен, че създавам правилни задачи.
-      Аз съм програмист и искам да планирам нещата, точно и ясно.
-      `;
+      setInstructions(instructions) {
+        this.instructions = instructions;
       }
 
       configureDataChannel() {
@@ -132,23 +100,22 @@
           type: 'session.update',
           session: {
             modalities: ['text', 'audio'],
-            tools: this.getTools()
+            tools: this.tools
           }
         };
         this.dataChannel.send(JSON.stringify(event));
       }
 
       async createSession() {
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        const response = await fetch('{{ route('virtual-project-manager.session') }}', {
+        const response = await fetch('{{ url('/virtual-project-manager/session') }}', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
+            'X-CSRF-TOKEN': this.csrfToken
           },
           body: JSON.stringify({
-            model: 'gpt-realtime-mini',
-            instructions: this.getDefaultInstructions(),
+            model: this.model,
+            instructions: this.instructions,
             voice: 'ash'
           })
         });
@@ -187,9 +154,12 @@
           return;
         }
         this.log(`Calling local function ${message.name} with ${message.arguments}`);
+
         const args = JSON.parse(message.arguments);
         const result = await handler(args);
+
         this.log('result', result);
+
         const event = {
           type: 'conversation.item.create',
           item: {
@@ -210,14 +180,16 @@
               this.peerConnection.setLocalDescription(offer);
               this.createSession()
                 .then((data) => {
-                  const EPHEMERAL_KEY = data.result.client_secret.value;
+                  console.log('data', data);
+
+                  const ephemeralKey = data.client_secret.value;
                   const baseUrl = 'https://api.openai.com/v1/realtime';
-                  const model = 'gpt-realtime-mini';
-                  fetch(`${baseUrl}?model=${model}`, {
+
+                  fetch(`${baseUrl}?model=${this.model}`, {
                     method: 'POST',
                     body: offer.sdp,
                     headers: {
-                      Authorization: `Bearer ${EPHEMERAL_KEY}`,
+                      Authorization: `Bearer ${ephemeralKey}`,
                       'Content-Type': 'application/sdp'
                     }
                   })
@@ -240,8 +212,60 @@
       }
     }
 
-    const projectManagerApp = new VirtualProjectManagerApp();
-    projectManagerApp.startConnectionAndMicrophone();
+    ///
 
+    const projectManagerApp = new VirtualProjectManagerApp({
+      csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    });
+
+    projectManagerApp.setToos([
+      {
+        type: 'function',
+        name: 'getAllTasks',
+        description: 'Връща наличните задачи'
+      },
+      {
+        type: 'function',
+        name: 'changePriority',
+        description: 'Смяна на приоритета на задача',
+        parameters: {
+          type: 'object',
+          properties: {
+            id: {type: 'integer', description: 'ID-то на задачата която ще и променим приоритета'},
+            priority: {type: 'integer', description: 'Задаване на стойност на приоритета за дадена задача'}
+          }
+        }
+      },
+      {
+        type: 'function',
+        name: 'addTask',
+        description: 'Добавяне на нова задача',
+        parameters: {
+          type: 'object',
+          properties: {
+            text: {type: 'string', description: 'Текст на задачата'},
+            priority: {type: 'integer', description: 'Приоритет на новата задача'}
+          }
+        }
+      },
+      {
+        type: 'function',
+        name: 'deleteTask',
+        description: 'Изтриване на задача',
+        parameters: {
+          type: 'object',
+          properties: {
+            id: {type: 'integer', description: 'ID-то на задачата която ще бъде изтрита'}
+          }
+        }
+      }
+    ]);
+
+    projectManagerApp.setInstructions(`
+      Ти си Project Manager, аз съм Алекс. Ще ми помагаш да си планирам задачите. Ще взимаш мнение и участие в планирането. Ще ми даваш съвети и активно ще ме разпитваш за дтайли, за да съм сигурен, че създавам правилни задачи.
+      Аз съм програмист и искам да планирам нещата, точно и ясно.
+    `);
+
+    // projectManagerApp.startConnectionAndMicrophone();
   </script>
 @endsection
