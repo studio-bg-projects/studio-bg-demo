@@ -39,7 +39,7 @@
           <a class="navbar-brand me-1 me-sm-3" href="{{ url('/erp/') }}">
             <div class="d-flex align-items-center">
               <div class="d-flex align-items-center">
-                <img src="{{ asset('/img/logo-white.svg') }}" alt="Gavazov.net - Demo" style="height: 40px;"/>
+                <img src="{{ asset('/img/logo.svg') }}" alt="Gavazov.net - Demo" style="height: 40px;"/>
               </div>
             </div>
           </a>

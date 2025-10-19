@@ -4,17 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d48c8f0-8c79-490e-b62f-ed1afe370b68" name="Changes" comment="Update">
-      <change beforePath="$PROJECT_DIR$/.idea/demo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/demo.iml" afterDir="false" />
+    <list default="true" id="8d48c8f0-8c79-490e-b62f-ed1afe370b68" name="Changes" comment="Translate">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/js/app/uploader.js" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/js/app/uploader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/errors/400.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/errors/400.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/errors/403.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/errors/403.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/errors/404.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/errors/404.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/errors/500.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/errors/500.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/public/img/favicons/android-chrome-192x192.png" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/public/img/favicons/android-chrome-192x192.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/public/img/favicons/android-chrome-512x512.png" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/public/img/favicons/android-chrome-512x512.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/public/img/favicons/apple-touch-icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/public/img/favicons/apple-touch-icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/public/img/favicons/favicon-16x16.png" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/public/img/favicons/favicon-16x16.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/public/img/favicons/favicon-32x32.png" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/public/img/favicons/favicon-32x32.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/public/img/favicons/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/public/img/favicons/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/public/img/logo-symbol.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/public/img/logo-white.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/public/img/logo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/public/img/logo.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/partials/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/partials/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/shared/no-rs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/shared/no-rs.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +185,7 @@
       <updated>1760872301197</updated>
       <workItem from="1760872302442" duration="237000" />
       <workItem from="1760872575544" duration="830000" />
-      <workItem from="1760873421416" duration="11209000" />
+      <workItem from="1760873421416" duration="12042000" />
     </task>
     <task id="LOCAL-00001" summary="Start the project">
       <option name="closed" value="true" />
@@ -274,7 +275,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760883975676</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Translate">
+      <option name="closed" value="true" />
+      <created>1760884843327</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1760884843327</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -303,6 +312,7 @@
     <MESSAGE value="Make it work" />
     <MESSAGE value="Final" />
     <MESSAGE value="Update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update" />
+    <MESSAGE value="Translate" />
+    <option name="LAST_COMMIT_MESSAGE" value="Translate" />
   </component>
 </project>
