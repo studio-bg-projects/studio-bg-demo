@@ -127,20 +127,22 @@
       Аз съм програмист и искам да планирам нещата, точно и ясно.
       `;
 
-      const OPENAI_API_KEY = '....secret-key.... here';
-      const response = await fetch('https://api.openai.com/v1/realtime/sessions', {
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      const response = await fetch('{{ route('virtual-project-manager.session') }}', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': csrfToken
         },
         body: JSON.stringify({
           model: 'gpt-realtime-mini',
-          // model: 'gpt-4o-realtime-preview-2024-12-17',
           instructions: DEFAULT_INSTRUCTIONS,
           voice: 'ash'
         })
       });
+      if (!response.ok) {
+        throw new Error('Unable to create a new session.');
+      }
       const result = await response.json();
       console.log('result', result);
       return {result};
@@ -216,6 +218,9 @@
                   type: 'answer'
                 });
               });
+          })
+          .catch((error) => {
+            log('Session creation failed', error.message);
           });
 
         // Send WebRTC Offer to Workers Realtime WebRTC API Relay
