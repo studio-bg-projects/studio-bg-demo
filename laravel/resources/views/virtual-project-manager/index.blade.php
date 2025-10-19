@@ -1,12 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-  <h1 class="h3">AI Virtual Project Manager</h1>
+  <div class="widgets-scrollspy-nav z-5 bg-body-emphasis border-bottom mt-n5 mx-n4 mx-lg-n6 mb-3 overflow-x-auto d-flex align-items-center" style="min-height: 3rem;">
+    <div class="nav nav-content flex-row ms-auto me-auto" id="audio-controls"></div>
+  </div>
+
+  <h1 class="h3 mb-3">AI Virtual Project Manager</h1>
 
   <button class="btn btn-primary" id="js-start-btn">START</button>
 
-  <div id="audio-visualizer" style="width: 100%; height: 500px;"></div>
-  <div id="audio-controls"></div>
+  <div id="audio-visualizer" style="width: 100%; height: calc(100vh - 500px);"></div>
   <pre id="action-log"></pre>
 
   <script type="module">

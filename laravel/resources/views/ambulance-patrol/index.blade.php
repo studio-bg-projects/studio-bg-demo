@@ -12,7 +12,7 @@
     }
   </script>
 
-  <div class="widgets-scrollspy-nav z-5 bg-body-emphasis border-bottom mt-n5 mx-n4 mx-lg-n6 mb-5 overflow-x-auto d-flex align-items-center" style="min-height: 3rem;">
+  <div class="widgets-scrollspy-nav z-5 bg-body-emphasis border-bottom mt-n5 mx-n4 mx-lg-n6 mb-3 overflow-x-auto d-flex align-items-center" style="min-height: 3rem;">
     <ul class="nav nav-content flex-row">
       <li class="nav-item">
         <ol class="breadcrumb my-0 mx-3 white-space-nowrap flex-nowrap">
@@ -50,10 +50,12 @@
     </ul>
   </div>
 
+  <h1 class="h3 mb-3">AI Virtual Project Manager</h1>
+
   <div id="ambulance-patrol">
     <div class="alert alert-subtle-info fs-9 py-2 px-3" role="alert" id="info-alert">
-      <p>This proof of concept demonstrates a system that tracks ambulance locations within a region and determines which unit can reach an incident fastest, taking into account current traffic conditions.</p>
-      <p>You can adjust the route points and move the incident location using drag & drop.</p>
+      <p class="mb-1">This proof of concept demonstrates a system that tracks ambulance locations within a region and determines which unit can reach an incident fastest, taking into account current traffic conditions.</p>
+      <p class="mb-1">You can adjust the route points and move the incident location using drag & drop.</p>
       <p class="mb-0">
         <b>Start by adding a few ambulances to begin the simulation.</b>
       </p>

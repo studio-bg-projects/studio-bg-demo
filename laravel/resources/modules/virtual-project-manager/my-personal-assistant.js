@@ -23,6 +23,7 @@ export class MyPersonalAssistant {
       const audioElement = document.createElement('audio');
       audioElement.srcObject = event.streams[0];
       audioElement.autoplay = audioElement.controls = true;
+      audioElement.style.height = '2rem';
       this.audioControlsNode.appendChild(audioElement);
     };
 
