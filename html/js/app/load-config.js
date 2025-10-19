@@ -6,17 +6,26 @@ Config.isInit = false;
 
 Config.init = function () {
   return new Promise(function (resolve, reject) {
-    $.ajax({
-      url: Config.url + '?' + Date(),
-      success: function (data) {
-        $.each(data, Config.set);
-        Config.isInit = true;
-        resolve();
-      },
-      error: function () {
-        alert('There is a problem with configuration load');
-        reject();
-      },
+    let url = Config.url + '?' + Date.now();
+
+    fetch(url, {
+      cache: 'no-store',
+    }).then(function (response) {
+      if (!response.ok) {
+        throw new Error('Config request failed');
+      }
+
+      return response.json();
+    }).then(function (data) {
+      Object.keys(data).forEach(function (key) {
+        Config.set(key, data[key]);
+      });
+
+      Config.isInit = true;
+      resolve();
+    }).catch(function () {
+      alert('There is a problem with configuration load');
+      reject();
     });
   });
 };

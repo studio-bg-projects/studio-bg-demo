@@ -9,6 +9,8 @@ App.init = function () {
   promises.push(Config.init());
 
   Promise.all(promises).then(function () {
+    App.isReady = true;
+
     for (let i = 0; i < App.waitingStack.length; i++) {
       App.waitingStack[i]();
     }
@@ -47,4 +49,4 @@ App.getQuery = function (name) {
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
 
-$(App.init);
+document.addEventListener('DOMContentLoaded', App.init);

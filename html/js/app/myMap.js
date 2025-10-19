@@ -46,23 +46,31 @@ MyMap.init = function () {
   let mapScript = document.createElement('script');
   mapScript.type = 'text/javascript';
   mapScript.src = 'https://maps.googleapis.com/maps/api/js?key=' + Config.get('googleMapsKey') + '&callback=googleMapsApiIsLoaded';
-  $('head').append(mapScript);
+  document.head.appendChild(mapScript);
 
   // Set proxies
   let proxies = Config.get('googleDirectionProxies');
 
   if (proxies && proxies.length > 0) {
     for (let i = 0; i < proxies.length; i++) {
-      $.ajax({
-        url: proxies[i],
-        data: {
-          ping: true,
-        },
-        success: function (response) {
-          if (response === 'pong') {
-            MyMap.proxies.push(proxies[i]);
-          }
-        },
+      let proxyUrl;
+
+      try {
+        proxyUrl = new URL(proxies[i], window.location.href);
+      } catch (error) {
+        continue;
+      }
+
+      proxyUrl.searchParams.set('ping', 'true');
+
+      fetch(proxyUrl.toString()).then(function (response) {
+        return response.text();
+      }).then(function (text) {
+        if (text === 'pong') {
+          MyMap.proxies.push(proxies[i]);
+        }
+      }).catch(function () {
+        // Ignore failing proxies
       });
     }
   }
@@ -99,9 +107,17 @@ MyMap.ready = function (callback) {
 MyMap.create = function (place) {
   return new Promise(function (resolve) {
     MyMap.ready(function () {
-      place = $(place).get(0);
+      let element = place;
 
-      let map = new google.maps.Map(place, {
+      if (typeof place === 'string') {
+        element = document.querySelector(place);
+      }
+
+      if (!element) {
+        throw new Error('Map container not found');
+      }
+
+      let map = new google.maps.Map(element, {
         zoom: 15,
         center: Config.get('defaultMapCenter'),
         mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -138,26 +154,32 @@ MyMap.directionRequest = function (originLat, originLng, destinationLat, destina
       serviceUrl += '&origin=' + originLat + ',' + originLng;
       serviceUrl += '&destination=' + destinationLat + ',' + destinationLng;
 
-      $.ajax({
-        url: proxyUrl,
-        dataType: 'json',
-        method: 'post',
-        data: {
-          url: serviceUrl,
+      let body = new URLSearchParams();
+      body.append('url', serviceUrl);
+
+      fetch(proxyUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         },
-        success: function (response) {
-          if (response.status === 'OK') {
-            for (let i = 0; i < response.routes.length; i++) {
-              if (!response.routes[i].overview_path && response.routes[i].overview_polyline) {
-                response.routes[i].overview_path = google.maps.geometry.encoding.decodePath(response.routes[i].overview_polyline.points);
-              }
+        body: body.toString(),
+      }).then(function (response) {
+        if (!response.ok) {
+          throw new Error('Proxy request failed');
+        }
+
+        return response.json();
+      }).then(function (data) {
+        if (data.status === 'OK') {
+          for (let i = 0; i < data.routes.length; i++) {
+            if (!data.routes[i].overview_path && data.routes[i].overview_polyline) {
+              data.routes[i].overview_path = google.maps.geometry.encoding.decodePath(data.routes[i].overview_polyline.points);
             }
           }
+        }
 
-          resolve(response);
-        },
-        error: reject,
-      });
+        resolve(data);
+      }).catch(reject);
     });
   } else {
     // Make request via google service

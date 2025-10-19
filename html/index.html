@@ -18,11 +18,6 @@
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet">
 
-  <!-- JS -->
-  <script src="js/lib/jquery.min.js"></script>
-  <script src="js/lib/popper.min.js"></script>
-  <script src="js/lib/bootstrap.min.js"></script>
-
   <script src="js/app/app.js"></script>
   <script src="js/app/load-config.js"></script>
   <script src="js/app/myMap.js"></script>
@@ -88,15 +83,10 @@
   <ul class="map-items">
     <li class="notify-label">Започни като добавш линейка</li>
     <li id="ambulanceTemplate" style="display: none;">
-      <div class="dropdown show">
-        <a class="btn btn-link dropdown-toggle" href="#" data-toggle="dropdown">
-          <i class="material-icons">more_vert</i>
-        </a>
-
-        <div class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="javascript:;" data-trigger="remove">Изтрий</a>
-        </div>
-      </div>
+      <button class="btn btn-link item-remove" type="button" data-trigger="remove">
+        <i class="material-icons">delete</i>
+        Изтрий
+      </button>
       <span class="item-name" data-placeholder="name"></span>
       <span class="item-speed" data-placeholder="speed"></span>
       <span class="item-label" data-placeholder="label"></span>
@@ -360,14 +350,67 @@
 
   Sosa.isPlayed = true;
 
+  function showElement(element, displayValue) {
+    if (!element) {
+      return;
+    }
+
+    if (displayValue) {
+      element.style.display = displayValue;
+    } else {
+      element.style.removeProperty('display');
+    }
+  }
+
+  function hideElement(element) {
+    if (!element) {
+      return;
+    }
+
+    element.style.display = 'none';
+  }
+
+  function toggleElement(element, visible, displayValue) {
+    if (!element) {
+      return;
+    }
+
+    if (visible) {
+      showElement(element, displayValue);
+    } else {
+      hideElement(element);
+    }
+  }
+
+  function toggleElements(selector, visible, displayValue) {
+    document.querySelectorAll(selector).forEach(function (element) {
+      toggleElement(element, visible, displayValue);
+    });
+  }
+
+  function forEachAmbulance(callback) {
+    Object.keys(Sosa.ambulances).forEach(function (key) {
+      callback(Sosa.ambulances[key]);
+    });
+  }
+
   Sosa.init = function () {
     MyMap.create('#map').then(function (map) {
       Sosa.map = map;
 
-      Sosa.ambulanceTemplate = $('#ambulanceTemplate').remove();
-      Sosa.ambulanceBlanks = Config.get('ambulanceBlanks').slice();
+      Sosa.ambulanceTemplate = document.getElementById('ambulanceTemplate');
 
-      Sosa.notificationsTemplate = $('#notificationTemplate').remove();
+      if (Sosa.ambulanceTemplate && Sosa.ambulanceTemplate.parentNode) {
+        Sosa.ambulanceTemplate.parentNode.removeChild(Sosa.ambulanceTemplate);
+      }
+
+      Sosa.notificationsTemplate = document.getElementById('notificationTemplate');
+
+      if (Sosa.notificationsTemplate && Sosa.notificationsTemplate.parentNode) {
+        Sosa.notificationsTemplate.parentNode.removeChild(Sosa.notificationsTemplate);
+      }
+
+      Sosa.ambulanceBlanks = Config.get('ambulanceBlanks').slice();
 
       setInterval(Sosa.moveAmbulances, 100);
       setInterval(Sosa.setAmbulanceSpeed, 1000);
@@ -391,9 +434,7 @@
       return;
     }
 
-    $.each(Sosa.ambulances, function () {
-      let ambulance = this;
-
+    forEachAmbulance(function (ambulance) {
       if (ambulance.stopUpdate === 2) {
         return;
       } else if (ambulance.stopUpdate === 1) {
@@ -406,13 +447,18 @@
         return;
       }
 
-      let directionPromise = MyMap.directionRequest(ambulance.ambulanceMarker.getPosition().lat(), ambulance.ambulanceMarker.getPosition().lng(), Sosa.accidentMarker.getPosition().lat(), Sosa.accidentMarker.getPosition().lng());
+      let directionPromise = MyMap.directionRequest(
+        ambulance.ambulanceMarker.getPosition().lat(),
+        ambulance.ambulanceMarker.getPosition().lng(),
+        Sosa.accidentMarker.getPosition().lat(),
+        Sosa.accidentMarker.getPosition().lng()
+      );
+
       directionPromise.then(function (response) {
         if (response.status === 'OK' && response.routes.length) {
           if (Sosa.accidentAmbulanceId !== ambulance.id) {
             let path = response.routes[0].overview_path;
 
-            // Draw road
             if (ambulance.accidentLine) {
               ambulance.accidentLine.setPath(path);
             } else {
@@ -426,11 +472,9 @@
             }
           }
 
-          // Add info
           ambulance.accidentDistance = response.routes[0].legs[0].distance.value;
           ambulance.accidentDuration = response.routes[0].legs[0].duration.value;
           ambulance.accidentCurrentAddress = response.routes[0].legs[0].start_address;
-
           ambulance.accidentCurrentAddress = ambulance.accidentCurrentAddress.replace(/,.*/g, '');
 
           Sosa.ambulanceInfo(ambulance.id);
@@ -446,13 +490,10 @@
       return;
     }
 
-    $.each(Sosa.ambulances, function () {
-      let ambulance = this;
-
+    forEachAmbulance(function (ambulance) {
       if (ambulance.waitReverse) {
         return;
       }
-
 
       if (!ambulance.ambulanceMarker.getMap()) {
         ambulance.ambulanceMarker.setMap(Sosa.map);
@@ -462,20 +503,17 @@
         ambulance.speedStep = +1;
       }
 
-      // Increment move index
       if (ambulance.travelDistance === null) {
         ambulance.travelDistance = 0;
       } else {
         ambulance.travelDistance += ambulance.speed;
       }
 
-      // Set move marker position
       let movePosition;
 
       if (Sosa.accidentAmbulanceId === ambulance.id) {
         let totalDistance = MyMap.calcDistance(MyMap.pathToArray(ambulance.accidentLine.getPath()));
 
-        // Stay on the accident when comes last point
         if (ambulance.travelDistance >= totalDistance) {
           ambulance.travelDistance = totalDistance;
 
@@ -495,7 +533,6 @@
 
           movePosition = MyMap.calcPointAtDistance(MyMap.pathToArray(ambulance.patrolLine.getPath()), ambulance.travelDistance);
 
-          // Reverse direction
           if (ambulance.travelDistance >= totalDistance) {
             let startPosition = ambulance.endMarker.getPosition();
             let endPosition = ambulance.startMarker.getPosition();
@@ -512,7 +549,6 @@
 
       if (movePosition) {
         ambulance.ambulanceMarker.setPosition(movePosition);
-
         ambulance.timePolygon.updatePosition(movePosition.lat(), movePosition.lng());
       }
 
@@ -526,9 +562,7 @@
     let from = 0.5;
     let to = 2.5;
 
-    $.each(Sosa.ambulances, function () {
-      let ambulance = this;
-
+    forEachAmbulance(function (ambulance) {
       if (ambulance.stopUpdate) {
         return;
       }
@@ -571,6 +605,10 @@
   };
 
   Sosa.createAmbulances = function () {
+    if (!Sosa.ambulanceTemplate || !Sosa.ambulanceBlanks.length) {
+      return;
+    }
+
     let ambulance = {};
     ambulance.color = Sosa.ambulanceBlanks.shift();
     ambulance.plate = Sosa.randomPlate();
@@ -581,29 +619,45 @@
 
     ambulance.timePolygon = new TimePolygon(Sosa.map, ambulance.color);
 
-    // Html
-    ambulance.html = Sosa.ambulanceTemplate.clone();
-    ambulance.html.prependTo($('.map-items'));
-    ambulance.html.hide().fadeIn();
+    ambulance.html = Sosa.ambulanceTemplate.cloneNode(true);
+    ambulance.html.removeAttribute('id');
+    ambulance.html.removeAttribute('style');
 
-    // Color
-    ambulance.html.attr('id', 'ambulance-' + ambulance.id);
-    $('html > head').append($('<style>#ambulance-' + ambulance.id + ':after { background-color: ' + ambulance.color + '; }</style>'));
+    let mapItems = document.querySelector('.map-items');
 
-    // Get nodes
-    ambulance.nodeRemove = ambulance.html.find('[data-trigger="remove"]');
-    ambulance.nodeName = ambulance.html.find('[data-placeholder="name"]');
-    ambulance.nodeSpeed = ambulance.html.find('[data-placeholder="speed"]');
-    ambulance.nodeLabel = ambulance.html.find('[data-placeholder="label"]');
-    ambulance.nodeSend = ambulance.html.find('[data-trigger="send"]');
+    if (mapItems) {
+      mapItems.insertBefore(ambulance.html, mapItems.firstChild);
+    }
 
-    // Nodes behaviour
-    ambulance.nodeRemove.click(Sosa.removeAmbulance.bind({}, ambulance.id));
-    ambulance.nodeName.html(ambulance.plate);
-    ambulance.nodeLabel.html('&nbsp;');
-    ambulance.nodeSend.click(Sosa.sendAmbulanceToAccident.bind({}, ambulance.id));
+    ambulance.html.id = 'ambulance-' + ambulance.id;
 
-    // Ambulance move marker
+    let style = document.createElement('style');
+    style.textContent = '#ambulance-' + ambulance.id + ':after { background-color: ' + ambulance.color + '; }';
+    document.head.appendChild(style);
+
+    ambulance.nodeRemove = ambulance.html.querySelector('[data-trigger="remove"]');
+    ambulance.nodeName = ambulance.html.querySelector('[data-placeholder="name"]');
+    ambulance.nodeSpeed = ambulance.html.querySelector('[data-placeholder="speed"]');
+    ambulance.nodeLabel = ambulance.html.querySelector('[data-placeholder="label"]');
+    ambulance.nodeSend = ambulance.html.querySelector('[data-trigger="send"]');
+
+    if (ambulance.nodeRemove) {
+      ambulance.nodeRemove.addEventListener('click', Sosa.removeAmbulance.bind(null, ambulance.id));
+    }
+
+    if (ambulance.nodeName) {
+      ambulance.nodeName.textContent = ambulance.plate;
+    }
+
+    if (ambulance.nodeLabel) {
+      ambulance.nodeLabel.innerHTML = '&nbsp;';
+    }
+
+    if (ambulance.nodeSend) {
+      ambulance.nodeSend.addEventListener('click', Sosa.sendAmbulanceToAccident.bind(null, ambulance.id));
+      hideElement(ambulance.nodeSend);
+    }
+
     ambulance.ambulanceMarker = new google.maps.Marker({
       zIndex: 3,
       icon: {
@@ -617,13 +671,12 @@
       }
     });
 
-    // Start/end markers
     let zones = Sosa.generateZones(2, 3);
     let zone = zones[Object.keys(Sosa.ambulances).length % zones.length];
     let halfX = (zone.endX - zone.startX) / 2;
     let halfY = (zone.endY - zone.startY) / 2;
 
-    let startEndMarker = {
+    let startEndMarkerBase = {
       map: Sosa.map,
       draggable: true,
       animation: google.maps.Animation.DROP,
@@ -637,34 +690,35 @@
       }
     };
 
-    // Start marker
-    ambulance.startMarker = new google.maps.Marker($.extend(startEndMarker, {
-      position: {
-        lat: Sosa.rand(zone.startX * 100000, (zone.endX - halfX) * 100000) / 100000,
-        lng: Sosa.rand(zone.startY * 100000, (zone.endY - halfY) * 100000) / 100000
-      }
-    }));
+    function createMarker(position) {
+      return new google.maps.Marker({
+        map: startEndMarkerBase.map,
+        draggable: startEndMarkerBase.draggable,
+        animation: startEndMarkerBase.animation,
+        zIndex: startEndMarkerBase.zIndex,
+        icon: Object.assign({}, startEndMarkerBase.icon),
+        position: position
+      });
+    }
+
+    ambulance.startMarker = createMarker({
+      lat: Sosa.rand(zone.startX * 100000, (zone.endX - halfX) * 100000) / 100000,
+      lng: Sosa.rand(zone.startY * 100000, (zone.endY - halfY) * 100000) / 100000
+    });
     google.maps.event.addListener(ambulance.startMarker, 'dragend', Sosa.relocatePoints.bind({}, ambulance.id));
 
-    // End marker
-    ambulance.endMarker = new google.maps.Marker($.extend(startEndMarker, {
-      position: {
-        lat: Sosa.rand((zone.startX + halfX) * 100000, zone.endX * 100000) / 100000,
-        lng: Sosa.rand((zone.startY + halfY) * 100000, zone.endY * 100000) / 100000
-      }
-    }));
+    ambulance.endMarker = createMarker({
+      lat: Sosa.rand((zone.startX + halfX) * 100000, zone.endX * 100000) / 100000,
+      lng: Sosa.rand((zone.startY + halfY) * 100000, zone.endY * 100000) / 100000
+    });
     google.maps.event.addListener(ambulance.endMarker, 'dragend', Sosa.relocatePoints.bind({}, ambulance.id));
 
-    // Register it
     Sosa.ambulances[ambulance.id] = ambulance;
 
-    // Relocate points
     Sosa.relocatePoints(ambulance.id);
 
-    // Finish
     Sosa.controlVisibility();
 
-    // Notification
     Sosa.notify(ambulance.plate, 'repeat', 'започна да патрулира');
   };
 
@@ -729,7 +783,10 @@
 
     let ambulance = Sosa.ambulances[ambulanceId];
 
-    let directionPromise = MyMap.directionRequest(ambulance.startMarker.position.lat(), ambulance.startMarker.position.lng(), ambulance.endMarker.position.lat(), ambulance.endMarker.position.lng());
+    let startPosition = ambulance.startMarker.getPosition();
+    let endPosition = ambulance.endMarker.getPosition();
+
+    let directionPromise = MyMap.directionRequest(startPosition.lat(), startPosition.lng(), endPosition.lat(), endPosition.lng());
     directionPromise.then(function (response) {
       if (response.status === 'OK' && response.routes.length) {
         let path = response.routes[0].overview_path;
@@ -769,6 +826,8 @@
   };
 
   Sosa.removeAmbulance = function (ambulanceId) {
+    closeDropdowns();
+
     if (!Sosa.ambulances[ambulanceId]) {
       return;
     }
@@ -837,101 +896,101 @@
     averageSpeed = averageSpeed / ambulance.speedRegistry.length;
 
     // Ambulance speed
-    ambulance.nodeSpeed.html(speed + ' км/ч.');
+    if (ambulance.nodeSpeed) {
+      ambulance.nodeSpeed.innerHTML = speed + ' км/ч.';
+    }
 
     // Ambulance label
-    if (!isNaN(distance)) {
+    if (!isNaN(distance) && ambulance.nodeLabel) {
       let label = leftMin + ' <small>мин.</small>';
       label += ' <span class="distance">/ ' + distance + ' км.</span>';
-      ambulance.nodeLabel.html(label);
+      ambulance.nodeLabel.innerHTML = label;
     }
 
     // Live stats
     if (Sosa.accidentAmbulanceId === ambulance.id) {
-      $('[data-info="speed"]').html(speed);
-      $('[data-info="average-speed"]').html(parseInt(averageSpeed));
-      $('[data-info="left-time"]').html(leftMin);
-      $('[data-info="street"]').html(ambulance.accidentCurrentAddress);
-      $('[data-info="plate"]').html(ambulance.plate);
-      $('[data-info="people"]').html(ambulance.people);
+      document.querySelectorAll('[data-info="speed"]').forEach(function (element) {
+        element.textContent = speed;
+      });
+
+      document.querySelectorAll('[data-info="average-speed"]').forEach(function (element) {
+        element.textContent = parseInt(averageSpeed, 10);
+      });
+
+      document.querySelectorAll('[data-info="left-time"]').forEach(function (element) {
+        element.textContent = leftMin;
+      });
+
+      document.querySelectorAll('[data-info="street"]').forEach(function (element) {
+        element.textContent = ambulance.accidentCurrentAddress;
+      });
+
+      document.querySelectorAll('[data-info="plate"]').forEach(function (element) {
+        element.textContent = ambulance.plate;
+      });
+
+      document.querySelectorAll('[data-info="people"]').forEach(function (element) {
+        element.textContent = ambulance.people;
+      });
     }
   };
 
   Sosa.controlVisibility = function () {
     // Create new ambulance
-    if (Sosa.ambulanceBlanks.length) {
-      $('[data-id="create-ambulance"]').fadeIn();
-    } else {
-      $('[data-id="create-ambulance"]').hide();
-    }
+    toggleElements('[data-id="create-ambulance"]', Sosa.ambulanceBlanks.length > 0);
 
-    // Accident
     if (Sosa.accidentMarker) {
-      $('[data-id="create-accident"]').fadeOut();
+      toggleElements('[data-id="create-accident"]', false);
     } else if (Object.keys(Sosa.ambulances).length) {
-      $('[data-id="create-accident"]').fadeIn();
+      toggleElements('[data-id="create-accident"]', true);
     } else {
-      $('[data-id="create-accident"]').fadeOut();
+      toggleElements('[data-id="create-accident"]', false);
     }
 
-    // Play/pause
     if (!Object.keys(Sosa.ambulances).length) {
-      $('[data-id="simulation-pause"]').hide();
-      $('[data-id="simulation-play"]').hide();
+      toggleElements('[data-id="simulation-pause"]', false);
+      toggleElements('[data-id="simulation-play"]', false);
+    } else if (Sosa.isPlayed) {
+      toggleElements('[data-id="simulation-pause"]', false);
+      toggleElements('[data-id="simulation-play"]', true);
     } else {
-      if (Sosa.isPlayed) {
-        $('[data-id="simulation-pause"]').hide();
-        $('[data-id="simulation-play"]').fadeIn();
-      } else {
-        $('[data-id="simulation-pause"]').fadeIn();
-        $('[data-id="simulation-play"]').hide();
-      }
+      toggleElements('[data-id="simulation-pause"]', true);
+      toggleElements('[data-id="simulation-play"]', false);
     }
 
-    // Send button
-    $.each(Sosa.ambulances, function () {
-      let ambulance = this;
-
-      if (Sosa.accidentMarker && !Sosa.accidentAmbulanceId && ambulance.accidentLine) {
-        ambulance.nodeSend.show();
-      } else {
-        ambulance.nodeSend.hide();
-      }
+    forEachAmbulance(function (ambulance) {
+      let shouldShowSend = Boolean(Sosa.accidentMarker && !Sosa.accidentAmbulanceId && ambulance.accidentLine);
+      toggleElement(ambulance.nodeSend, shouldShowSend, 'inline-block');
     });
 
-    // Live stat
-    if (Sosa.accidentAmbulanceId) {
-      $('[data-id="live-stat"]').fadeIn();
-    } else {
-      $('[data-id="live-stat"]').hide();
-    }
+    toggleElements('[data-id="live-stat"]', Boolean(Sosa.accidentAmbulanceId));
 
-    // Closest ambulance
     if (Sosa.accidentMarker) {
       let closestAmbulance = null;
 
-      $.each(Sosa.ambulances, function () {
-        let ambulance = this;
-
-        ambulance.html.removeClass('closest');
+      forEachAmbulance(function (ambulance) {
+        if (ambulance.html) {
+          ambulance.html.classList.remove('closest');
+        }
 
         if (typeof ambulance.accidentDuration === 'undefined') {
           return;
         }
 
-        if (closestAmbulance === null) {
-          closestAmbulance = ambulance;
-          return;
-        }
-
-        if (closestAmbulance.accidentDuration > ambulance.accidentDuration) {
+        if (closestAmbulance === null || closestAmbulance.accidentDuration > ambulance.accidentDuration) {
           closestAmbulance = ambulance;
         }
       });
 
-      if (closestAmbulance) {
-        closestAmbulance.html.addClass('closest');
+      if (closestAmbulance && closestAmbulance.html) {
+        closestAmbulance.html.classList.add('closest');
       }
+    } else {
+      forEachAmbulance(function (ambulance) {
+        if (ambulance.html) {
+          ambulance.html.classList.remove('closest');
+        }
+      });
     }
   };
 
@@ -941,20 +1000,40 @@
   };
 
   Sosa.notify = function (name, icon, text) {
-    let html = Sosa.notificationsTemplate.clone();
+    if (!Sosa.notificationsTemplate) {
+      return;
+    }
 
-    html.find('[data-id="name"]').html(name);
-    html.find('[data-id="icon"]').html(icon);
-    html.find('[data-id="text"]').html(text);
+    let html = Sosa.notificationsTemplate.cloneNode(true);
+    html.removeAttribute('id');
+    html.removeAttribute('style');
 
-    html.appendTo($('.notifications'));
-    html.slideDown().fadeIn();
+    let nameNode = html.querySelector('[data-id="name"]');
+    let iconNode = html.querySelector('[data-id="icon"]');
+    let textNode = html.querySelector('[data-id="text"]');
 
-    setTimeout(function () {
-      html.slideUp().fadeOut(function () {
-        $(this).remove();
-      });
-    }, 5000);
+    if (nameNode) {
+      nameNode.textContent = name;
+    }
+
+    if (iconNode) {
+      iconNode.textContent = icon;
+    }
+
+    if (textNode) {
+      textNode.textContent = text;
+    }
+
+    let container = document.querySelector('.notifications');
+
+    if (container) {
+      container.appendChild(html);
+      showElement(html);
+
+      setTimeout(function () {
+        html.remove();
+      }, 5000);
+    }
   };
 
   Sosa.randomPlate = function () {
