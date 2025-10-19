@@ -5,11 +5,13 @@ it-erp
 
 studio.bg
 
+public access
+
+jobs
+
 [puppeteer](docker-images/puppeteer)
 
 mysql-shop
 mysql-data
 
-DB_DATA_DATABASE=it-erp-data
-DB_DATA_USERNAME=it-erp-data
-DB_DATA_PASSWORD=pass
+да е на английски

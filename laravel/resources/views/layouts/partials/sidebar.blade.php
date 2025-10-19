@@ -158,11 +158,6 @@
             <span class="nav-link-text-wrapper">
               <span class="nav-link-text">
                 Поръчки
-                @if ($waitingOrders)
-                  <span class="badge rounded-pill text-bg-danger">
-                    {{ $waitingOrders }}
-                  </span>
-                @endif
               </span>
             </span>
           </div>
@@ -197,11 +192,6 @@
             <span class="nav-link-text-wrapper">
               <span class="nav-link-text">
                 Фактури и документи
-                @if ($unpaidDocuments)
-                  <span class="badge rounded-pill text-bg-danger">
-                    {{ $unpaidDocuments }}
-                  </span>
-                @endif
               </span>
             </span>
           </div>
@@ -247,11 +237,6 @@
             <span class="nav-link-text-wrapper">
               <span class="nav-link-text">
                 Клиенти и доставчици
-                @if ($waitingCustomers || $waitingCustomersCreditLine)
-                  <span class="badge rounded-pill text-bg-danger">
-                    {{ implode('/', [$waitingCustomers, $waitingCustomersCreditLine]) }}
-                  </span>
-                @endif
               </span>
             </span>
           </div>
@@ -325,11 +310,6 @@
             <span class="nav-link-text-wrapper">
               <span class="nav-link-text">
                 Свързване
-                @if ($unlinkedItemsCount)
-                  <span class="badge rounded-pill text-bg-danger">
-                    {{ $unlinkedItemsCount }}
-                  </span>
-                @endif
               </span>
             </span>
           </div>
@@ -345,11 +325,6 @@
             <span class="nav-link-text-wrapper">
               <span class="nav-link-text">
                 Конфликти
-                @if ($conflictsItemsCount)
-                  <span class="badge rounded-pill text-bg-danger">
-                    {{ $conflictsItemsCount }}
-                  </span>
-                @endif
               </span>
             </span>
           </div>

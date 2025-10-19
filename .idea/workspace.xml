@@ -5,43 +5,77 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d48c8f0-8c79-490e-b62f-ed1afe370b68" name="Changes" comment="Start the project">
-      <change afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/demo.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/laravel-idea.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ambulance-patrol.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-images/nginx/default.conf" beforeDir="false" afterPath="$PROJECT_DIR$/docker-images/nginx/default.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-images/puppeteer/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/css/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/db/gps-list/file1.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/db/gps-list/file2.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/db/gps-list/file3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/img/accident_icn.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/img/ambulance_icn.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/img/eu.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/img/kite_fav.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/img/logo_icn.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/img/map_sosa.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/img/opik.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/img/package_map.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/img/sprite.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/js/app.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/js/load-config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/js/myMap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/proxy.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/config/database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobCleanupUploads.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobDataSourcesMatch.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobLoadDataSources.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobMisc.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobOrders.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSendMailQueue.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncCategories.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncCustomers.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncCustomersAddresses.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncFeedsImports.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncFilters.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncManufacturers.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncPayments.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncProducts.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncSeo.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncSpecifications.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncStoreSearches.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/Controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/FeedsImportsLoader/BaseLoader.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/FeedsImportsLoader/Kosatec.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/FeedsImportsLoader/T1Distribution.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/BaseJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/BaseSyncJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/CleanupUploadsJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/DataSourcesMatchJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/LoadDataSourcesJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SendMailQueue.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncCategoriesJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncCustomersAddressesJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncCustomersJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncFeedsImports.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncFiltersJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncManufacturersJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncMiscJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncOrdersJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncPaymentsJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncProductsJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncSeoJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncSpecificationsJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncStoreSearchesJob.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/MailMakerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/MapService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/ProductSyncService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/SchedulesService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Shipment/Speedy.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/partials/chart-categories-products.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/partials/chart-customers-groups.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/partials/chart-customers.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/partials/chart-orders.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/partials/pending-customers-list.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/partials/pending-orders-list.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/partials/unpaid-documents.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/partials/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/partials/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/AGENTS.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/Send.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/bulk/ATTRIBUTES-TO-SQL.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/bulk/ATTRIBUTES.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/bulk/BULK-NOTES.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/bulk/photos-copy-sql.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/bulk/photos-copy.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/bulk/photos-download.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/it-cron-10.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/it-cron.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/win.bat" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,18 +89,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "agavazov"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;agavazov&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/studio-bg-projects/studio-bg-demo.git",
-    "accountId": "9d0d4d6a-d27c-4a13-9214-e88dc8c90c46"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/studio-bg-projects/studio-bg-demo.git&quot;,
+    &quot;accountId&quot;: &quot;9d0d4d6a-d27c-4a13-9214-e88dc8c90c46&quot;
   }
-}]]></component>
+}</component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/laravel/vendor/doctrine/inflector" />
@@ -160,26 +194,35 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="34HZ8nWt56WidyPu6znLwBYYTnB" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;//wsl.localhost/Ubuntu/var/workspace/services/studio.bg/demo&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.CommitDialog&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="\\wsl.localhost\Ubuntu\var\workspace\services\studio.bg\demo" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -196,8 +239,18 @@
       <option name="presentableId" value="Default" />
       <updated>1760872301197</updated>
       <workItem from="1760872302442" duration="237000" />
-      <workItem from="1760872575544" duration="766000" />
+      <workItem from="1760872575544" duration="830000" />
+      <workItem from="1760873421416" duration="563000" />
     </task>
+    <task id="LOCAL-00001" summary="Start the project">
+      <option name="closed" value="true" />
+      <created>1760873360963</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1760873360963</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

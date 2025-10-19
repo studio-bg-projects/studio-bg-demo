@@ -4,8 +4,6 @@
 /laravel/public/hot
 /laravel/public/storage
 /laravel/storage/*.key
-/laravel/storage/data-sources
-!/laravel/storage/data-sources/.gitkeep
 /laravel/vendor
 /laravel/.env
 /src.env.backup
