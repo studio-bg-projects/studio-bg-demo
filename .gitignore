@@ -1,3 +1,4 @@
+/.idea
 /laravel/.phpunit.cache
 /laravel/node_modules
 /laravel/public/build
