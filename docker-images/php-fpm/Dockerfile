@@ -19,6 +19,9 @@ RUN apt install -y libzip-dev libpng-dev libjpeg-dev libwebp-dev && \
 RUN apt install -y libzip-dev && \
     docker-php-ext-install zip
 
+RUN docker-php-ext-configure pcntl --enable-pcntl \
+    && docker-php-ext-install pcntl
+
 RUN apt clean && \
     apt autoremove -y && \
     rm -rf /var/lib/apt/lists/*

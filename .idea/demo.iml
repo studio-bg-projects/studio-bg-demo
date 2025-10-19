@@ -15,7 +15,6 @@
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/doctrine/lexer" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/dragonmantank/cron-expression" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/egulias/email-validator" />
-      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/ezyang/htmlpurifier" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/fruitcake/php-cors" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/graham-campbell/result-type" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/guzzlehttp/guzzle" />
@@ -35,18 +34,12 @@
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/mime-type-detection" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/uri" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/uri-interfaces" />
-      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/maatwebsite/excel" />
-      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/maennchen/zipstream-php" />
-      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/markbaker/complex" />
-      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/markbaker/matrix" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/nesbot/carbon" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/nette/schema" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/nette/utils" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/nunomaduro/termwind" />
-      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/phpoffice/phpspreadsheet" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/phpoption/phpoption" />
-      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/picqer/php-barcode-generator" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/psr/clock" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/psr/event-dispatcher" />
