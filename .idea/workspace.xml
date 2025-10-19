@@ -4,78 +4,51 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d48c8f0-8c79-490e-b62f-ed1afe370b68" name="Changes" comment="Start the project">
-      <change afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobCleanupUploads.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobDataSourcesMatch.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobLoadDataSources.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobMisc.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobOrders.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSendMailQueue.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncCategories.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncCustomers.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncCustomersAddresses.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncFeedsImports.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncFilters.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncManufacturers.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncPayments.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncProducts.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncSeo.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncSpecifications.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Console/Commands/JobSyncStoreSearches.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/Controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/DashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/FeedsImportsLoader/BaseLoader.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/FeedsImportsLoader/Kosatec.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/FeedsImportsLoader/T1Distribution.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/BaseJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/BaseSyncJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/CleanupUploadsJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/DataSourcesMatchJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/LoadDataSourcesJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SendMailQueue.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncCategoriesJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncCustomersAddressesJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncCustomersJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncFeedsImports.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncFiltersJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncManufacturersJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncMiscJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncOrdersJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncPaymentsJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncProductsJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncSeoJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncSpecificationsJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Jobs/SyncStoreSearchesJob.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/MailMakerService.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/MapService.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/ProductSyncService.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/SchedulesService.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/Shipment/Speedy.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/partials/chart-categories-products.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/partials/chart-customers-groups.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/partials/chart-customers.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/partials/chart-orders.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/partials/pending-customers-list.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/partials/pending-orders-list.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/partials/unpaid-documents.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/partials/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/partials/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/AGENTS.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/Send.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/bulk/ATTRIBUTES-TO-SQL.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/bulk/ATTRIBUTES.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/bulk/BULK-NOTES.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/bulk/photos-copy-sql.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/bulk/photos-copy.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/bulk/photos-download.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/it-cron-10.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/it-cron.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/win.bat" beforeDir="false" />
+    <list default="true" id="8d48c8f0-8c79-490e-b62f-ed1afe370b68" name="Changes" comment="Start cleanup">
+      <change beforePath="$PROJECT_DIR$/AGENTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/AGENTS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/AGENTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/AGENTS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/ApiKey.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Category.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Country.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Customer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/CustomersAddress.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/CustomersGroup.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/DataSourceCategory.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/DataSourceMatch.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/DataSourceProduct.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Demo.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Document.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/DocumentItem.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/DocumentLine.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/FeedImport.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/FeedImportItem.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Income.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/IncomeCreditMemo.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/IncomesAllocation.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Mail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Manufacturer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Offer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/OfferItem.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Order.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/OrdersEvent.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Product.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/ProductsLog.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/ProductsSpecification.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/SalesRepresentative.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Schedule.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Shipment.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Specification.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/StorageEntriesIncomeInvoice.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/StorageEntryProduct.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/StorageExitsItem.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/StorageItem.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/StorageItemsWriteOffProtocol.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/StoreSearch.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Upload.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/User.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/ImgService.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Services/ImgService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/PermissionsService.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -240,7 +213,7 @@
       <updated>1760872301197</updated>
       <workItem from="1760872302442" duration="237000" />
       <workItem from="1760872575544" duration="830000" />
-      <workItem from="1760873421416" duration="563000" />
+      <workItem from="1760873421416" duration="830000" />
     </task>
     <task id="LOCAL-00001" summary="Start the project">
       <option name="closed" value="true" />
@@ -250,7 +223,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760873360963</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Start cleanup">
+      <option name="closed" value="true" />
+      <created>1760874009609</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1760874009609</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,6 +252,7 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="Start the project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Start the project" />
+    <MESSAGE value="Start cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Start cleanup" />
   </component>
 </project>

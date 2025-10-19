@@ -24,9 +24,3 @@ This directory contains the Laravel 11 application.
 - When creating migrations, include camelCase timestamps `createdAt` and `updatedAt`
 - When adding JSON fields, always cast them to `array` in the model
 - When creating or updating a model, always describe its properties at the top of the class. Use the @property annotation and explain each field in Bulgarian, for example: `@property boolean $isActive - дали продуктът е активен или не`
-
-## Router permissions
-
-- Permissions are defined in [PermissionsService.php](app/Services/PermissionsService.php)
-- Add new permissions to [web.php](routes/web.php) as needed
-- [CheckUserPermissions.php](app/Http/Middleware/CheckUserPermissions.php) ensures the user has the required permissions

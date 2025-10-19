@@ -5,7 +5,6 @@ This repository contains a Laravel application and a Node.js service for PDF gen
 ## Structure
 
 - `/laravel/` – main Laravel 11 application (PHP 8.3)
-- `/pdf-server/` – Node.js service that uses Puppeteer to create PDFs
 
 ## Code style
 
