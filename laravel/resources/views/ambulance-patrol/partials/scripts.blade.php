@@ -530,7 +530,7 @@
       if (ambulance.stopUpdate === 2) {
         return;
       } else if (ambulance.stopUpdate === 1) {
-        AmbulancePatrol.notify(ambulance.plate, 'thumb_up', 'arrived at the incident');
+        AmbulancePatrol.notify(ambulance.plate, '<i class="fa-regular fa-thumbs-up"></i>', 'arrived at the incident');
 
         ambulance.stopUpdate = 2;
       }
@@ -701,7 +701,7 @@
       return;
     }
 
-    document.querySelector('.notify-label').style.display = 'none';
+    document.querySelector('#info-alert').style.display = 'none';
 
     let ambulance = {};
     ambulance.color = AmbulancePatrol.ambulanceBlanks.shift();
@@ -718,6 +718,7 @@
     ambulance.html.removeAttribute('style');
 
     let mapItems = document.querySelector('.map-items');
+    mapItems.style.display = 'flex';
 
     if (mapItems) {
       mapItems.insertBefore(ambulance.html, mapItems.firstChild);
@@ -813,7 +814,7 @@
 
     AmbulancePatrol.controlVisibility();
 
-    AmbulancePatrol.notify(ambulance.plate, 'repeat', 'started patrolling');
+    AmbulancePatrol.notify(ambulance.plate, '<i class="fa-regular fa-repeat"></i>', 'started patrolling');
   };
 
   AmbulancePatrol.sendAmbulanceToAccident = function (ambulanceId) {
@@ -838,7 +839,7 @@
 
     AmbulancePatrol.accidentMarker.setDraggable(false);
 
-    AmbulancePatrol.notify(ambulance.plate, 'trending_up', 'is on its way to the incident');
+    AmbulancePatrol.notify(ambulance.plate, '<i class="fa-regular fa-meteor"></i>', 'is on its way to the incident');
 
     AmbulancePatrol.controlVisibility();
   };
@@ -1109,7 +1110,7 @@
     }
 
     if (iconNode) {
-      iconNode.textContent = icon;
+      iconNode.innerHTML = icon;
     }
 
     if (textNode) {

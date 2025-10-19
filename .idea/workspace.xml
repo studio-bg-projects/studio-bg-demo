@@ -6,14 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8d48c8f0-8c79-490e-b62f-ed1afe370b68" name="Changes" comment="Make it work">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AmbulancePatrolController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AmbulancePatrolController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/ambulance-patrol/html/css/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/ambulance-patrol/html/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/ambulance-patrol/html/img/ambulance-icn.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/ambulance-patrol/html/img/sprite.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/ambulance-patrol/_ambulance-patrol.scss" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/ambulance-patrol/_ambulance-patrol.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/ambulance-patrol/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/ambulance-patrol/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/ambulance-patrol/partials/scripts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/ambulance-patrol/partials/scripts.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,7 +185,7 @@
       <updated>1760872301197</updated>
       <workItem from="1760872302442" duration="237000" />
       <workItem from="1760872575544" duration="830000" />
-      <workItem from="1760873421416" duration="6965000" />
+      <workItem from="1760873421416" duration="9314000" />
     </task>
     <task id="LOCAL-00001" summary="Start the project">
       <option name="closed" value="true" />
@@ -248,7 +243,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760879883987</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Make it work">
+      <option name="closed" value="true" />
+      <created>1760880514809</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1760880514809</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

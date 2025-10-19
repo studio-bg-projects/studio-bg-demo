@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
   @include('ambulance-patrol.partials.scripts')
 
   <script async src="https://maps.googleapis.com/maps/api/js?key={{ $googleMapsKey }}&loading=async&callback=initMap"></script>
@@ -14,58 +12,57 @@
     }
   </script>
 
-  <div id="ambulance-patrol">
-    <div class="head">
-      <h2>Ambulance Patrol - By Alex Gavazov 2015</h2>
-
-      <ul class="controls">
-        <li>
-          <div data-id="create-accident" style="display: none;">
-            <button class="btn btn-danger btn-pulse" onclick="AmbulancePatrol.createAccident();">
-              <i class="material-icons">whatshot</i>
-              Create an incident
-            </button>
-          </div>
-        </li>
-
-        <li>
-          <div data-id="simulation-play" style="display: none;">
-            <button class="btn btn-default" onclick="AmbulancePatrol.playPause();">
-              <i class="material-icons">pause</i>
-              Stop simulation
-            </button>
-          </div>
-
-          <div data-id="simulation-pause" style="display: none;">
-            <button class="btn btn-default" onclick="AmbulancePatrol.playPause();">
-              <i class="material-icons">play_arrow</i>
-              Run the simulation
-            </button>
-          </div>
-        </li>
-
-        <li>
-          <div data-id="create-ambulance" style="display: none;">
-            <button class="btn btn-default btn-pulse" onclick="AmbulancePatrol.createAmbulances();">
-              <i class="material-icons">add</i>
+  <div class="widgets-scrollspy-nav z-5 bg-body-emphasis border-bottom mt-n5 mx-n4 mx-lg-n6 mb-5 overflow-x-auto d-flex align-items-center" style="min-height: 3rem;">
+    <ul class="nav nav-content flex-row">
+      <li class="nav-item">
+        <ol class="breadcrumb my-0 mx-3 white-space-nowrap flex-nowrap">
+          <li class="nav-item" data-id="create-ambulance" style="display: none;">
+            <a class="nav-link px-2 fw-bold ambulance-pulse-btn" onclick="AmbulancePatrol.createAmbulances(); this.classList.remove('ambulance-pulse-btn');" style="cursor: pointer;">
+              <i class="fa-regular fa-plus"></i>
               Add ambulance
-            </button>
-          </div>
-        </li>
-      </ul>
+            </a>
+          </li>
+
+          <li class="nav-item" data-id="create-accident" style="display: none;">
+            <a class="nav-link px-2 fw-bold ambulance-pulse-btn" onclick="AmbulancePatrol.createAccident(); this.classList.remove('ambulance-pulse-btn');" style="cursor: pointer;">
+              <span class="text-danger">
+                <i class="fa-regular fa-fire"></i>
+                Create an incident
+              </span>
+            </a>
+          </li>
+
+          <li class="nav-item" data-id="simulation-play" style="display: none;">
+            <a class="nav-link px-2 fw-bold" onclick="AmbulancePatrol.playPause();" style="cursor: pointer;">
+              <i class="fa-regular fa-pause"></i>
+              Pause simulation
+            </a>
+          </li>
+
+          <li class="nav-item" data-id="simulation-pause" style="display: none;">
+            <a class="nav-link px-2 fw-bold" onclick="AmbulancePatrol.playPause();" style="cursor: pointer;">
+              <i class="fa-regular fa-play"></i>
+              Run the simulation
+            </a>
+          </li>
+        </ol>
+      </li>
+    </ul>
+  </div>
+
+  <div id="ambulance-patrol">
+    <div class="alert alert-subtle-info fs-9 py-2 px-3" role="alert" id="info-alert">
+      <p>This proof of concept demonstrates a system that tracks ambulance locations within a region and determines which unit can reach an incident fastest, taking into account current traffic conditions.</p>
+      <p>You can adjust the route points and move the incident location using drag & drop.</p>
+      <p class="mb-0">
+        <b>Start by adding a few ambulances to begin the simulation.</b>
+      </p>
     </div>
 
-    <ul class="map-items">
-      <li class="notify-label">
-        <p>This proof of concept demonstrates a system that tracks ambulance locations within a region and determines which unit can reach an incident fastest, taking into account current traffic conditions.</p>
-        <p>You can adjust the route points and move the incident location using drag & drop.</p>
-        <p>
-          <b>Start by adding a few ambulances to begin the simulation.</b>
-        </p>
-      </li>
+    <ul class="map-items" style="display: none;">
       <li id="ambulanceTemplate" style="display: none;">
         <a style="float: right; cursor: pointer;" data-trigger="remove">
-          <i class="material-icons">delete</i>
+          <i class="fa-regular fa-trash"></i>
         </a>
         <span class="item-name" data-placeholder="name"></span>
         <span class="item-speed" data-placeholder="speed"></span>
@@ -74,8 +71,8 @@
       </li>
     </ul>
 
-    <div class="ambulance-patrol-map">
-      <div id="map" style="height: 500px;"></div>
+    <div class="ambulance-patrol-map mx-n4 mx-lg-n6">
+      <div id="map" style="height: 100%;"></div>
 
       <div class="live-stats" data-id="live-stat" style="display: none;">
         <div class="head-data">
@@ -112,9 +109,9 @@
       </div>
       <ul class="notifications">
         <li class="directions" id="notificationTemplate" style="display: none;">
-          <i class="material-icons" data-id="icon"></i>
+          <i data-id="icon"></i>
           <p>
-            <i class="material-icons">airport_shuttle</i>
+            <i class="fa-regular fa-van-shuttle"></i>
             <strong data-id="name">-</strong>
             <span data-id="text">-</span>
           </p>
