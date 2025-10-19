@@ -1,159 +1,3 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>Ambulance</title>
-
-  <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&amp;subset=cyrillic" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  <!-- Bootstrap core CSS -->
-  {{--  <link href="css/bootstrap.min.css" rel="stylesheet">--}}
-
-  <!-- Custom styles for this template -->
-  {{--  <link href="css/style.css" rel="stylesheet">--}}
-
-  {{--  <script src="js/load-config.js"></script>--}}
-  {{--  <script src="js/myMap.js"></script>--}}
-</head>
-
-<body>
-
-<!-- Begin page content -->
-<main role="main" class="container">
-  <div class="head">
-    <h2>Ambulance Patrol - By Alex Gavazov 2015</h2>
-
-    <ul class="controls">
-      <li>
-        <div data-id="create-accident" style="display: none;">
-          <button class="btn btn-danger btn-pulse" onclick="AmbulancePatrol.createAccident();">
-            <i class="material-icons">whatshot</i>
-            Create an incident
-          </button>
-        </div>
-      </li>
-
-      <li>
-        <div data-id="simulation-play" style="display: none;">
-          <button class="btn btn-default" onclick="AmbulancePatrol.playPause();">
-            <i class="material-icons">pause</i>
-            Stop simulation
-          </button>
-        </div>
-
-        <div data-id="simulation-pause" style="display: none;">
-          <button class="btn btn-default" onclick="AmbulancePatrol.playPause();">
-            <i class="material-icons">play_arrow</i>
-            Run the simulation
-          </button>
-        </div>
-      </li>
-
-      <li>
-        <div data-id="create-ambulance" style="display: none;">
-          <button class="btn btn-default btn-pulse" onclick="AmbulancePatrol.createAmbulances();">
-            <i class="material-icons">add</i>
-            Add ambulance
-          </button>
-        </div>
-      </li>
-    </ul>
-  </div>
-
-  <ul class="map-items">
-    <li class="notify-label">
-      <p>This proof of concept demonstrates a system that tracks ambulance locations within a region and determines which unit can reach an incident fastest, taking into account current traffic conditions.</p>
-      <p>You can adjust the route points and move the incident location using drag & drop.</p>
-      <p>
-        <b>Start by adding a few ambulances to begin the simulation.</b>
-      </p>
-    </li>
-    <li id="ambulanceTemplate" style="display: none;">
-      <a href="javascript:;" style="float: right;" data-trigger="remove">
-        <i class="material-icons">delete</i>
-      </a>
-      <span class="item-name" data-placeholder="name"></span>
-      <span class="item-speed" data-placeholder="speed"></span>
-      <span class="item-label" data-placeholder="label"></span>
-      <button data-trigger="send" class="btn btn-primary">Send</button>
-    </li>
-  </ul>
-</main>
-
-<div class="ambulance-patrol-map">
-  <div id="map" style="height: 500px;"></div>
-
-  <div class="live-stats" data-id="live-stat" style="display: none;">
-    <div class="head-data">
-      <span>Current speed</span>
-      <span data-info="speed" class="speed">--</span>
-      <span>km/h</span>
-    </div>
-    <ul class="body-data">
-      <li>
-        <strong data-info="left-time">--:--</strong>
-        minutes to arrival at location
-      </li>
-      <li>
-        <strong data-info="speed" class="speed">--</strong>
-        km/h speed
-      </li>
-      <li>
-        <strong data-info="average-speed">--</strong>
-        km/h average speed
-      </li>
-      <li>
-        <strong data-info="street">--</strong>
-        last location
-      </li>
-      <li>
-        <strong data-info="plate">--</strong>
-        plate
-      </li>
-      <li>
-        <strong data-info="people">-</strong>
-        person on board
-      </li>
-    </ul>
-  </div>
-  <ul class="notifications">
-    <li class="directions" id="notificationTemplate" style="display: none;">
-      <i class="material-icons" data-id="icon"></i>
-      <p>
-        <i class="material-icons">airport_shuttle</i>
-        <strong data-id="name">-</strong>
-        <span data-id="text">-</span>
-      </p>
-    </li>
-  </ul>
-</div><!-- end map -->
-
-<script>
-  const Config = {
-    "googleMapsKey": "AIzaSyAwDzP7HofpNJAaKqW99-42OcFkvYSY2QQ",
-    "googleMapsKeyProxy": "AIzaSyB0E9DnO1Z1QUcjBjgCJnbRoaiUFCXijbo",
-    "defaultMapCenter": {
-      "lat": 42.697713,
-      "lng": 23.321844
-    },
-    "googleDirectionProxies": [
-      "./proxy.php"
-    ],
-    "ambulanceBlanks": [
-      "#f26522",
-      "#744be8",
-      "#32caa1",
-      "#6dcff2",
-      "#ffca28",
-      "#AD1457"
-    ]
-  };
-</script>
 <script>
   let MyMap = {};
 
@@ -194,17 +38,9 @@
     },
   ];
 
-  MyMap.isLoaded = false;
-  MyMap.waitingStack = [];
   MyMap.proxies = [];
 
   MyMap.init = function () {
-    // Init map
-    let mapScript = document.createElement('script');
-    mapScript.type = 'text/javascript';
-    mapScript.src = 'https://maps.googleapis.com/maps/api/js?key=' + Config.googleMapsKey + '&callback=googleMapsApiIsLoaded';
-    document.head.appendChild(mapScript);
-
     // Set proxies
     let proxies = Config.googleDirectionProxies;
 
@@ -220,7 +56,12 @@
 
         proxyUrl.searchParams.set('ping', 'true');
 
-        fetch(proxyUrl.toString()).then(function (response) {
+        fetch(proxyUrl.toString(), {
+          method: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+          },
+        }).then(function (response) {
           return response.text();
         }).then(function (text) {
           if (text === 'pong') {
@@ -231,58 +72,27 @@
         });
       }
     }
-  };
 
-  MyMap.loaded = function () {
-    MyMap.isLoaded = true;
+    // Init map
     MyMap.directionsService = new google.maps.DirectionsService();
   };
 
-  MyMap.ready = function (callback) {
-    if (MyMap.isLoaded) {
-      callback();
-      return;
-    }
-
-    MyMap.waitingStack.push(callback);
-
-    if (!MyMap._tryInterval) {
-      MyMap._tryInterval = setInterval(function () {
-        if (MyMap.isLoaded) {
-          clearInterval(MyMap._tryInterval);
-
-          for (let i = 0; i < MyMap.waitingStack.length; i++) {
-            MyMap.waitingStack[i]();
-          }
-
-          MyMap.waitingStack = [];
-        }
-      }, 10);
-    }
-  };
-
   MyMap.create = function (place) {
-    return new Promise(function (resolve) {
-      MyMap.ready(function () {
-        let element = place;
+    let element = place;
 
-        if (typeof place === 'string') {
-          element = document.querySelector(place);
-        }
+    if (typeof place === 'string') {
+      element = document.querySelector(place);
+    }
 
-        if (!element) {
-          throw new Error('Map container not found');
-        }
+    if (!element) {
+      throw new Error('Map container not found');
+    }
 
-        let map = new google.maps.Map(element, {
-          zoom: 15,
-          center: Config.defaultMapCenter,
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          styles: MyMap.style,
-        });
-
-        resolve(map);
-      });
+    return new google.maps.Map(element, {
+      zoom: 15,
+      center: Config.defaultMapCenter,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      styles: MyMap.style,
     });
   };
 
@@ -317,6 +127,7 @@
         fetch(proxyUrl, {
           method: 'POST',
           headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
           },
           body: body.toString(),
@@ -573,6 +384,7 @@
 
       this.syncPoints.timer = setTimeout(this.syncPoints.bind(this), 50);
     }.bind(this)).catch(function (error) {
+      console.log('Error', error);
       this.syncPoints.timer = setTimeout(this.syncPoints.bind(this), 500);
     }.bind(this));
   };
@@ -679,28 +491,26 @@
   }
 
   AmbulancePatrol.init = function () {
-    MyMap.create('#map').then(function (map) {
-      AmbulancePatrol.map = map;
+    AmbulancePatrol.map = MyMap.create('#map');
 
-      AmbulancePatrol.ambulanceTemplate = document.getElementById('ambulanceTemplate');
+    AmbulancePatrol.ambulanceTemplate = document.getElementById('ambulanceTemplate');
 
-      if (AmbulancePatrol.ambulanceTemplate && AmbulancePatrol.ambulanceTemplate.parentNode) {
-        AmbulancePatrol.ambulanceTemplate.parentNode.removeChild(AmbulancePatrol.ambulanceTemplate);
-      }
+    if (AmbulancePatrol.ambulanceTemplate && AmbulancePatrol.ambulanceTemplate.parentNode) {
+      AmbulancePatrol.ambulanceTemplate.parentNode.removeChild(AmbulancePatrol.ambulanceTemplate);
+    }
 
-      AmbulancePatrol.notificationsTemplate = document.getElementById('notificationTemplate');
+    AmbulancePatrol.notificationsTemplate = document.getElementById('notificationTemplate');
 
-      if (AmbulancePatrol.notificationsTemplate && AmbulancePatrol.notificationsTemplate.parentNode) {
-        AmbulancePatrol.notificationsTemplate.parentNode.removeChild(AmbulancePatrol.notificationsTemplate);
-      }
+    if (AmbulancePatrol.notificationsTemplate && AmbulancePatrol.notificationsTemplate.parentNode) {
+      AmbulancePatrol.notificationsTemplate.parentNode.removeChild(AmbulancePatrol.notificationsTemplate);
+    }
 
-      AmbulancePatrol.ambulanceBlanks = Config.ambulanceBlanks.slice();
+    AmbulancePatrol.ambulanceBlanks = Config.ambulanceBlanks.slice();
 
-      setInterval(AmbulancePatrol.moveAmbulances, 100);
-      setInterval(AmbulancePatrol.setAmbulanceSpeed, 1000);
+    setInterval(AmbulancePatrol.moveAmbulances, 100);
+    setInterval(AmbulancePatrol.setAmbulanceSpeed, 1000);
 
-      AmbulancePatrol.controlVisibility();
-    });
+    AmbulancePatrol.controlVisibility();
   };
 
   AmbulancePatrol.updateAccidentLines = function () {
@@ -1358,12 +1168,5 @@
     let seconds = time - minutes * 60;
 
     return strPadLeft(minutes, '0', 2) + ':' + strPadLeft(seconds, '0', 2);
-
   };
-
-  document.addEventListener('DOMContentLoaded', function () {
-    MyMap.init();
-  });
 </script>
-</body>
-</html>

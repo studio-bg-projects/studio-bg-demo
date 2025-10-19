@@ -8,6 +8,7 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index']);
 
 Route::get('/ambulance-patrol', [\App\Http\Controllers\AmbulancePatrolController::class, 'index']);
+Route::post('/ambulance-patrol/proxy', [\App\Http\Controllers\AmbulancePatrolController::class, 'proxy']);
 
 Route::get('/virtual-project-manager', [\App\Http\Controllers\VirtualProjectManagerController::class, 'index']);
 
