@@ -3,11 +3,24 @@
 @section('content')
   <h1>AI Project Manager by Studio.bg</h1>
 
-  <form id="user-form">
-    <label for="user-name">Please enter your name before starting the session:</label>
-    <input type="text" id="user-name" name="user-name" placeholder="Your name" required>
-    <button type="submit" id="start-session">Start Session</button>
-  </form>
+  <p id="session-message" class="lead mt-4">Please enter your name to begin.</p>
+
+  <div class="modal fade" id="nameModal" tabindex="-1" aria-labelledby="nameModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <form id="user-form" class="modal-content" autocomplete="off">
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="nameModalLabel">Introduce yourself</h2>
+        </div>
+        <div class="modal-body">
+          <label for="user-name" class="form-label">Please enter your name before starting the session:</label>
+          <input type="text" class="form-control" id="user-name" name="user-name" placeholder="Your name" required>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" id="start-session">Start Session</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <pre id="log"></pre>
 
@@ -15,15 +28,61 @@
     const nameInput = document.getElementById('user-name');
     const userForm = document.getElementById('user-form');
     const startButton = document.getElementById('start-session');
+    const fallbackSessionMessage = document.getElementById('session-message');
+    const nameModal = document.getElementById('nameModal');
+
+    let modalBackdrop = document.getElementById('nameModalBackdrop');
+    if (!modalBackdrop) {
+      modalBackdrop = document.createElement('div');
+      modalBackdrop.id = 'nameModalBackdrop';
+      modalBackdrop.className = 'modal-backdrop fade';
+      modalBackdrop.style.display = 'none';
+      document.body.appendChild(modalBackdrop);
+    }
+
+    function showModal() {
+      if (!nameModal || nameModal.classList.contains('show')) {
+        return;
+      }
+      nameModal.style.display = 'block';
+      nameModal.classList.add('show');
+      nameModal.removeAttribute('aria-hidden');
+      nameModal.setAttribute('aria-modal', 'true');
+      modalBackdrop.style.display = 'block';
+      modalBackdrop.classList.add('show');
+      document.body.classList.add('modal-open');
+    }
+
+    function hideModal() {
+      if (!nameModal) {
+        return;
+      }
+      nameModal.classList.remove('show');
+      nameModal.style.display = 'none';
+      nameModal.setAttribute('aria-hidden', 'true');
+      nameModal.removeAttribute('aria-modal');
+      modalBackdrop.classList.remove('show');
+      modalBackdrop.style.display = 'none';
+      document.body.classList.remove('modal-open');
+    }
+
+    function setMessage(message) {
+      if (fallbackSessionMessage) {
+        fallbackSessionMessage.textContent = message;
+      }
+    }
 
     const storedName = localStorage.getItem('userName');
-    if (storedName) {
+    const hasStoredName = typeof storedName === 'string' && storedName.trim().length > 0;
+    if (typeof storedName === 'string') {
       nameInput.value = storedName;
     }
 
     function enableNameForm() {
       nameInput.disabled = false;
       startButton.disabled = false;
+      showModal();
+      nameInput.focus();
     }
 
     function disableNameForm() {
@@ -33,19 +92,33 @@
 
     window.vpmNameForm = {
       enable: enableNameForm,
-      disable: disableNameForm
+      disable: disableNameForm,
+      setMessage
     };
 
-    userForm.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const name = nameInput.value.trim();
-      if (!name) {
+    function acceptName(name) {
+      const trimmedName = name.trim();
+      if (!trimmedName) {
         nameInput.focus();
         return;
       }
-      localStorage.setItem('userName', name);
-      window.dispatchEvent(new CustomEvent('vpm:name-submitted', {detail: {name}}));
+      localStorage.setItem('userName', trimmedName);
+      disableNameForm();
+      hideModal();
+      setMessage('Speak now :)');
+      window.dispatchEvent(new CustomEvent('vpm:name-submitted', {detail: {name: trimmedName}}));
+    }
+
+    userForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      acceptName(nameInput.value);
     });
+
+    if (hasStoredName) {
+      acceptName(storedName);
+    } else {
+      enableNameForm();
+    }
   </script>
 
   <script>
@@ -274,6 +347,13 @@
             })
             .catch((error) => {
               log('Session creation failed', error.message);
+              connectionStarted = false;
+              if (window.vpmNameForm) {
+                window.vpmNameForm.setMessage('Unable to start the session. Please try again.');
+                window.vpmNameForm.enable();
+              } else if (fallbackSessionMessage) {
+                fallbackSessionMessage.textContent = 'Unable to start the session. Please try again.';
+              }
             });
 
           // Send WebRTC Offer to Workers Realtime WebRTC API Relay
@@ -282,7 +362,10 @@
         connectionStarted = false;
         log('Microphone access failed', error.message);
         if (window.vpmNameForm) {
+          window.vpmNameForm.setMessage('Microphone access failed. Please try again.');
           window.vpmNameForm.enable();
+        } else if (fallbackSessionMessage) {
+          fallbackSessionMessage.textContent = 'Microphone access failed. Please try again.';
         }
       });
     }
