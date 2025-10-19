@@ -6,226 +6,242 @@
   <pre id="log"></pre>
 
   <script>
-    // Зареждане на задачите и последното ID от localStorage
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || {};
+    class VirtualProjectManagerApp {
+      constructor() {
+        this.loadState();
+        this.logNode = document.getElementById('log');
+        this.functionHandlers = {
+          getAllTasks: this.handleGetAllTasks.bind(this),
+          changePriority: this.handleChangePriority.bind(this),
+          addTask: this.handleAddTask.bind(this),
+          deleteTask: this.handleDeleteTask.bind(this)
+        };
+        this.peerConnection = new RTCPeerConnection();
+        this.peerConnection.ontrack = (event) => {
+          const audioElement = document.createElement('audio');
+          audioElement.srcObject = event.streams[0];
+          audioElement.autoplay = audioElement.controls = true;
+          document.body.appendChild(audioElement);
+        };
+        this.dataChannel = this.peerConnection.createDataChannel('oai-events');
+        this.registerDataChannelEvents();
+      }
 
-    let lastId = parseInt(localStorage.getItem('lastTaskId')) || Object.keys(tasks).length;
+      loadState() {
+        this.tasks = JSON.parse(localStorage.getItem('tasks')) || {};
+        const storedId = parseInt(localStorage.getItem('lastTaskId'), 10);
+        this.lastId = Number.isInteger(storedId) ? storedId : Object.keys(this.tasks).length;
+      }
 
-    // Помощни функции за запис
-    function saveTasks() {
-      localStorage.setItem('tasks', JSON.stringify(tasks));
-      localStorage.setItem('lastTaskId', lastId.toString());
-    }
+      saveState() {
+        localStorage.setItem('tasks', JSON.stringify(this.tasks));
+        localStorage.setItem('lastTaskId', this.lastId.toString());
+      }
 
-    const fns = {
-      getAllTasks: () => {
+      handleGetAllTasks() {
         return {
           success: true,
-          tasks
+          tasks: this.tasks
         };
-      },
-      changePriority: ({id, priority}) => {
-        if (tasks[id]) {
-          tasks[id].priority = priority;
-          saveTasks();
+      }
+
+      handleChangePriority({id, priority}) {
+        if (this.tasks[id]) {
+          this.tasks[id].priority = priority;
+          this.saveState();
           return {success: true, priority};
         }
         return {success: false, error: 'Invalid task ID'};
-      },
-      addTask: ({text, priority}) => {
-        lastId++;
-        const id = lastId;
-        tasks[id] = {
+      }
+
+      handleAddTask({text, priority}) {
+        this.lastId += 1;
+        const id = this.lastId;
+        this.tasks[id] = {
           id,
           text,
           priority
         };
-        saveTasks();
-        return {success: true, task: tasks[id]};
-      },
-      deleteTask: ({id}) => {
-        if (tasks[id]) {
-          delete tasks[id];
-          saveTasks();
+        this.saveState();
+        return {success: true, task: this.tasks[id]};
+      }
+
+      handleDeleteTask({id}) {
+        if (this.tasks[id]) {
+          delete this.tasks[id];
+          this.saveState();
           return {success: true};
         }
         return {success: false, error: 'Invalid task ID'};
       }
-    };
 
-
-    // Create a WebRTC Agent
-    const peerConnection = new RTCPeerConnection();
-
-    // On inbound audio add to page
-    peerConnection.ontrack = (event) => {
-      const el = document.createElement('audio');
-      el.srcObject = event.streams[0];
-      el.autoplay = el.controls = true;
-      document.body.appendChild(el);
-    };
-
-    const dataChannel = peerConnection.createDataChannel('oai-events');
-
-    function configureData() {
-      console.log('Configuring data channel');
-      const event = {
-        type: 'session.update',
-        session: {
-          modalities: ['text', 'audio'],
-          // Provide the tools. Note they match the keys in the `fns` object above
-          tools: [
-            {
-              type: 'function',
-              name: 'getAllTasks',
-              description: 'Връща наличните задачи'
-            },
-            {
-              type: 'function',
-              name: 'changePriority',
-              description: 'Смяна на приоритета на задача',
-              parameters: {
-                type: 'object',
-                properties: {
-                  id: {type: 'integer', description: 'ID-то на задачата която ще и променим приоритета'},
-                  priority: {type: 'integer', description: 'Задаване на стойност на приоритета за дадена задача'}
-                }
-              }
-            },
-            {
-              type: 'function',
-              name: 'addTask',
-              description: 'Добавяне на нова задача',
-              parameters: {
-                type: 'object',
-                properties: {
-                  text: {type: 'string', description: 'Текст на задачата'},
-                  priority: {type: 'integer', description: 'Приоритет на новата задача'}
-                }
-              }
-            },
-            {
-              type: 'function',
-              name: 'deleteTask',
-              description: 'Изтриване на задача',
-              parameters: {
-                type: 'object',
-                properties: {
-                  id: {type: 'integer', description: 'ID-то на задачата която ще бъде изтрита'}
-                }
+      getTools() {
+        return [
+          {
+            type: 'function',
+            name: 'getAllTasks',
+            description: 'Връща наличните задачи'
+          },
+          {
+            type: 'function',
+            name: 'changePriority',
+            description: 'Смяна на приоритета на задача',
+            parameters: {
+              type: 'object',
+              properties: {
+                id: {type: 'integer', description: 'ID-то на задачата която ще и променим приоритета'},
+                priority: {type: 'integer', description: 'Задаване на стойност на приоритета за дадена задача'}
               }
             }
-          ]
-        }
-      };
-      dataChannel.send(JSON.stringify(event));
-    }
+          },
+          {
+            type: 'function',
+            name: 'addTask',
+            description: 'Добавяне на нова задача',
+            parameters: {
+              type: 'object',
+              properties: {
+                text: {type: 'string', description: 'Текст на задачата'},
+                priority: {type: 'integer', description: 'Приоритет на новата задача'}
+              }
+            }
+          },
+          {
+            type: 'function',
+            name: 'deleteTask',
+            description: 'Изтриване на задача',
+            parameters: {
+              type: 'object',
+              properties: {
+                id: {type: 'integer', description: 'ID-то на задачата която ще бъде изтрита'}
+              }
+            }
+          }
+        ];
+      }
 
-    const session = async () => {
-      const DEFAULT_INSTRUCTIONS = `
-      Ти си Project Manager, аз съм Алекс. Ще ми помагаш да си планирам задачите. Ще взимаш мнение и участие в планирането. Ще ми даваш съвети и активно ще ме разпитваш за детайли, за да съм сигурен, че създавам правилни задачи.
+      getDefaultInstructions() {
+        return `
+      Ти си Project Manager, аз съм Алекс. Ще ми помагаш да си планирам задачите. Ще взимаш мнение и участие в планирането. Ще ми даваш съвети и активно ще ме разпитваш за дтайли, за да съм сигурен, че създавам правилни задачи.
       Аз съм програмист и искам да планирам нещата, точно и ясно.
       `;
-
-      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-      const response = await fetch('{{ route('virtual-project-manager.session') }}', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': csrfToken
-        },
-        body: JSON.stringify({
-          model: 'gpt-realtime-mini',
-          instructions: DEFAULT_INSTRUCTIONS,
-          voice: 'ash'
-        })
-      });
-      if (!response.ok) {
-        throw new Error('Unable to create a new session.');
       }
-      const result = await response.json();
-      console.log('result', result);
-      return {result};
-    };
 
-    const log = (...arg) => {
-      console.log.call(arg);
-      const logNode = document.getElementById('log');
-      if (logNode) {
-        logNode.innerHTML = `${JSON.stringify(arg, null, 2)}\n${logNode.innerHTML}`;
+      configureDataChannel() {
+        const event = {
+          type: 'session.update',
+          session: {
+            modalities: ['text', 'audio'],
+            tools: this.getTools()
+          }
+        };
+        this.dataChannel.send(JSON.stringify(event));
       }
-    };
 
-    dataChannel.addEventListener('open', (ev) => {
-      console.log('Opening data channel', ev);
-      configureData();
-    });
+      async createSession() {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const response = await fetch('{{ route('virtual-project-manager.session') }}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+          },
+          body: JSON.stringify({
+            model: 'gpt-realtime-mini',
+            instructions: this.getDefaultInstructions(),
+            voice: 'ash'
+          })
+        });
+        if (!response.ok) {
+          throw new Error('Unable to create a new session.');
+        }
+        const result = await response.json();
+        console.log('result', result);
+        return result;
+      }
 
-    dataChannel.addEventListener('message', async (ev) => {
-      const msg = JSON.parse(ev.data);
-      // Handle function calls
-      if (msg.type === 'response.function_call_arguments.done') {
-        const fn = fns[msg.name];
-        if (fn !== undefined) {
-          log(`Calling local function ${msg.name} with ${msg.arguments}`);
-          const args = JSON.parse(msg.arguments);
-          const result = await fn(args);
-          log('result', result);
-          // Let OpenAI know that the function has been called and share it's output
-          const event = {
-            type: 'conversation.item.create',
-            item: {
-              type: 'function_call_output',
-              call_id: msg.call_id, // call_id from the function_call message
-              output: JSON.stringify(result) // result of the function
-            }
-          };
-          dataChannel.send(JSON.stringify(event));
-          // Have assistant respond after getting the results
-          dataChannel.send(JSON.stringify({type: 'response.create'}));
+      log(...args) {
+        console.log(...args);
+        if (this.logNode) {
+          this.logNode.innerHTML = `${JSON.stringify(args, null, 2)}\n${this.logNode.innerHTML}`;
         }
       }
-    });
 
-    // Capture microphone
-    navigator.mediaDevices.getUserMedia({audio: true}).then((stream) => {
-      // Add microphone to PeerConnection
-      stream.getTracks().forEach((track) => peerConnection.addTransceiver(track, {direction: 'sendrecv'}));
+      registerDataChannelEvents() {
+        this.dataChannel.addEventListener('open', (event) => {
+          console.log('Opening data channel', event);
+          this.configureDataChannel();
+        });
 
-      peerConnection.createOffer().then((offer) => {
-        peerConnection.setLocalDescription(offer);
+        this.dataChannel.addEventListener('message', async (event) => {
+          const message = JSON.parse(event.data);
+          if (message.type === 'response.function_call_arguments.done') {
+            await this.handleFunctionCall(message);
+          }
+        });
+      }
 
-        session()
-          //.then((tokenResponse) => tokenResponse.json())
-          .then((data) => {
-            const EPHEMERAL_KEY = data.result.client_secret.value;
-            const baseUrl = 'https://api.openai.com/v1/realtime';
-            // const model = 'gpt-4o-realtime-preview';
-            const model = 'gpt-realtime-mini';
-            fetch(`${baseUrl}?model=${model}`, {
-              method: 'POST',
-              body: offer.sdp,
-              headers: {
-                Authorization: `Bearer ${EPHEMERAL_KEY}`,
-                'Content-Type': 'application/sdp'
-              }
-            })
-              .then((r) => r.text())
-              .then((answer) => {
-                // Accept answer from Realtime WebRTC API
-                peerConnection.setRemoteDescription({
-                  sdp: answer,
-                  type: 'answer'
+      async handleFunctionCall(message) {
+        const handler = this.functionHandlers[message.name];
+        if (!handler) {
+          return;
+        }
+        this.log(`Calling local function ${message.name} with ${message.arguments}`);
+        const args = JSON.parse(message.arguments);
+        const result = await handler(args);
+        this.log('result', result);
+        const event = {
+          type: 'conversation.item.create',
+          item: {
+            type: 'function_call_output',
+            call_id: message.call_id,
+            output: JSON.stringify(result)
+          }
+        };
+        this.dataChannel.send(JSON.stringify(event));
+        this.dataChannel.send(JSON.stringify({type: 'response.create'}));
+      }
+
+      startConnectionAndMicrophone() {
+        navigator.mediaDevices.getUserMedia({audio: true})
+          .then((stream) => {
+            stream.getTracks().forEach((track) => this.peerConnection.addTransceiver(track, {direction: 'sendrecv'}));
+            this.peerConnection.createOffer().then((offer) => {
+              this.peerConnection.setLocalDescription(offer);
+              this.createSession()
+                .then((data) => {
+                  const EPHEMERAL_KEY = data.result.client_secret.value;
+                  const baseUrl = 'https://api.openai.com/v1/realtime';
+                  const model = 'gpt-realtime-mini';
+                  fetch(`${baseUrl}?model=${model}`, {
+                    method: 'POST',
+                    body: offer.sdp,
+                    headers: {
+                      Authorization: `Bearer ${EPHEMERAL_KEY}`,
+                      'Content-Type': 'application/sdp'
+                    }
+                  })
+                    .then((response) => response.text())
+                    .then((answer) => {
+                      this.peerConnection.setRemoteDescription({
+                        sdp: answer,
+                        type: 'answer'
+                      });
+                    });
+                })
+                .catch((error) => {
+                  this.log('Session creation failed', error.message);
                 });
-              });
+            });
           })
           .catch((error) => {
-            log('Session creation failed', error.message);
+            this.log('Microphone access failed', error.message);
           });
+      }
+    }
 
-        // Send WebRTC Offer to Workers Realtime WebRTC API Relay
-      });
-    });
+    const projectManagerApp = new VirtualProjectManagerApp();
+    projectManagerApp.startConnectionAndMicrophone();
 
   </script>
 @endsection
