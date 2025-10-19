@@ -10,7 +10,7 @@ This directory contains the Laravel 11 application.
 
 ## Language
 
-- All user-facing messages should be in Bulgarian
+- All user-facing messages should be in English
 - Ensure each comment is written on English
 
 ## Recommends
@@ -23,4 +23,4 @@ This directory contains the Laravel 11 application.
 - Database fields use camelCase
 - When creating migrations, include camelCase timestamps `createdAt` and `updatedAt`
 - When adding JSON fields, always cast them to `array` in the model
-- When creating or updating a model, always describe its properties at the top of the class. Use the @property annotation and explain each field in Bulgarian, for example: `@property boolean $isActive - дали продуктът е активен или не`
+- When creating or updating a model, always describe its properties at the top of the class. Use the @property annotation and explain each field

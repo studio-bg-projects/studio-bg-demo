@@ -6,16 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="8d48c8f0-8c79-490e-b62f-ed1afe370b68" name="Changes" comment="Translate">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/public/img/favicons/android-chrome-192x192.png" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/public/img/favicons/android-chrome-192x192.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/public/img/favicons/android-chrome-512x512.png" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/public/img/favicons/android-chrome-512x512.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/public/img/favicons/apple-touch-icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/public/img/favicons/apple-touch-icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/public/img/favicons/favicon-16x16.png" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/public/img/favicons/favicon-16x16.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/public/img/favicons/favicon-32x32.png" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/public/img/favicons/favicon-32x32.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/public/img/favicons/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/public/img/favicons/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/public/img/logo-symbol.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/public/img/logo-white.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/public/img/logo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/public/img/logo.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/AGENTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/AGENTS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/virtual-project-manager/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/virtual-project-manager/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +139,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "//wsl.localhost/Ubuntu/var/workspace/services/studio.bg/demo/laravel/resources",
+    "last_opened_file_path": "//wsl.localhost/Ubuntu/var/workspace/services/studio.bg/demo/laravel/resources/views/virtual-project-manager",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -159,6 +151,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="\\wsl.localhost\Ubuntu\var\workspace\services\studio.bg\demo\laravel\resources\views\virtual-project-manager" />
       <recent name="\\wsl.localhost\Ubuntu\var\workspace\services\studio.bg\demo\laravel\resources" />
       <recent name="\\wsl.localhost\Ubuntu\var\workspace\services\studio.bg\demo\laravel\resources\views\ambulance-patrol" />
       <recent name="\\wsl.localhost\Ubuntu\var\workspace\services\studio.bg\demo" />
