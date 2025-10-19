@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-  HELLO WORLD
+  virtual-project-manager
 @endsection
