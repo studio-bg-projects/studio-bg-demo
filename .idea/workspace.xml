@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d48c8f0-8c79-490e-b62f-ed1afe370b68" name="Changes" comment="Final">
+    <list default="true" id="8d48c8f0-8c79-490e-b62f-ed1afe370b68" name="Changes" comment="Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-images/php-fpm/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker-images/php-fpm/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/composer.lock" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,11 +57,8 @@
       <path value="$PROJECT_DIR$/laravel/vendor/ramsey/uuid" />
       <path value="$PROJECT_DIR$/laravel/vendor/brick/math" />
       <path value="$PROJECT_DIR$/laravel/vendor/nesbot/carbon" />
-      <path value="$PROJECT_DIR$/laravel/vendor/maatwebsite/excel" />
       <path value="$PROJECT_DIR$/laravel/vendor/nette/utils" />
       <path value="$PROJECT_DIR$/laravel/vendor/monolog/monolog" />
-      <path value="$PROJECT_DIR$/laravel/vendor/markbaker/matrix" />
-      <path value="$PROJECT_DIR$/laravel/vendor/markbaker/complex" />
       <path value="$PROJECT_DIR$/laravel/vendor/nette/schema" />
       <path value="$PROJECT_DIR$/laravel/vendor/tijsverkoyen/css-to-inline-styles" />
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-intl-idn" />
@@ -84,7 +79,6 @@
       <path value="$PROJECT_DIR$/laravel/vendor/composer" />
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-php80" />
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-php85" />
-      <path value="$PROJECT_DIR$/laravel/vendor/picqer/php-barcode-generator" />
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/uid" />
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/routing" />
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/clock" />
@@ -103,12 +97,9 @@
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/finder" />
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/translation" />
-      <path value="$PROJECT_DIR$/laravel/vendor/maennchen/zipstream-php" />
       <path value="$PROJECT_DIR$/laravel/vendor/graham-campbell/result-type" />
       <path value="$PROJECT_DIR$/laravel/vendor/laravel/framework" />
-      <path value="$PROJECT_DIR$/laravel/vendor/phpoffice/phpspreadsheet" />
       <path value="$PROJECT_DIR$/laravel/vendor/psr/container" />
-      <path value="$PROJECT_DIR$/laravel/vendor/ezyang/htmlpurifier" />
       <path value="$PROJECT_DIR$/laravel/vendor/laravel/prompts" />
       <path value="$PROJECT_DIR$/laravel/vendor/laravel/serializable-closure" />
       <path value="$PROJECT_DIR$/laravel/vendor/phpoption/phpoption" />
@@ -184,7 +175,7 @@
       <updated>1760872301197</updated>
       <workItem from="1760872302442" duration="237000" />
       <workItem from="1760872575544" duration="830000" />
-      <workItem from="1760873421416" duration="9650000" />
+      <workItem from="1760873421416" duration="10406000" />
     </task>
     <task id="LOCAL-00001" summary="Start the project">
       <option name="closed" value="true" />
@@ -258,7 +249,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760882879561</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Update">
+      <option name="closed" value="true" />
+      <created>1760883399664</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1760883399664</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -286,6 +285,7 @@
     <MESSAGE value="Start ambulances" />
     <MESSAGE value="Make it work" />
     <MESSAGE value="Final" />
-    <option name="LAST_COMMIT_MESSAGE" value="Final" />
+    <MESSAGE value="Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update" />
   </component>
 </project>
