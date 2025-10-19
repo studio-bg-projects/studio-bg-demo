@@ -74,55 +74,11 @@
               </li>
               <li>
                 <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto">
-                  <i class="fa-regular fa-adjust me-2"></i>
+                  <i class="fa-regular fa-sun-bright me-2"></i>
                   Автоматично
                 </button>
               </li>
             </ul>
-          </li>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-              <div class="avatar avatar-l">
-                <img class="rounded-circle" src="{{ auth()->user()->avatarUrl }}" alt="{{ auth()->user()->fullName }}"/>
-              </div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border">
-              <div class="card position-relative border-0">
-                <div class="card-body p-0">
-                  <div class="text-center pt-4 pb-3">
-                    <div class="avatar avatar-xl">
-                      <img class="rounded-circle" src="{{ auth()->user()->avatarUrl }}" alt=""/>
-                    </div>
-                    <h6 class="mt-2 text-body-emphasis">{{ auth()->user()->fullName }}</h6>
-                  </div>
-                </div>
-                <div class="overflow-auto scrollbar" style="max-height: 10rem;">
-                  <ul class="nav d-flex flex-column mb-2 pb-1">
-                    <li class="nav-item">
-                      <a class="nav-link px-3 d-block" href="{{ url('/profile') }}">
-                        <i class="me-2 fa-regular fa-user"></i>
-                        <span>Профил</span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link px-3 d-block" href="{{ url('/profile/password-change') }}">
-                        <i class="me-2 fa-regular fa-key"></i>
-                        <span>Смяна на парола</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="card-footer p-0 border-top border-translucent">
-                  <div class="p-3">
-                    <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="{{ url('/auth/logout') }}">
-                      <i class="fa-regular fa-right-from-bracket me-2"></i>
-                      Изход
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
           </li>
         </ul>
       </div>

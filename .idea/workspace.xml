@@ -4,51 +4,316 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d48c8f0-8c79-490e-b62f-ed1afe370b68" name="Changes" comment="Start cleanup">
-      <change beforePath="$PROJECT_DIR$/AGENTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/AGENTS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/AGENTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/AGENTS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/ApiKey.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Category.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Config.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Country.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Customer.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/CustomersAddress.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/CustomersGroup.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/DataSourceCategory.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/DataSourceMatch.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/DataSourceProduct.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Demo.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Document.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/DocumentItem.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/DocumentLine.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/FeedImport.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/FeedImportItem.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Income.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/IncomeCreditMemo.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/IncomesAllocation.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Mail.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Manufacturer.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Offer.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/OfferItem.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Order.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/OrdersEvent.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Product.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/ProductsLog.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/ProductsSpecification.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/SalesRepresentative.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Schedule.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Shipment.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Specification.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/StorageEntriesIncomeInvoice.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/StorageEntryProduct.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/StorageExitsItem.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/StorageItem.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/StorageItemsWriteOffProtocol.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/StoreSearch.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Upload.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/User.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/ImgService.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Services/ImgService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/PermissionsService.php" beforeDir="false" />
+    <list default="true" id="8d48c8f0-8c79-490e-b62f-ed1afe370b68" name="Changes" comment="Cleanup">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Enums/CustomerStatusType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Enums/DemoStatus.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Enums/DocumentType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Enums/OfferStatus.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Enums/OrderEventAction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Enums/OrderEventActorType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Enums/OrderStatus.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Enums/ProductNonSyncStatus.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Enums/ProductSource.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Enums/ProductUsageStatus.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Enums/SpecificationValueType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Enums/StorageEntryDocumentType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Enums/StorageItemExitType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Enums/UploadGroupType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Helpers/FilterAndSort.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Helpers/helpers.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Helpers/helpers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Api/FeedController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Api/IdReservationController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Api/MailController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Api/PingController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Api/SpeedyController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/ApiKeysController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/BannersController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/CategoriesController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/ConfigController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/CustomersAddressesController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/CustomersController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/CustomersGroupsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/DataSourcesController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/DemosController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/DocumentsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/FeedsImportController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/FeedsImportItemsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/FeedsImportsDashboardController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/HomeController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/ImpersonateController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/IncomesController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/MailsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/ManufacturersController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/OffersController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/OrdersController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/ProductsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/ProductsImportController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/SalesRepresentativesController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/SchedulersController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/SearchReportController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/Shipments/SpeedyController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/SpecificationsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/StorageEntriesController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/StorageEntriesIncomeCreditMemosController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/StorageItemsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/StorageReportController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/UploadsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Erp/UsersController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Public/AuthController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Public/HomeController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Public/ProfileController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Public/StorageController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Middleware/ApiKey.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Middleware/CheckUserPermissions.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/ImgService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Services/UploadsService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/api-keys/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/api-keys/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/banners/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/banners/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/categories/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/categories/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/categories/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/categories/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/categories/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/categories/products.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/categories/specifications.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/categories/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/config/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/config/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers-addresses/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers-addresses/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers-addresses/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers-addresses/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers-addresses/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers-groups/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers-groups/customers.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers-groups/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers-groups/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers-groups/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers-groups/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers-groups/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers/documents.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers/incomes.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers/orders.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/customers/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/dashboard/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/dashboard/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/data-sources/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/data-sources/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/demos/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/demos/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/demos/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/demos/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/demos/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/demos/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/demos/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/incomes-allocations.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/partials/form/deliveryNote.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/partials/form/invoice.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/partials/form/orderConfirmation.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/partials/form/outcomeCreditMemo.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/partials/form/packingList.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/partials/form/partials/invoice-amounts.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/partials/form/partials/readonly-lines.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/partials/form/proformaInvoice.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/prepare.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/templates/deliveryNote.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/templates/invoice.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/templates/orderConfirmation.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/templates/outcomeCreditMemo.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/templates/packingList.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/templates/partials/footer.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/templates/partials/header.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/templates/partials/parties.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/templates/partials/related-documents.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/templates/partials/style.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/templates/proformaInvoice.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/documents/view.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-dashboard/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-dashboard/partials/conflicts-count.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-dashboard/partials/feeds.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-dashboard/partials/promo-items.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-dashboard/partials/unlinked-count.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-items/conflicts.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-items/partials/conflicts/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-items/partials/conflicts/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-items/partials/conflicts/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-items/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-items/partials/related/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-items/partials/related/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-items/partials/related/partials/results-check.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-items/partials/related/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-items/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports-items/related.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports/items.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/feeds-imports/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/incomes/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/incomes/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/incomes/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/incomes/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/incomes/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/incomes/partials/results-incomes-allocations.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/incomes/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/incomes/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/mails/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/mails/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/mails/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/mails/test.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/mails/view.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/manufacturers/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/manufacturers/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/manufacturers/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/manufacturers/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/manufacturers/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/manufacturers/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/manufacturers/products.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/manufacturers/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/offers/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/offers/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/offers/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/offers/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/offers/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/offers/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/offers/preview.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/offers/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/orders/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/orders/documents.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/orders/incomes-allocations.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/orders/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/orders/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/orders/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/orders/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/orders/partials/process-flow.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/orders/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/orders/prepare.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/orders/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/orders/view.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/products-import/from-excel-form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/products-import/from-excel-set-data.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/products-import/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/products/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/products/history.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/products/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/products/partials/categories-assign.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/products/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/products/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/products/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/products/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/products/related.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/products/specifications.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/products/storage-items.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/products/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/sales-representatives/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/sales-representatives/customers.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/sales-representatives/documents.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/sales-representatives/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/sales-representatives/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/sales-representatives/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/sales-representatives/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/sales-representatives/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/sales-representatives/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/schedulers/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/schedulers/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/schedulers/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/schedulers/view.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/search-report/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/search-report/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/search-report/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/search-report/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/shipments/speedy/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/shipments/speedy/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/shipments/speedy/partials/calculator.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/shipments/speedy/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/shipments/speedy/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/shipments/speedy/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/shipments/speedy/view.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/specifications/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/specifications/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/specifications/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/specifications/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/specifications/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/specifications/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/specifications/products.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/specifications/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-entries-income-credit-memos/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-entries-income-credit-memos/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-entries-income-credit-memos/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-entries-income-credit-memos/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-entries-income-credit-memos/view.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-entries/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-entries/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-entries/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-entries/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-entries/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-entries/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-entries/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-items/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-items/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-items/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-items/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-items/view.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-items/writeoff-protocol-form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-items/writeoff-protocol-pdf.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-report/inventory.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-report/nra.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-report/partials/inventory/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-report/partials/inventory/items.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-report/partials/inventory/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-report/partials/nra/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-report/partials/nra/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-report/partials/products/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-report/partials/products/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-report/partials/storage-item-quick-view.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-report/partials/tabs-navigation.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-report/partials/view-item-button.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/storage-report/products.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/uploads/uploader.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/users/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/users/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/users/partials/filters.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/users/partials/form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/users/partials/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/users/partials/results.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/erp/users/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/mails/customer-approved.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/mails/customer-credit-line-value-notify.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/mails/customer-credit-line-value.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/mails/customer-welcome-notify.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/mails/customer-welcome.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/mails/document.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/mails/order-new-notify.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/mails/order.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/mails/partials/sales-representative.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/public/auth/login.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/public/profile/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/public/profile/layout.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/public/profile/password-change.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/public/profile/update.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,6 +460,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="\\wsl.localhost\Ubuntu\var\workspace\services\studio.bg\demo" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="\\wsl.localhost\Ubuntu\var\workspace\services\studio.bg\demo\laravel\resources\views" />
+    </key>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -213,7 +481,7 @@
       <updated>1760872301197</updated>
       <workItem from="1760872302442" duration="237000" />
       <workItem from="1760872575544" duration="830000" />
-      <workItem from="1760873421416" duration="830000" />
+      <workItem from="1760873421416" duration="1624000" />
     </task>
     <task id="LOCAL-00001" summary="Start the project">
       <option name="closed" value="true" />
@@ -231,7 +499,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760874009609</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Cleanup">
+      <option name="closed" value="true" />
+      <created>1760874344411</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1760874344411</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -253,6 +529,7 @@
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="Start the project" />
     <MESSAGE value="Start cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="Start cleanup" />
+    <MESSAGE value="Cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleanup" />
   </component>
 </project>

@@ -21,9 +21,7 @@
     "ext-pcntl": "*",
     "guzzlehttp/guzzle": "^7.10.0",
     "intervention/image-laravel": "^1.5.6",
-    "laravel/framework": "^v12.27.1",
-    "maatwebsite/excel": "^3.1.67",
-    "picqer/php-barcode-generator": "^v3.2.3"
+    "laravel/framework": "^v12.27.1"
   },
   "autoload": {
     "psr-4": {

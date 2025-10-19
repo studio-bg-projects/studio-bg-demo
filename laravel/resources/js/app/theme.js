@@ -193,14 +193,14 @@ window.addEventListener('DOMContentLoaded', () => {
   const updateIcon = theme => {
     const activeThemeIcon = document.querySelector('.theme-icon-active');
     if (activeThemeIcon) {
-      activeThemeIcon.classList.remove('fa-lightbulb', 'fa-sunglasses', 'fa-adjust');
+      activeThemeIcon.classList.remove('fa-lightbulb', 'fa-sunglasses', 'fa-sun-bright');
 
       if (theme === 'dark') {
         activeThemeIcon.classList.add('fa-sunglasses');
       } else if (theme === 'light') {
         activeThemeIcon.classList.add('fa-lightbulb');
       } else if (theme === 'auto') {
-        activeThemeIcon.classList.add('fa-adjust');
+        activeThemeIcon.classList.add('fa-sun-bright');
       }
     }
   };
