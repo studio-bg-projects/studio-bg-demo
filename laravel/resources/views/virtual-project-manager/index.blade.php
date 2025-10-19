@@ -5,7 +5,7 @@
 
   <pre id="log"></pre>
 
-  <script>
+  <script type="module">
     class VirtualProjectManagerApp {
       model = 'gpt-realtime-mini';
       tools = [];
@@ -212,8 +212,12 @@
       }
     }
 
-    ///
+    window.VirtualProjectManagerApp = VirtualProjectManagerApp;
+  </script>
 
+  <button class="btn btn-primary" id="js-start-btn">START</button>
+
+  <script type="module">
     const projectManagerApp = new VirtualProjectManagerApp({
       csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
     });
@@ -264,8 +268,11 @@
     projectManagerApp.setInstructions(`
       Ти си Project Manager, аз съм Алекс. Ще ми помагаш да си планирам задачите. Ще взимаш мнение и участие в планирането. Ще ми даваш съвети и активно ще ме разпитваш за дтайли, за да съм сигурен, че създавам правилни задачи.
       Аз съм програмист и искам да планирам нещата, точно и ясно.
+      **Искам ти да започнеш разговора и да ме питаш как съм!**
     `);
 
-    projectManagerApp.startConnectionAndMicrophone();
+    $('#js-start-btn').click(function () {
+      projectManagerApp.startConnectionAndMicrophone()
+    });
   </script>
 @endsection
