@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8d48c8f0-8c79-490e-b62f-ed1afe370b68" name="Changes" comment="Start the project">
+      <change afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/demo.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/laravel-idea.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ambulance-patrol.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-images/nginx/default.conf" beforeDir="false" afterPath="$PROJECT_DIR$/docker-images/nginx/default.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-images/puppeteer/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/css/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/db/gps-list/file1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/db/gps-list/file2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/db/gps-list/file3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/img/accident_icn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/img/ambulance_icn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/img/eu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/img/kite_fav.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/img/logo_icn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/img/map_sosa.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/img/opik.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/img/package_map.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/img/sprite.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/js/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/js/load-config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/js/myMap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/proxy.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/.env.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/config/database.php" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/laravel/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "agavazov"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/studio-bg-projects/studio-bg-demo.git",
+    "accountId": "9d0d4d6a-d27c-4a13-9214-e88dc8c90c46"
+  }
+}]]></component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/laravel/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/laravel/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/laravel/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/laravel/vendor/guzzlehttp/uri-template" />
+      <path value="$PROJECT_DIR$/laravel/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/laravel/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/laravel/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/laravel/vendor/league/uri-interfaces" />
+      <path value="$PROJECT_DIR$/laravel/vendor/league/flysystem" />
+      <path value="$PROJECT_DIR$/laravel/vendor/league/mime-type-detection" />
+      <path value="$PROJECT_DIR$/laravel/vendor/league/commonmark" />
+      <path value="$PROJECT_DIR$/laravel/vendor/ramsey/collection" />
+      <path value="$PROJECT_DIR$/laravel/vendor/league/uri" />
+      <path value="$PROJECT_DIR$/laravel/vendor/league/flysystem-local" />
+      <path value="$PROJECT_DIR$/laravel/vendor/league/config" />
+      <path value="$PROJECT_DIR$/laravel/vendor/ramsey/uuid" />
+      <path value="$PROJECT_DIR$/laravel/vendor/brick/math" />
+      <path value="$PROJECT_DIR$/laravel/vendor/nesbot/carbon" />
+      <path value="$PROJECT_DIR$/laravel/vendor/maatwebsite/excel" />
+      <path value="$PROJECT_DIR$/laravel/vendor/nette/utils" />
+      <path value="$PROJECT_DIR$/laravel/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/laravel/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/laravel/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/laravel/vendor/nette/schema" />
+      <path value="$PROJECT_DIR$/laravel/vendor/tijsverkoyen/css-to-inline-styles" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-php84" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-php83" />
+      <path value="$PROJECT_DIR$/laravel/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/css-selector" />
+      <path value="$PROJECT_DIR$/laravel/vendor/voku/portable-ascii" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/laravel/vendor/carbonphp/carbon-doctrine-types" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/laravel/vendor/composer" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-php85" />
+      <path value="$PROJECT_DIR$/laravel/vendor/picqer/php-barcode-generator" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/uid" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/clock" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/laravel/vendor/dragonmantank/cron-expression" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/laravel/vendor/fruitcake/php-cors" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-uuid" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/laravel/vendor/maennchen/zipstream-php" />
+      <path value="$PROJECT_DIR$/laravel/vendor/graham-campbell/result-type" />
+      <path value="$PROJECT_DIR$/laravel/vendor/laravel/framework" />
+      <path value="$PROJECT_DIR$/laravel/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/laravel/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/laravel/vendor/ezyang/htmlpurifier" />
+      <path value="$PROJECT_DIR$/laravel/vendor/laravel/prompts" />
+      <path value="$PROJECT_DIR$/laravel/vendor/laravel/serializable-closure" />
+      <path value="$PROJECT_DIR$/laravel/vendor/phpoption/phpoption" />
+      <path value="$PROJECT_DIR$/laravel/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/laravel/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/laravel/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/laravel/vendor/nunomaduro/termwind" />
+      <path value="$PROJECT_DIR$/laravel/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/laravel/vendor/dflydev/dot-access-data" />
+      <path value="$PROJECT_DIR$/laravel/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/laravel/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/laravel/vendor/intervention/image-laravel" />
+      <path value="$PROJECT_DIR$/laravel/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/laravel/vendor/intervention/image" />
+      <path value="$PROJECT_DIR$/laravel/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/laravel/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/laravel/vendor/intervention/gif" />
+    </include_path>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="34HZ8nWt56WidyPu6znLwBYYTnB" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-PS-252.26830.95" />
+        <option value="bundled-php-predefined-a98d8de5180a-9b563d34894c-com.jetbrains.php.sharedIndexes-PS-252.26830.95" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8d48c8f0-8c79-490e-b62f-ed1afe370b68" name="Changes" comment="" />
+      <created>1760872301197</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1760872301197</updated>
+      <workItem from="1760872302442" duration="237000" />
+      <workItem from="1760872575544" duration="766000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="Start the project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Start the project" />
+  </component>
+</project>

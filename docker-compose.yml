@@ -46,23 +46,6 @@ services:
       MYSQL_PASSWORD: ${DB_MAIN_PASSWORD-pass}
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
-  mysql-data:
-    container_name: $PREFIX-mysql-data$SUFFIX
-    image: $PREFIX/mysql:latest
-    build: ./docker-images/mysql
-    restart: ${SERVICES_RESTART:-no}
-    ports:
-      - ${PORT_MYSQL_DATA:-3306}:3306
-    volumes:
-      - ${VOLUME_MYSQL_DATA}
-    environment:
-      TZ: ${TZ:-UTC}
-      MYSQL_ROOT_PASSWORD: ${DB_DATA_PASSWORD-pass}
-      MYSQL_DATABASE: ${DB_DATA_DATABASE-$PREFIX}
-      MYSQL_USER: ${DB_DATA_USERNAME-$PREFIX}
-      MYSQL_PASSWORD: ${DB_DATA_PASSWORD-pass}
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-
   redis:
     container_name: $PREFIX-redis$SUFFIX
     image: $PREFIX/redis:latest
