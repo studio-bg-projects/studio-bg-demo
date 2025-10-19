@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 class AmbulancePatrolController extends Controller
 {
+  protected $googleMapsKey = 'AIzaSyAwDzP7HofpNJAaKqW99-42OcFkvYSY2QQ';
+  protected $googleMapsKeyProxy = 'AIzaSyB0E9DnO1Z1QUcjBjgCJnbRoaiUFCXijbo';
+
   public function index()
   {
-    return view('ambulance-patrol.index');
+    return view('ambulance-patrol.index', [
+      'googleMapsKey' => $this->googleMapsKey
+    ]);
   }
 
   public function proxy()
@@ -16,12 +21,11 @@ class AmbulancePatrolController extends Controller
       die('pong');
     }
 
-    if (empty($_REQUEST['url'])) {
-      die('Please provide "url" POST');
-    }
-
     // Curl
-    $url = $_REQUEST['url'];
+    $url = 'https://maps.googleapis.com/maps/api/directions/json';
+    $url .= '?key=' . $this->googleMapsKeyProxy;
+    $url .= '&origin=' . request()->input('originLat') . ',' . request()->input('originLng');
+    $url .= '&destination=' . request()->input('destinationLat') . ',' . request()->input('destinationLng');
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);

@@ -3,31 +3,9 @@
 @section('content')
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <script>
-    const Config = {
-      "googleMapsKey": "AIzaSyAwDzP7HofpNJAaKqW99-42OcFkvYSY2QQ",
-      "googleMapsKeyProxy": "AIzaSyB0E9DnO1Z1QUcjBjgCJnbRoaiUFCXijbo",
-      "defaultMapCenter": {
-        "lat": 42.697713,
-        "lng": 23.321844
-      },
-      "googleDirectionProxies": [
-        @json(url('/ambulance-patrol/proxy/'))
-      ],
-      "ambulanceBlanks": [
-        "#f26522",
-        "#744be8",
-        "#32caa1",
-        "#6dcff2",
-        "#ffca28",
-        "#AD1457"
-      ]
-    };
-  </script>
-
   @include('ambulance-patrol.partials.scripts')
 
-  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwDzP7HofpNJAaKqW99-42OcFkvYSY2QQ&loading=async&callback=initMap"></script>
+  <script async src="https://maps.googleapis.com/maps/api/js?key={{ $googleMapsKey }}&loading=async&callback=initMap"></script>
 
   <script>
     function initMap() {
@@ -35,7 +13,6 @@
       AmbulancePatrol.init();
     }
   </script>
-
 
   <div id="ambulance-patrol">
     <div class="head">

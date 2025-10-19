@@ -42,7 +42,9 @@
 
   MyMap.init = function () {
     // Set proxies
-    let proxies = Config.googleDirectionProxies;
+    let proxies = [
+      @json(url('/ambulance-patrol/proxy/'))
+    ];
 
     if (proxies && proxies.length > 0) {
       for (let i = 0; i < proxies.length; i++) {
@@ -56,12 +58,7 @@
 
         proxyUrl.searchParams.set('ping', 'true');
 
-        fetch(proxyUrl.toString(), {
-          method: 'POST',
-          headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-          },
-        }).then(function (response) {
+        fetch(proxyUrl.toString()).then(function (response) {
           return response.text();
         }).then(function (text) {
           if (text === 'pong') {
@@ -90,7 +87,10 @@
 
     return new google.maps.Map(element, {
       zoom: 15,
-      center: Config.defaultMapCenter,
+      center: {
+        "lat": 42.697713,
+        "lng": 23.321844
+      },
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       styles: MyMap.style,
     });
@@ -115,23 +115,13 @@
     // Make request
     if (MyMap.proxies.length > 0) {
       return new Promise(function (resolve, reject) {
-        let proxyUrl = MyMap.proxies[0];
-        let serviceUrl = 'https://maps.googleapis.com/maps/api/directions/json';
-        serviceUrl += '?key=' + Config.googleMapsKeyProxy;
-        serviceUrl += '&origin=' + originLat + ',' + originLng;
-        serviceUrl += '&destination=' + destinationLat + ',' + destinationLng;
+        let url = MyMap.proxies[0];
+        url += '?originLat=' + originLat;
+        url += '&originLng=' + originLng;
+        url += '&destinationLat=' + destinationLat;
+        url += '&destinationLng=' + destinationLng;
 
-        let body = new URLSearchParams();
-        body.append('url', serviceUrl);
-
-        fetch(proxyUrl, {
-          method: 'POST',
-          headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          },
-          body: body.toString(),
-        }).then(function (response) {
+        fetch(url).then(function (response) {
           if (!response.ok) {
             throw new Error('Proxy request failed');
           }
@@ -505,7 +495,15 @@
       AmbulancePatrol.notificationsTemplate.parentNode.removeChild(AmbulancePatrol.notificationsTemplate);
     }
 
-    AmbulancePatrol.ambulanceBlanks = Config.ambulanceBlanks.slice();
+    const colors = [
+      "#f26522",
+      "#744be8",
+      "#32caa1",
+      "#6dcff2",
+      "#ffca28",
+      "#AD1457"
+    ];
+    AmbulancePatrol.ambulanceBlanks = colors.slice();
 
     setInterval(AmbulancePatrol.moveAmbulances, 100);
     setInterval(AmbulancePatrol.setAmbulanceSpeed, 1000);
@@ -738,7 +736,6 @@
     ambulance.nodeSend = ambulance.html.querySelector('[data-trigger="send"]');
 
     if (ambulance.nodeRemove) {
-      console.log('ambulance.nodeRemove', ambulance.nodeRemove);
       ambulance.nodeRemove.addEventListener('click', AmbulancePatrol.removeAmbulance.bind(null, ambulance.id));
     }
 
