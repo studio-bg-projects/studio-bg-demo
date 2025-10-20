@@ -5,7 +5,7 @@
 
   <h1 class="h3 mb-3">AI Virtual Project Manager</h1>
 
-  <div class="card">
+  <div class="card" id="js-user-preferences">
     <div class="card-body">
       <div class="row gy-2">
         <div class="col-12">
@@ -59,7 +59,15 @@
   <pre id="action-log"></pre>
 
   <script type="module">
-    const projectManagerApp = new MyPersonalAssistant({
+    $('#js-start-btn').click(function () {
+      projectManagerApp.startConnectionAndMicrophone();
+      window.aduioVisualizer.start()
+      $('#js-user-preferences').fadeOut();
+    });
+  </script>
+
+  <script type="module">
+    window.projectManagerApp = new MyPersonalAssistant({
       model: 'gpt-realtime-mini',
       sessionUrl: @json(url('/virtual-project-manager/session')),
       csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -115,17 +123,12 @@
     });
 
     const visualizerNode = document.getElementById('audio-visualizer');
-    const ball = new MicBallVisualizer(visualizerNode, {
+    window.aduioVisualizer = new MicBallVisualizer(visualizerNode, {
       colorInner: '#22d3ee',
       colorOuter: '#8b5cf6',
       minRadius: 52,
       maxRadius: 118,
       glow: true
-    });
-
-    $('#js-start-btn').click(function () {
-      projectManagerApp.startConnectionAndMicrophone();
-      ball.start()
     });
   </script>
 @endsection
