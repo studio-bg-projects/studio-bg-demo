@@ -127,18 +127,21 @@
     const behaviourConfigs = {
       normal: {
         persona: 'Sam',
+        voice: 'alloy',
         description:
           'Keep a friendly, collaborative tone. Offer encouragement while making sure the plan stays realistic and organised.'
       },
       focused: {
         persona: 'Ray',
+        voice: 'cedar',
         description:
           'Be concise, direct, and structured. Quickly get to the heart of the task details and push for actionable next steps.'
       },
       crazy: {
         persona: 'Karen',
+        voice: 'coral',
         description:
-          'Turn the energy up to eleven. Be wildly enthusiastic, loud, and funny with dramatic flair, plenty of exclamations, playful asides, and occasional ALL-CAPS emphasis while still delivering helpful planning guidance.'
+          'Explode with hysterical urgency. Sound frantic, demanding answers right now, peppering speech with excited exclamations, intense curiosity, and playful panic while still guiding the planning process.'
       }
     };
 
@@ -160,10 +163,17 @@
       }
     };
 
-    function buildInstructions(preferences) {
-      const behaviour = behaviourConfigs[preferences.assistantBehaviour] || behaviourConfigs.normal;
-      const language = languageConfigs[preferences.language] || languageConfigs.english;
+    const DEFAULT_VOICE = 'ash';
 
+    function selectBehaviour(behaviourKey) {
+      return behaviourConfigs[behaviourKey] || behaviourConfigs.normal;
+    }
+
+    function selectLanguage(languageKey) {
+      return languageConfigs[languageKey] || languageConfigs.english;
+    }
+
+    function buildInstructions(preferences, behaviour, language) {
       return [
         `You are ${behaviour.persona}, an AI project manager helping ${preferences.name} plan software development work.`,
         behaviour.description,
@@ -181,12 +191,16 @@
         language: $('#f-language').val()
       };
 
+      const behaviour = selectBehaviour(preferences.assistantBehaviour);
+      const language = selectLanguage(preferences.language);
+
       const projectManagerApp = new MyPersonalAssistant({
         model: 'gpt-realtime-mini',
         sessionUrl: @json(url('/virtual-project-manager/session')),
         csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         audioControlsNode: document.getElementById('audio-controls'),
         logNode: document.getElementById('action-log'),
+        voice: behaviour.voice || DEFAULT_VOICE,
         tools: [
           {
             type: 'function',
@@ -229,7 +243,7 @@
             }
           }
         ],
-        instructions: buildInstructions(preferences)
+        instructions: buildInstructions(preferences, behaviour, language)
       });
 
       const visualizerNode = document.getElementById('audio-visualizer');
