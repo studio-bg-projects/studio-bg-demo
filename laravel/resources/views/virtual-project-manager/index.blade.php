@@ -15,6 +15,7 @@
         <div class="col-12 col-md-6 col-xl-3">
           <label class="app-form-label required" for="f-name">Your name</label>
           <input class="form-control" id="f-name" type="text" placeholder="Alex Gavazov..." required/>
+          <div class="invalid-feedback">Please enter your name.</div>
         </div>
 
         <div class="col-12 col-md-6 col-xl-3">
@@ -37,8 +38,8 @@
         </div>
 
         <div class="col-12 col-md-6 col-xl-3">
-          <label class="app-form-label" for="f-assistantBehaviour">Language</label>
-          <select class="form-select" id="f-assistantBehaviour">
+          <label class="app-form-label" for="f-language">Language</label>
+          <select class="form-select" id="f-language">
             <option value="english">English</option>
             <option value="bulgarian">Bulgarian</option>
             <option value="german">German (not tested)</option>
@@ -59,10 +60,77 @@
   <pre id="action-log"></pre>
 
   <script type="module">
-    $('#js-start-btn').click(function () {
+    const storageKey = 'vpmUserPreferences';
+    const $name = $('#f-name');
+    const $role = $('#f-role');
+    const $assistantBehaviour = $('#f-assistantBehaviour');
+    const $language = $('#f-language');
+    const $startButton = $('#js-start-btn');
+    const $preferencesCard = $('#js-user-preferences');
+
+    function getPreferences() {
+      return {
+        name: $name.val().trim(),
+        role: $role.val(),
+        assistantBehaviour: $assistantBehaviour.val(),
+        language: $language.val()
+      };
+    }
+
+    function savePreferences() {
+      const preferences = getPreferences();
+      window.localStorage.setItem(storageKey, JSON.stringify(preferences));
+    }
+
+    function loadPreferences() {
+      const storedPreferences = window.localStorage.getItem(storageKey);
+      if (!storedPreferences) {
+        return;
+      }
+
+      try {
+        const preferences = JSON.parse(storedPreferences);
+        if (preferences.name) {
+          $name.val(preferences.name);
+          $name.removeClass('is-invalid');
+        }
+        if (preferences.role) {
+          $role.val(preferences.role);
+        }
+        if (preferences.assistantBehaviour) {
+          $assistantBehaviour.val(preferences.assistantBehaviour);
+        }
+        if (preferences.language) {
+          $language.val(preferences.language);
+        }
+      } catch (error) {
+        console.error('Unable to load user preferences', error);
+      }
+    }
+
+    loadPreferences();
+
+    $name.on('input', function () {
+      if ($name.val().trim()) {
+        $name.removeClass('is-invalid');
+      }
+      savePreferences();
+    });
+
+    $role.on('change', savePreferences);
+    $assistantBehaviour.on('change', savePreferences);
+    $language.on('change', savePreferences);
+
+    $startButton.on('click', function () {
+      if (!$name.val().trim()) {
+        $name.addClass('is-invalid').focus();
+        return;
+      }
+
+      savePreferences();
       projectManagerApp.startConnectionAndMicrophone();
-      window.aduioVisualizer.start()
-      $('#js-user-preferences').fadeOut();
+      window.aduioVisualizer.start();
+      $preferencesCard.fadeOut();
     });
   </script>
 
