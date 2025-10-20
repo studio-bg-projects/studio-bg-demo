@@ -3,24 +3,24 @@
   "properties": {
     "summary": {
       "type": "string",
-      "description": "Кратко описание (до 50 символа) за съдържанието на снимката.",
+      "description": "Short description (up to 50 characters) of the image contents.",
       "example": [
-        "Здрав влекач DAF със светнати фарове",
-        "Повреден влекач Volvo със здраво ремарке",
-        "Червена кола",
-        "Повреден влекач, сниман под ъгъл"
+        "Intact DAF tractor with headlights on",
+        "Damaged Volvo tractor with intact trailer",
+        "Red car",
+        "Damaged tractor photographed at an angle"
       ]
     },
     "version": {
       "type": "string",
-      "description": "Версията на текущата схема",
+      "description": "Current schema version",
       "enum": [
         "0.3-2025-05-25"
       ]
     },
     "plate": {
       "type": "string",
-      "description": "Регистрационен номер в български формат (CB8638BE)",
+      "description": "License plate in Bulgarian format (CB8638BE)",
       "example": "CB8638BE"
     },
     "vehicle": {
@@ -28,17 +28,17 @@
       "properties": {
         "type": {
           "type": "string",
-          "description": "Тип на превозното средство",
+          "description": "Type of vehicle",
           "enum": [
-            "влекач",
-            "камион",
-            "лек автомобил",
-            "друго"
+            "tractor",
+            "truck",
+            "passenger car",
+            "other"
           ]
         },
         "model": {
           "type": "string",
-          "description": "Марка и модел на превозното средство",
+          "description": "Make and model of the vehicle",
           "example": [
             "DAF XF 430",
             "Volvo FH 460"
@@ -46,22 +46,22 @@
         },
         "scratches": {
           "type": "array",
-          "description": "Всички потенцялни драскотини по влекача",
+          "description": "All potential scratches on the tractor",
           "items": {
             "type": "object",
             "properties": {
               "summary": {
                 "type": "string",
-                "description": "Описание каква драскотина или зацапване си видял",
+                "description": "Description of the scratch or smudge you observed",
                 "example": [
-                  "Лека драскотина долу до гумата",
-                  "Леко зацапване на жълтата каросерия до номера",
-                  "Незабележително зацапване или драскотина по каросерията"
+                  "Light scratch near the tire",
+                  "Small smudge on the yellow body near the plate",
+                  "Barely visible smudge or scratch on the body"
                 ]
               },
               "confidence": {
                 "type": "string",
-                "description": "Колко си сигурен, че това, което е описано е така",
+                "description": "How confident you are that the description is correct",
                 "enum": [
                   "low",
                   "middle",
@@ -77,28 +77,28 @@
         },
         "problems": {
           "type": "array",
-          "description,": "Опис на всички липсващи или повредени части",
+          "description": "List of missing or damaged parts",
           "items": {
             "type": "object",
             "properties": {
               "part": {
                 "type": "string",
-                "description": "Частта която е повредена или липсваща",
-                "example": "Предна броня"
+                "description": "The part that is damaged or missing",
+                "example": "Front bumper"
               },
               "summary": {
                 "type": "string",
-                "description": "Описание на повредата или какво липсва",
+                "description": "Description of the damage or what is missing",
                 "example": [
-                  "Пукнатина на бронята",
-                  "Липсващ десен фар",
-                  "Липсващо ляво огледало",
-                  "Счупен сенник над прозореца"
+                  "Cracked bumper",
+                  "Missing right headlight",
+                  "Missing left mirror",
+                  "Broken sun visor above the windshield"
                 ]
               },
               "confidence": {
                 "type": "string",
-                "description": "Колко си сигурен, че това, което е описано е така",
+                "description": "How confident you are that the description is correct",
                 "enum": [
                   "low",
                   "middle",
@@ -107,7 +107,7 @@
               },
               "criticality": {
                 "type": "string",
-                "description": "Ниво на критичност. `critical` композицията не може да се движи; `non-critical` композицията може да се движи",
+                "description": "Criticality level. `critical` means the combination cannot move; `non-critical` means it can move",
                 "enum": [
                   "critical",
                   "non-critical"
@@ -135,12 +135,12 @@
       "properties": {
         "type": {
           "type": "string",
-          "description": "Типът на ремаркето",
-          "example": "Щора"
+          "description": "Trailer type",
+          "example": "Curtain-sided"
         },
         "model": {
           "type": "string",
-          "description": "Моделът на ремаркето",
+          "description": "Trailer model",
           "example": "KÖGEL"
         },
         "problems": {
@@ -150,12 +150,12 @@
             "properties": {
               "summary": {
                 "type": "string",
-                "description": "Опсание на повредата по ремаркето",
-                "example": "Скъсан брезент"
+                "description": "Description of the trailer damage",
+                "example": "Torn tarp"
               },
               "confidence": {
                 "type": "string",
-                "description": "Колко си сигурен, че това, което е описано е така",
+                "description": "How confident you are that the description is correct",
                 "enum": [
                   "low",
                   "middle",
