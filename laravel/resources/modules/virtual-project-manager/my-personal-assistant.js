@@ -1,3 +1,5 @@
+import { createAssistantHandlers } from './assistant-handlers';
+
 export class MyPersonalAssistant {
   constructor(options) {
     this.model = options.model;
@@ -11,12 +13,7 @@ export class MyPersonalAssistant {
 
     this.loadState();
 
-    this.functionHandlers = {
-      getAllTasks: this.handleGetAllTasks.bind(this),
-      changePriority: this.handleChangePriority.bind(this),
-      addTask: this.handleAddTask.bind(this),
-      deleteTask: this.handleDeleteTask.bind(this)
-    };
+    this.functionHandlers = createAssistantHandlers(this);
 
     this.peerConnection = new RTCPeerConnection();
 
@@ -42,43 +39,6 @@ export class MyPersonalAssistant {
   saveState() {
     localStorage.setItem('tasks', JSON.stringify(this.tasks));
     localStorage.setItem('lastTaskId', this.lastId.toString());
-  }
-
-  handleGetAllTasks() {
-    return {
-      success: true,
-      tasks: this.tasks
-    };
-  }
-
-  handleChangePriority({ id, priority }) {
-    if (this.tasks[id]) {
-      this.tasks[id].priority = priority;
-      this.saveState();
-      return { success: true, priority };
-    }
-    return { success: false, error: 'Invalid task ID' };
-  }
-
-  handleAddTask({ text, priority }) {
-    this.lastId += 1;
-    const id = this.lastId;
-    this.tasks[id] = {
-      id,
-      text,
-      priority
-    };
-    this.saveState();
-    return { success: true, task: this.tasks[id] };
-  }
-
-  handleDeleteTask({ id }) {
-    if (this.tasks[id]) {
-      delete this.tasks[id];
-      this.saveState();
-      return { success: true };
-    }
-    return { success: false, error: 'Invalid task ID' };
   }
 
   setToos(tools) {
@@ -117,20 +77,36 @@ export class MyPersonalAssistant {
       throw new Error('Unable to create a new session.');
     }
     const result = await response.json();
-    console.log('result', result);
+    this.log('Realtime session created successfully.');
     return result;
   }
 
-  log(...args) {
-    console.log(...args);
+  log(message, ...details) {
+    const timestamp = new Date().toLocaleTimeString();
+    const formattedDetails = details
+      .map((detail) => {
+        if (typeof detail === 'string') {
+          return detail;
+        }
+        try {
+          return JSON.stringify(detail, null, 2);
+        } catch (error) {
+          return String(detail);
+        }
+      })
+      .filter(Boolean)
+      .join(' ');
+    const entry = `[${timestamp}] ${message}${formattedDetails ? ` — ${formattedDetails}` : ''}`;
     if (this.logNode) {
-      this.logNode.innerHTML = `${JSON.stringify(args, null, 2)}\n${this.logNode.innerHTML}`;
+      const entryElement = document.createElement('div');
+      entryElement.textContent = entry;
+      this.logNode.insertBefore(entryElement, this.logNode.firstChild);
     }
   }
 
   registerDataChannelEvents() {
-    this.dataChannel.addEventListener('open', (event) => {
-      console.log('Opening data channel', event);
+    this.dataChannel.addEventListener('open', () => {
+      this.log('Data channel opened. Configuring session tools.');
       this.configureDataChannel();
     });
 
@@ -147,12 +123,12 @@ export class MyPersonalAssistant {
     if (!handler) {
       return;
     }
-    this.log(`Calling local function ${message.name} with ${message.arguments}`);
+    this.log(`Received request to execute "${message.name}"`, message.arguments);
 
     const args = JSON.parse(message.arguments);
     const result = await handler(args);
 
-    this.log('result', result);
+    this.log(`Completed "${message.name}"`, result);
 
     const event = {
       type: 'conversation.item.create',
@@ -169,12 +145,13 @@ export class MyPersonalAssistant {
   startConnectionAndMicrophone() {
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then((stream) => {
+        this.log('Microphone access granted. Preparing audio stream.');
         stream.getTracks().forEach((track) => this.peerConnection.addTransceiver(track, { direction: 'sendrecv' }));
         this.peerConnection.createOffer().then((offer) => {
           this.peerConnection.setLocalDescription(offer);
           this.createSession()
             .then((data) => {
-              console.log('data', data);
+              this.log('Session details received from backend. Requesting realtime connection.');
 
               const ephemeralKey = data.client_secret.value;
               const baseUrl = 'https://api.openai.com/v1/realtime';
@@ -193,6 +170,7 @@ export class MyPersonalAssistant {
                     sdp: answer,
                     type: 'answer'
                   });
+                  this.log('Realtime connection established. Listening for tasks.');
                 });
             })
             .catch((error) => {

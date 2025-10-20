@@ -186,8 +186,6 @@
       const behaviour = selectBehaviour(preferences.assistantBehaviour);
       const language = selectLanguage(preferences.language);
 
-      console.log('behaviour', behaviour, behaviour.voice);
-
       const projectManagerApp = new MyPersonalAssistant({
         sessionUrl: @json(url('/virtual-project-manager/session')),
         csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
