@@ -49,11 +49,11 @@ class VehicleInspectionsController extends Controller
       $uploadsCount = $validPhotos->count();
 
       if ($uploadsCount <= 0) {
-        $errors->add('photos', 'Трябва да прикачите поне едно изображение');
+        $errors->add('photos', 'You must attach at least one image.');
       }
 
       if ($uploadsCount > 10) {
-        $errors->add('photos', 'Към момента не може да качвате повече от 10 изображения');
+        $errors->add('photos', 'You cannot upload more than 10 images at the moment.');
       }
 
       if ($errors->isEmpty()) {
@@ -86,7 +86,7 @@ class VehicleInspectionsController extends Controller
           $vehicleInspection->save();
 
           return redirect('/vehicle-inspections/view/' . $vehicleInspection->id)
-            ->with('success', 'Успешно създадохте нов запис.');
+            ->with('success', 'You successfully created a new record.');
         } catch (\Throwable $exception) {
           $storageDisk->deleteDirectory($baseDirectory);
 
@@ -94,7 +94,7 @@ class VehicleInspectionsController extends Controller
             $vehicleInspection->delete();
           }
 
-          $errors->add('photos', 'Възникна грешка при обработката на изображенията. Моля, опитайте отново.');
+          $errors->add('photos', 'An error occurred while processing the images. Please try again.');
         }
       }
     }
@@ -130,7 +130,7 @@ class VehicleInspectionsController extends Controller
     $vehicleInspection->save();
 
     return redirect('/vehicle-inspections/view/' . $vehicleInspection->id)
-      ->with('success', 'Записът е нулиран.');
+      ->with('success', 'The record has been reset.');
   }
 
   public function process(int $id)
@@ -224,7 +224,7 @@ class VehicleInspectionsController extends Controller
     curl_close($ch);
 
     return redirect('/vehicle-inspections/view/' . $vehicleInspection->id)
-      ->with('success', 'Записът беше пуснат за анализ.');
+      ->with('success', 'The record has been submitted for analysis.');
   }
 
   public function delete(int $id)
@@ -238,6 +238,6 @@ class VehicleInspectionsController extends Controller
     $vehicleInspection->delete();
 
     return redirect('/vehicle-inspections')
-      ->with('success', 'Успешно изтрихте записа.');
+      ->with('success', 'You successfully deleted the record.');
   }
 }

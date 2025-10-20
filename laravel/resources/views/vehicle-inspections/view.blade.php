@@ -4,7 +4,7 @@
   @include('vehicle-inspections.partials.navbar')
 
   <h1 class="h4 mb-5">
-    Преглед на инспекция
+    Inspection Overview
     {{ !empty($vehicleInspection->responseContent->summary) ? ' - ' . $vehicleInspection->responseContent->summary : '' }}
   </h1>
 
@@ -22,7 +22,7 @@
 
   @if (!$vehicleInspection->progressStatus)
     <pre class="alert alert-outline-danger" id="js-response-error" style="display: none;"></pre>
-    <div class="alert alert-outline-primary">Заявката за инспекция на изображенията беше пусната. Моля, изчакайте!</div>
+    <div class="alert alert-outline-primary">The image inspection request has been submitted. Please wait!</div>
     <script type="module">
       $.ajax({
         url: '{{ url('/vehicle-inspections/process/' . $vehicleInspection->id) }}',
@@ -30,7 +30,7 @@
           setTimeout(() => document.location = document.location, 2000);
         },
         error: function (data) {
-          alert('Възникна грешка!');
+          alert('An error occurred!');
           $('#js-response-error').text(data.responseText).fadeIn();
         }
       });
@@ -38,7 +38,7 @@
       setTimeout(() => document.location = '?', 1000);
     </script>
   @elseif ($vehicleInspection->progressStatus === 1)
-    <div class="alert alert-outline-primary">В момента се извършва визуалена инспекция. Моля, изчакайте ({{ app('request')->input('i') + 1 }})!</div>
+    <div class="alert alert-outline-primary">A visual inspection is currently in progress. Please wait ({{ app('request')->input('i') + 1 }})!</div>
     <script type="module">
       setTimeout(() => document.location = '?i=' + {{ app('request')->input('i') + 1 }}, 1000);
     </script>
@@ -52,7 +52,7 @@
                 <i class="fa-regular fa-truck-container"></i>
               </div>
               <div>
-                <p class="fw-bold mb-1">Тип превозно средство</p>
+                <p class="fw-bold mb-1">Vehicle Type</p>
                 <h4 class="fw-bolder text-nowrap">{{ !empty($vehicleInspection->responseContent->vehicle->type) ? $vehicleInspection->responseContent->vehicle->type : '-' }}</h4>
               </div>
             </div>
@@ -63,7 +63,7 @@
                 <i class="fa-regular fa-input-numeric"></i>
               </div>
               <div>
-                <p class="fw-bold mb-1">Регистрационен номер</p>
+                <p class="fw-bold mb-1">License Plate</p>
                 <h4 class="fw-bolder text-nowrap">{{ !empty($vehicleInspection->responseContent->plate) ? $vehicleInspection->responseContent->plate : '-' }}</h4>
               </div>
             </div>
@@ -74,7 +74,7 @@
                 <i class="fa-regular fa-square-quote"></i>
               </div>
               <div>
-                <p class="fw-bold mb-1">Модел превозно средство</p>
+                <p class="fw-bold mb-1">Vehicle Model</p>
                 <h4 class="fw-bolder text-nowrap">{{ !empty($vehicleInspection->responseContent->vehicle->model) ? $vehicleInspection->responseContent->vehicle->model : '-' }}</h4>
               </div>
             </div>
@@ -85,7 +85,7 @@
                 <i class="fa-regular fa-trailer"></i>
               </div>
               <div>
-                <p class="fw-bold mb-1">Ремарке</p>
+                <p class="fw-bold mb-1">Trailer</p>
                 <h4 class="fw-bolder text-nowrap">
                   {{ !empty($vehicleInspection->responseContent->trailer->type) ? $vehicleInspection->responseContent->trailer->type : '-' }}
                   {{ !empty($vehicleInspection->responseContent->trailer->model) ? $vehicleInspection->responseContent->trailer->model : '-' }}
@@ -101,16 +101,16 @@
       <div class="col-md-6 d-flex align-items-stretch">
         <div class="card w-100">
           <div class="card-body">
-            <h2 class="h4 mb-5">Проблеми по превозното средство ({{ !empty($vehicleInspection->responseContent->vehicle->type) ? $vehicleInspection->responseContent->vehicle->type : '-' }})</h2>
+            <h2 class="h4 mb-5">Vehicle Issues ({{ !empty($vehicleInspection->responseContent->vehicle->type) ? $vehicleInspection->responseContent->vehicle->type : '-' }})</h2>
 
             @if (!empty($vehicleInspection->responseContent->vehicle->problems) || !empty($vehicleInspection->responseContent->vehicle->scratches))
               <table class="table fs-9">
                 <thead>
                 <tr>
-                  <th class="white-space-nowrap align-middle text-uppercase">Част</th>
-                  <th class="white-space-nowrap align-middle text-uppercase">Описание</th>
-                  <th class="white-space-nowrap align-middle text-uppercase">Обеденост</th>
-                  <th class="white-space-nowrap align-middle text-uppercase">Критичност</th>
+                  <th class="white-space-nowrap align-middle text-uppercase">Part</th>
+                  <th class="white-space-nowrap align-middle text-uppercase">Description</th>
+                  <th class="white-space-nowrap align-middle text-uppercase">Confidence</th>
+                  <th class="white-space-nowrap align-middle text-uppercase">Criticality</th>
                 </tr>
                 </thead>
                 <tbody class="list">
@@ -136,11 +136,11 @@
                     <td class="align-middle white-space-nowrap py-2">
                       @if ($problem->criticality ?? null == 'critical' )
                         <span class="badge badge-phoenix badge-phoenix-danger">
-                          Критично
+                          Critical
                         </span>
                       @else
                         <span class="badge badge-phoenix badge-phoenix-warning">
-                          Не критично
+                          Not Critical
                         </span>
                       @endif
                     </td>
@@ -149,7 +149,7 @@
                 @foreach($vehicleInspection->responseContent->vehicle->scratches ?? [] as $scratch)
                   <tr class="btn-reveal-trigger position-static">
                     <td class="align-middle white-space-nowrap py-2">
-                      Драскотина / Пукнатина
+                      Scratch / Crack
                     </td>
                     <td class="align-middle white-space-nowrap py-2">
                       {{ $scratch->summary ?? '-' }}
@@ -167,7 +167,7 @@
                     </td>
                     <td class="align-middle white-space-nowrap py-2">
                       <span class="badge badge-phoenix badge-phoenix-secondary">
-                        Некласифицирано
+                        Unclassified
                       </span>
                     </td>
                   </tr>
@@ -175,7 +175,7 @@
                 </tbody>
               </table>
             @else
-              <p>Няма открити проблеми.</p>
+              <p>No issues found.</p>
             @endif
           </div>
         </div>
@@ -183,14 +183,14 @@
       <div class="col-md-6 d-flex align-items-stretch">
         <div class="card w-100">
           <div class="card-body">
-            <h2 class="h4 mb-5">Проблеми по ремаркето ({{ !empty($vehicleInspection->responseContent->trailer->type) ? 'Тип: ' . $vehicleInspection->responseContent->trailer->type : '-' }})</h2>
+            <h2 class="h4 mb-5">Trailer Issues ({{ !empty($vehicleInspection->responseContent->trailer->type) ? 'Type: ' . $vehicleInspection->responseContent->trailer->type : '-' }})</h2>
 
             @if (!empty($vehicleInspection->responseContent->trailer->problems))
               <table class="table fs-9">
                 <thead>
                 <tr>
-                  <th class="white-space-nowrap align-middle text-uppercase">Описание</th>
-                  <th class="white-space-nowrap align-middle text-uppercase">Обеденост</th>
+                  <th class="white-space-nowrap align-middle text-uppercase">Description</th>
+                  <th class="white-space-nowrap align-middle text-uppercase">Confidence</th>
                 </tr>
                 </thead>
                 <tbody class="list">
@@ -215,7 +215,7 @@
                 </tbody>
               </table>
             @else
-              <p>Няма открити проблеми.</p>
+              <p>No issues found.</p>
             @endif
           </div>
         </div>

@@ -7,11 +7,11 @@
           <th style="width: 5rem;" class="nosort border-top border-translucent"></th>
 
           <th class="nosort border-top border-translucent">
-            Инспекция
+            Inspection
           </th>
 
           <th class="nosort border-top border-translucent">
-            Номер
+            Number
           </th>
         </tr>
         </thead>
