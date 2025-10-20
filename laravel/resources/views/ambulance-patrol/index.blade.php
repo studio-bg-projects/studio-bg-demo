@@ -4,7 +4,6 @@
   @include('ambulance-patrol.partials.navbar')
   @include('ambulance-patrol.partials.scripts')
 
-
   <script>
     window.initMap = function () {
       MyMap.init();
