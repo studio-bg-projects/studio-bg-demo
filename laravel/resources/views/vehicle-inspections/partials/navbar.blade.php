@@ -11,13 +11,13 @@
         @if (!empty($vehicleInspection->id))
           <li class="breadcrumb-item active">
             <a href="{{ url('/vehicle-inspections/view/' . $vehicleInspection->id) }}" class="text-body-tertiary text-truncate d-inline-block" style="max-width: 10rem;">
-              {{ $vehicleInspection->getOriginal('nameBg') }}
+              Inspection #{{ $vehicleInspection->id }}
             </a>
           </li>
         @elseif (Request::is('vehicle-inspections/create'))
           <li class="breadcrumb-item active">
             <a href="{{ url('/vehicle-inspections/create') }}" class="text-body-tertiary ">
-              Add inspection
+              Add Inspection
             </a>
           </li>
         @endif
@@ -31,16 +31,22 @@
         <li class="nav-item">
           <a href="{{ url('/vehicle-inspections/create') }}" class="nav-link px-2 fw-bold pulse-btn-primary">
             <i class="fa-regular fa-plus"></i>
-            Add inspection
+            Add Inspection
           </a>
         </li>
       @endif
     @else
       <li class="nav-item">
+        <a href="{{ url('/vehicle-inspections/reset/' . $vehicleInspection->id) }}" class="nav-link px-2 fw-bold" >
+            <i class="fa-regular fa-microchip-ai"></i>
+            Reset Inspection
+        </a>
+      </li>
+      <li class="nav-item">
         <a href="{{ url('/vehicle-inspections/delete/' . $vehicleInspection->id) }}" class="nav-link px-2 fw-bold" onclick="return confirm('Are you sure you want to delete this record?')">
           <span class="text-danger">
             <i class="fa-regular fa-trash-can"></i>
-            Delete inspection
+            Delete Inspection
           </span>
         </a>
       </li>

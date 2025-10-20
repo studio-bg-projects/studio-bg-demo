@@ -68,7 +68,7 @@ class VehicleInspectionsController extends Controller
         try {
           foreach ($validPhotos as $file) {
             $image = Image::read($file->getRealPath());
-            $image->scale(width: 1000, height: 1000);
+            $image->scale(width: 1500, height: 1500);
 
             $filename = Str::uuid() . '.jpg';
             $relativePath = $baseDirectory . '/' . $filename;
@@ -141,21 +141,19 @@ class VehicleInspectionsController extends Controller
     /* @var $vehicleInspection VehicleInspection */
     $vehicleInspection = VehicleInspection::where('id', $id)->firstOrFail();
 
-//    if ($vehicleInspection->progressStatus) {
-//      return redirect('/erp/visual-detector/view/' . $vehicleInspection->id)
-//        ->withErrors(['msg' => 'Този запис е вече анализиран!']);
-//    }
-
     // Fill
+    // @todo move out from here
     $vehicleInspection->systemMessage = file_get_contents(storage_path('ai-prompts/system-message.md'));
-    $vehicleInspection->systemMessage .= "\n" . dbConfig('model:additionalPrompt');
     $vehicleInspection->responseFormat = file_get_contents(storage_path('ai-prompts/response-format.json'));
 
     // Files
     $photos = [];
 
-    foreach ($vehicleInspection->uploads as $upload) {
-      $imageFile = storage_path('app/public/uploads/' . $upload->groupType . '/' . $upload->groupId . '/' . $upload->name);
+    $storageDisk = Storage::disk('public');
+    $baseDirectory = 'uploads/vehicle-inspections/' . $vehicleInspection->id;
+
+    foreach ($vehicleInspection->files as $file) {
+      $imageFile = $storageDisk->path($baseDirectory . '/' . $file);
       $image = Image::read($imageFile);
       $image->scale(width: 1500, height: 1500);
 
@@ -168,7 +166,7 @@ class VehicleInspectionsController extends Controller
     // Request
     $request = [
 //      'model' => 'gpt-4o-mini',
-      'model' => 'gpt-4.5-preview',
+      'model' => 'gpt-5',
 //      'temperature' => 2,
 //      'max_output_tokens' => 2048,
 //      'top_p' => 1,

@@ -20,7 +20,7 @@
 
   <hr/>
 
-  @if ($vehicleInspection->progressStatus === 0)
+  @if (!$vehicleInspection->progressStatus)
     <pre class="alert alert-outline-danger" id="js-response-error" style="display: none;"></pre>
     <div class="alert alert-outline-primary">Заявката за инспекция на изображенията беше пусната. Моля, изчакайте!</div>
     <script type="module">
@@ -35,7 +35,7 @@
         }
       });
 
-      setTimeout(() => document.location = '?', 1000);
+      // setTimeout(() => document.location = '?', 1000);
     </script>
   @elseif ($vehicleInspection->progressStatus === 1)
     <div class="alert alert-outline-primary">В момента се извършва визуалена инспекция. Моля, изчакайте ({{ app('request')->input('i') + 1 }})!</div>
@@ -222,23 +222,4 @@
       </div>
     </div>
   @endif
-
-  <hr/>
-
-  <div class="fs-9 text-muted mb-3">
-    @if (!empty($vehicleInspection->responseContent->version))
-      Версия на модела:
-      <code class="fs-9">studio-bg-{{ $vehicleInspection->responseContent->version ?? '-' }}</code>
-    @endif
-
-    @if ($vehicleInspection->response)
-      |
-      <a data-bs-toggle="collapse" href="#responseBlock" role="button" aria-expanded="false" aria-controls="responseBlock">
-        Debug
-      </a>
-      <div class="collapse" id="responseBlock">
-        @dump($vehicleInspection->response)
-      </div>
-    @endif
-  </div>
 @endsection

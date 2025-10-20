@@ -1,0 +1,152 @@
+{
+  "name": "vehicleDamageDetection",
+  "description": "Резултат от анализа на изображения на влекач и ремарке за идентифициране на повреди и липсващи части.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string",
+        "description": "Кратко описание, какво има на снимката.",
+        "examples": [
+          "Здрав влекач DAF със светнати фарове",
+          "Повреден влекач Volvo със здраво ремарке ",
+          "Червена кола",
+          "Повреден влекач сниман под ъгъл"
+        ]
+      },
+      "plate": {
+        "type": "string",
+        "description": "Регистрационен номер на влекача в български формат.",
+        "example": "CB8638BE"
+      },
+      "vehicle": {
+        "type": "object",
+        "description": "Информация за анализирания влекач.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Тип на превозното средство (напр. влекач, камион, лек автомобил).",
+            "enum": [
+              "влекач",
+              "камион",
+              "лек автомобил",
+              "друго"
+            ]
+          },
+          "model": {
+            "type": "string",
+            "description": "Марка и модел на влекача.",
+            "examples": [
+              "DAF XF 430",
+              "Volvo FH 460"
+            ]
+          },
+          "parts": {
+            "type": "array",
+            "description": "Списък с повредените или липсващи части по влекача.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "part": {
+                  "type": "string",
+                  "description": "Име на повредената част.",
+                  "example": "предна броня"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "Описание на увреждането.",
+                  "example": "Пукнатина в средата на бронята"
+                },
+                "confidence": {
+                  "type": "string",
+                  "description": "Ниво на увереност за идентифицираното увреждане.",
+                  "enum": [
+                    "low",
+                    "middle",
+                    "high"
+                  ]
+                },
+                "criticality": {
+                  "type": "string",
+                  "description": "Дали повредената част е критична за движението на влекача.",
+                  "enum": [
+                    "critical",
+                    "non-critical"
+                  ]
+                }
+              },
+              "required": [
+                "part",
+                "description",
+                "confidence",
+                "criticality"
+              ]
+            }
+          }
+        },
+        "required": [
+          "type",
+          "model",
+          "missingParts",
+          "damagedParts"
+        ]
+      },
+      "trailer": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "description": "Информация за ремаркето (ако има).",
+        "properties": {
+          "brand": {
+            "type": "string",
+            "description": "Марка на ремаркето.",
+            "example": "KÖGEL"
+          },
+          "type": {
+            "type": "string",
+            "description": "Тип на ремаркето.",
+            "example": "щора"
+          },
+          "damages": {
+            "type": "array",
+            "description": "Списък с повреди по ремаркето.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "type": "string",
+                  "description": "Описание на повредата (например: 'скъсано платнище').",
+                  "example": "Скъсано платнище в горен десен ъгъл"
+                },
+                "confidence": {
+                  "type": "string",
+                  "description": "Ниво на увереност за идентифицираната повреда.",
+                  "enum": [
+                    "low",
+                    "middle",
+                    "high"
+                  ]
+                }
+              },
+              "required": [
+                "description",
+                "confidence"
+              ]
+            }
+          }
+        },
+        "required": [
+          "brand",
+          "type",
+          "damages"
+        ]
+      }
+    },
+    "required": [
+      "plate",
+      "vehicle",
+      "trailer"
+    ]
+  }
+}

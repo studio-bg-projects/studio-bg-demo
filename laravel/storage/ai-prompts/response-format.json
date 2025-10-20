@@ -1,0 +1,186 @@
+{
+  "type": "object",
+  "properties": {
+    "summary": {
+      "type": "string",
+      "description": "Кратко описание (до 50 символа) за съдържанието на снимката.",
+      "example": [
+        "Здрав влекач DAF със светнати фарове",
+        "Повреден влекач Volvo със здраво ремарке",
+        "Червена кола",
+        "Повреден влекач, сниман под ъгъл"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "description": "Версията на текущата схема",
+      "enum": [
+        "0.3-2025-05-25"
+      ]
+    },
+    "plate": {
+      "type": "string",
+      "description": "Регистрационен номер в български формат (CB8638BE)",
+      "example": "CB8638BE"
+    },
+    "vehicle": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Тип на превозното средство",
+          "enum": [
+            "влекач",
+            "камион",
+            "лек автомобил",
+            "друго"
+          ]
+        },
+        "model": {
+          "type": "string",
+          "description": "Марка и модел на превозното средство",
+          "example": [
+            "DAF XF 430",
+            "Volvo FH 460"
+          ]
+        },
+        "scratches": {
+          "type": "array",
+          "description": "Всички потенцялни драскотини по влекача",
+          "items": {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string",
+                "description": "Описание каква драскотина или зацапване си видял",
+                "example": [
+                  "Лека драскотина долу до гумата",
+                  "Леко зацапване на жълтата каросерия до номера",
+                  "Незабележително зацапване или драскотина по каросерията"
+                ]
+              },
+              "confidence": {
+                "type": "string",
+                "description": "Колко си сигурен, че това, което е описано е така",
+                "enum": [
+                  "low",
+                  "middle",
+                  "high"
+                ]
+              }
+            },
+            "required": [
+              "summary",
+              "confidence"
+            ]
+          }
+        },
+        "problems": {
+          "type": "array",
+          "description,": "Опис на всички липсващи или повредени части",
+          "items": {
+            "type": "object",
+            "properties": {
+              "part": {
+                "type": "string",
+                "description": "Частта която е повредена или липсваща",
+                "example": "Предна броня"
+              },
+              "summary": {
+                "type": "string",
+                "description": "Описание на повредата или какво липсва",
+                "example": [
+                  "Пукнатина на бронята",
+                  "Липсващ десен фар",
+                  "Липсващо ляво огледало",
+                  "Счупен сенник над прозореца"
+                ]
+              },
+              "confidence": {
+                "type": "string",
+                "description": "Колко си сигурен, че това, което е описано е така",
+                "enum": [
+                  "low",
+                  "middle",
+                  "high"
+                ]
+              },
+              "criticality": {
+                "type": "string",
+                "description": "Ниво на критичност. `critical` композицията не може да се движи; `non-critical` композицията може да се движи",
+                "enum": [
+                  "critical",
+                  "non-critical"
+                ]
+              }
+            },
+            "required": [
+              "part",
+              "summary",
+              "confidence",
+              "criticality"
+            ]
+          }
+        }
+      },
+      "required": [
+        "type",
+        "model",
+        "problems"
+      ]
+    },
+    "trailer": {
+      "type": "object",
+      "nullable": true,
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Типът на ремаркето",
+          "example": "Щора"
+        },
+        "model": {
+          "type": "string",
+          "description": "Моделът на ремаркето",
+          "example": "KÖGEL"
+        },
+        "problems": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string",
+                "description": "Опсание на повредата по ремаркето",
+                "example": "Скъсан брезент"
+              },
+              "confidence": {
+                "type": "string",
+                "description": "Колко си сигурен, че това, което е описано е така",
+                "enum": [
+                  "low",
+                  "middle",
+                  "high"
+                ]
+              }
+            },
+            "required": [
+              "summary",
+              "confidence"
+            ]
+          }
+        }
+      },
+      "required": [
+        "type",
+        "model",
+        "problems"
+      ]
+    }
+  },
+  "required": [
+    "summary",
+    "plate",
+    "vehicle",
+    "trailer"
+  ]
+}
