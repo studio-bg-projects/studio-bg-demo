@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="widgets-scrollspy-nav z-5 bg-body-emphasis border-bottom mt-n5 mx-n4 mx-lg-n6 mb-3 overflow-x-auto d-flex align-items-center" style="min-height: 3rem;">
-    <div class="nav nav-content flex-row ms-auto me-auto" id="audio-controls"></div>
-  </div>
+  @include('virtual-project-manager.partials.navbar')
 
   <h1 class="h3 mb-3">AI Virtual Project Manager</h1>
 
@@ -34,7 +32,7 @@
           <select class="form-select form-select-lg" id="f-assistantBehaviour">
             <option value="normal">Sam - Normal person</option>
             <option value="focused">Ray - Straight-to-the-point</option>
-            <option value="crazy">Karen - Crazy nervous woman</option>
+            <option value="crazy">Karen - Crazy and nervous</option>
           </select>
         </div>
 

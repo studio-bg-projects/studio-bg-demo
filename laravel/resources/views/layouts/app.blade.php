@@ -47,7 +47,7 @@
 
         <ul class="navbar-nav navbar-nav-icons flex-row">
           @if (session()->has('impersonateAdminId'))
-            <li class="nav-item anim anim-pulse" data-bs-theme="dark">
+            <li class="nav-item anim pulse-btn-primary" data-bs-theme="dark">
               <a href="{{ url('/erp/impersonate/stop') }}" class="btn btn-subtle-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Go back as the old user">
                 <i class="fa-regular fa-eyes fs-8"></i>
               </a>

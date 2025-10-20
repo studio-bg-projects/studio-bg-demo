@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+  @include('ambulance-patrol.partials.navbar')
   @include('ambulance-patrol.partials.scripts')
 
   <script async src="https://maps.googleapis.com/maps/api/js?key={{ $googleMapsKey }}&loading=async&callback=initMap"></script>
@@ -12,48 +13,8 @@
     }
   </script>
 
-  <div class="widgets-scrollspy-nav z-5 bg-body-emphasis border-bottom mt-n5 mx-n4 mx-lg-n6 mb-3 overflow-x-auto d-flex align-items-center" style="min-height: 3rem;">
-    <ul class="nav nav-content flex-row">
-      <li class="nav-item">
-        <ol class="breadcrumb my-0 mx-3 white-space-nowrap flex-nowrap">
-          <li class="nav-item" data-id="create-ambulance" style="display: none;">
-            <a class="nav-link px-2 fw-bold ambulance-pulse-btn" onclick="AmbulancePatrol.createAmbulances(); this.classList.remove('ambulance-pulse-btn');" style="cursor: pointer;">
-              <i class="fa-regular fa-plus"></i>
-              Add ambulance
-            </a>
-          </li>
-
-          <li class="nav-item" data-id="create-accident" style="display: none;">
-            <a class="nav-link px-2 fw-bold ambulance-pulse-btn" onclick="AmbulancePatrol.createAccident(); this.classList.remove('ambulance-pulse-btn');" style="cursor: pointer;">
-              <span class="text-danger">
-                <i class="fa-regular fa-fire"></i>
-                Create an incident
-              </span>
-            </a>
-          </li>
-
-          <li class="nav-item" data-id="simulation-play" style="display: none;">
-            <a class="nav-link px-2 fw-bold" onclick="AmbulancePatrol.playPause();" style="cursor: pointer;">
-              <i class="fa-regular fa-pause"></i>
-              Pause simulation
-            </a>
-          </li>
-
-          <li class="nav-item" data-id="simulation-pause" style="display: none;">
-            <a class="nav-link px-2 fw-bold" onclick="AmbulancePatrol.playPause();" style="cursor: pointer;">
-              <i class="fa-regular fa-play"></i>
-              Run the simulation
-            </a>
-          </li>
-        </ol>
-      </li>
-    </ul>
-  </div>
-
-  <h1 class="h3 mb-3">AI Virtual Project Manager</h1>
-
-  <div id="ambulance-patrol">
-    <div class="alert alert-subtle-info fs-9 py-2 px-3" role="alert" id="info-alert">
+  <div id="start-intro">
+    <div class="alert alert-subtle-info fs-9 py-2 px-3" role="alert">
       <p class="mb-1">This proof of concept demonstrates a system that tracks ambulance locations within a region and determines which unit can reach an incident fastest, taking into account current traffic conditions.</p>
       <p class="mb-1">You can adjust the route points and move the incident location using drag & drop.</p>
       <p class="mb-0">
@@ -61,6 +22,21 @@
       </p>
     </div>
 
+    <script>
+      function addFew(total) {
+        for (let i = 1; i <= total; i++) {
+          AmbulancePatrol.createAmbulances();
+        }
+      }
+    </script>
+
+    <button class="btn btn-primary" id="first-add-btn" onclick="addFew(5);">
+      <i class="fa-regular fa-plus"></i>
+      Add 5 Ambulances
+    </button>
+  </div>
+
+  <div id="ambulance-patrol">
     <ul class="map-items" style="display: none;">
       <li id="ambulanceTemplate" style="display: none;">
         <a style="float: right; cursor: pointer;" data-trigger="remove">

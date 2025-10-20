@@ -701,7 +701,7 @@
       return;
     }
 
-    document.querySelector('#info-alert').style.display = 'none';
+    document.querySelector('#start-intro').style.display = 'none';
 
     let ambulance = {};
     ambulance.color = AmbulancePatrol.ambulanceBlanks.shift();

@@ -153,7 +153,6 @@ class VehicleInspectionsController extends Controller
     /* @var $gptRequest GptRequest */
     $gptRequest = GptRequest::where('id', $id)->firstOrFail();
 
-    // @todo
 //    if ($gptRequest->progressStatus) {
 //      return redirect('/erp/visual-detector/view/' . $gptRequest->id)
 //        ->withErrors(['msg' => 'Този запис е вече анализиран!']);
