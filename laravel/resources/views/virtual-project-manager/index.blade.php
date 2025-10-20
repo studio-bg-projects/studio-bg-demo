@@ -14,12 +14,12 @@
 
         <div class="col-12 col-md-6 col-xl-3">
           <label class="app-form-label required" for="f-name">Your name</label>
-          <input class="form-control form-control-lg" id="f-name" type="text" placeholder="Alex Gavazov..." required/>
+          <input class="form-control" id="f-name" type="text" placeholder="Alex Gavazov..." required/>
         </div>
 
         <div class="col-12 col-md-6 col-xl-3">
           <label class="app-form-label" for="f-role">Your role</label>
-          <select class="form-select form-select-lg" id="f-role">
+          <select class="form-select" id="f-role">
             <option value="engineer">Engineer</option>
             <option value="designer" disabled>Designer (coming soon)</option>
             <option value="qa" disabled>QA (coming soon)</option>
@@ -29,7 +29,7 @@
 
         <div class="col-12 col-md-6 col-xl-3">
           <label class="app-form-label" for="f-assistantBehaviour">Assistant behaviour</label>
-          <select class="form-select form-select-lg" id="f-assistantBehaviour">
+          <select class="form-select" id="f-assistantBehaviour">
             <option value="normal">Sam - Normal person</option>
             <option value="focused">Ray - Straight-to-the-point</option>
             <option value="crazy">Karen - Crazy and nervous</option>
@@ -38,7 +38,7 @@
 
         <div class="col-12 col-md-6 col-xl-3">
           <label class="app-form-label" for="f-assistantBehaviour">Language</label>
-          <select class="form-select form-select-lg" id="f-assistantBehaviour">
+          <select class="form-select" id="f-assistantBehaviour">
             <option value="english">English</option>
             <option value="bulgarian">Bulgarian</option>
             <option value="german">German (not tested)</option>
@@ -46,7 +46,10 @@
         </div>
 
         <div class="col-12">
-          <button class="btn btn-primary btn-lg mt-3" id="js-start-btn" type="button">Start</button>
+          <button class="btn btn-primary mt-3" id="js-start-btn" type="button">
+            <i class="fa-regular fa-microphone"></i>
+            Start
+          </button>
         </div>
       </div>
     </div>

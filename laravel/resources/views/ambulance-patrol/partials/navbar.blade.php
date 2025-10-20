@@ -37,7 +37,7 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link px-2 fw-bold pulse-btn-primary" onclick="AmbulancePatrol.createAmbulances(); this.classList.remove('pulse-btn-primary');" style="cursor: pointer;">
+      <a class="nav-link px-2 fw-bold" onclick="AmbulancePatrol.createAmbulances();" style="cursor: pointer;">
         <i class="fa-regular fa-plus"></i>
         Add ambulance
       </a>

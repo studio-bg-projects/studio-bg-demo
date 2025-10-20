@@ -6,18 +6,18 @@ use DateTime;
 
 /**
  * @property integer $id
- * @property array $files
- * @property object $request
- * @property object $response
- * @property string $systemMessage
- * @property string $responseFormat
- * @property integer $progressStatus
+ * @property null|array $files
+ * @property null|object $request
+ * @property null|object $response
+ * @property null|string $systemMessage
+ * @property null|string $responseFormat
+ * @property null|integer $progressStatus
  * @property DateTime $createdAt
  * @property DateTime $updatedAt
  *
  * @property object $responseContent
  */
-class GptRequest extends BaseModel
+class VehicleInspection extends BaseModel
 {
   protected $fillable = [
     'files',
@@ -28,7 +28,7 @@ class GptRequest extends BaseModel
   ];
 
   protected $casts = [
-    'files' => 'files',
+    'files' => 'object',
     'request' => 'object',
     'response' => 'object',
   ];

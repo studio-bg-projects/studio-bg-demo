@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\FilterAndSort;
-use App\Models\GptRequest;
+use App\Models\VehicleInspection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\MessageBag;
@@ -16,20 +16,20 @@ class VehicleInspectionsController extends Controller
 
   public function index()
   {
-    $gptRequests = GptRequest::orderBy('id', 'desc')->get();
+    $vehicleInspections = VehicleInspection::orderBy('id', 'desc')->get();
 
     return view('vehicle-inspections.index', [
-      'gptRequests' => $gptRequests,
+      'vehicleInspections' => $vehicleInspections,
     ]);
   }
 
   public function create(Request $request)
   {
     $errors = session()->get('errors') ?? new MessageBag();
-    $gptRequest = new GptRequest();
+    $vehicleInspection = new VehicleInspection();
 
     if ($request->isMethod('post')) {
-      $gptRequest->fill($request->all());
+      $vehicleInspection->fill($request->all());
 
       $uploadedPhotos = $request->file('photos', []);
 
@@ -49,19 +49,19 @@ class VehicleInspectionsController extends Controller
       $uploadsCount = $validPhotos->count();
 
       if ($uploadsCount <= 0) {
-        $errors->add('fileGroupId', 'Трябва да прикачите поне едно изображение');
+        $errors->add('photos', 'Трябва да прикачите поне едно изображение');
       }
 
       if ($uploadsCount > 10) {
-        $errors->add('fileGroupId', 'Към момента не може да качвате повече от 10 изображения');
+        $errors->add('photos', 'Към момента не може да качвате повече от 10 изображения');
       }
 
       if ($errors->isEmpty()) {
-        $gptRequest->save();
+        $vehicleInspection->save();
 
         $files = [];
         $storageDisk = Storage::disk('public');
-        $baseDirectory = 'uploads/vehicle-inspections/' . $gptRequest->id;
+        $baseDirectory = 'uploads/vehicle-inspections/' . $vehicleInspection->id;
 
         $storageDisk->deleteDirectory($baseDirectory);
 
@@ -70,7 +70,7 @@ class VehicleInspectionsController extends Controller
             $image = Image::read($file->getRealPath());
             $image->scale(width: 1000, height: 1000);
 
-            $filename = (string)Str::uuid() . '.jpg';
+            $filename = Str::uuid() . '.jpg';
             $relativePath = $baseDirectory . '/' . $filename;
 
             $stored = $storageDisk->put($relativePath, (string)$image->toJpeg());
@@ -79,69 +79,57 @@ class VehicleInspectionsController extends Controller
               throw new \RuntimeException('Unable to store the processed image.');
             }
 
-            $files[] = [
-              'groupType' => 'vehicle-inspections',
-              'groupId' => $gptRequest->id,
-              'name' => $filename,
-              'urls' => [
-                'preview' => $storageDisk->url($relativePath),
-                'analize' => $storageDisk->url($relativePath),
-              ],
-            ];
+            $files[] = $filename;
           }
 
-          $gptRequest->files = [
-            'uploads' => $files,
-          ];
-          $gptRequest->save();
+          $vehicleInspection->files = $files;
+          $vehicleInspection->save();
 
-          return redirect('/vehicle-inspections/view/' . $gptRequest->id)
+          return redirect('/vehicle-inspections/view/' . $vehicleInspection->id)
             ->with('success', 'Успешно създадохте нов запис.');
         } catch (\Throwable $exception) {
           $storageDisk->deleteDirectory($baseDirectory);
 
-          if ($gptRequest->exists) {
-            $gptRequest->delete();
+          if ($vehicleInspection->exists) {
+            $vehicleInspection->delete();
           }
 
-          $errors->add('fileGroupId', 'Възникна грешка при обработката на изображенията. Моля, опитайте отново.');
+          $errors->add('photos', 'Възникна грешка при обработката на изображенията. Моля, опитайте отново.');
         }
       }
-    } else {
-      $gptRequest->fileGroupId = Str::random(50);
     }
 
     return view('vehicle-inspections.create', [
-      'gptRequest' => $gptRequest,
+      'vehicleInspection' => $vehicleInspection,
       'errors' => $errors,
     ]);
   }
 
   public function view(int $id)
   {
-    /* @var $gptRequest GptRequest */
-    $gptRequest = GptRequest::where('id', $id)->firstOrFail();
+    /* @var $vehicleInspection VehicleInspection */
+    $vehicleInspection = VehicleInspection::where('id', $id)->firstOrFail();
 
     // View
     return view('vehicle-inspections.view', [
-      'gptRequest' => $gptRequest,
+      'vehicleInspection' => $vehicleInspection,
       'response' => [],
     ]);
   }
 
   public function reset(int $id)
   {
-    /* @var $gptRequest GptRequest */
-    $gptRequest = GptRequest::where('id', $id)->firstOrFail();
+    /* @var $vehicleInspection VehicleInspection */
+    $vehicleInspection = VehicleInspection::where('id', $id)->firstOrFail();
 
-    $gptRequest->request = null;
-    $gptRequest->response = null;
-    $gptRequest->systemMessage = null;
-    $gptRequest->responseFormat = null;
-    $gptRequest->progressStatus = 0;
-    $gptRequest->save();
+    $vehicleInspection->request = null;
+    $vehicleInspection->response = null;
+    $vehicleInspection->systemMessage = null;
+    $vehicleInspection->responseFormat = null;
+    $vehicleInspection->progressStatus = 0;
+    $vehicleInspection->save();
 
-    return redirect('/vehicle-inspections/view/' . $gptRequest->id)
+    return redirect('/vehicle-inspections/view/' . $vehicleInspection->id)
       ->with('success', 'Записът е нулиран.');
   }
 
@@ -150,23 +138,23 @@ class VehicleInspectionsController extends Controller
     $apiUrl = 'https://api.openai.com/v1/responses';
     $apiKey = config('services.openai.api_key') ?? env('OPENAI_API_KEY');
 
-    /* @var $gptRequest GptRequest */
-    $gptRequest = GptRequest::where('id', $id)->firstOrFail();
+    /* @var $vehicleInspection VehicleInspection */
+    $vehicleInspection = VehicleInspection::where('id', $id)->firstOrFail();
 
-//    if ($gptRequest->progressStatus) {
-//      return redirect('/erp/visual-detector/view/' . $gptRequest->id)
+//    if ($vehicleInspection->progressStatus) {
+//      return redirect('/erp/visual-detector/view/' . $vehicleInspection->id)
 //        ->withErrors(['msg' => 'Този запис е вече анализиран!']);
 //    }
 
     // Fill
-    $gptRequest->systemMessage = file_get_contents(storage_path('ai-prompts/system-message.md'));
-    $gptRequest->systemMessage .= "\n" . dbConfig('model:additionalPrompt');
-    $gptRequest->responseFormat = file_get_contents(storage_path('ai-prompts/response-format.json'));
+    $vehicleInspection->systemMessage = file_get_contents(storage_path('ai-prompts/system-message.md'));
+    $vehicleInspection->systemMessage .= "\n" . dbConfig('model:additionalPrompt');
+    $vehicleInspection->responseFormat = file_get_contents(storage_path('ai-prompts/response-format.json'));
 
     // Files
     $photos = [];
 
-    foreach ($gptRequest->uploads as $upload) {
+    foreach ($vehicleInspection->uploads as $upload) {
       $imageFile = storage_path('app/public/uploads/' . $upload->groupType . '/' . $upload->groupId . '/' . $upload->name);
       $image = Image::read($imageFile);
       $image->scale(width: 1500, height: 1500);
@@ -191,7 +179,7 @@ class VehicleInspectionsController extends Controller
           'content' => [
             [
               'type' => 'input_text',
-              'text' => $gptRequest->systemMessage
+              'text' => $vehicleInspection->systemMessage
             ]
           ]
         ],
@@ -200,7 +188,7 @@ class VehicleInspectionsController extends Controller
           'content' => [
             [
               'type' => 'output_text',
-              'text' => $gptRequest->responseFormat
+              'text' => $vehicleInspection->responseFormat
             ]
           ]
         ],
@@ -212,8 +200,8 @@ class VehicleInspectionsController extends Controller
     ];
 
     // Mark it in progress
-    $gptRequest->progressStatus = 1;
-    $gptRequest->save();
+    $vehicleInspection->progressStatus = 1;
+    $vehicleInspection->save();
 
     // Curl
     $ch = curl_init($apiUrl);
@@ -230,26 +218,26 @@ class VehicleInspectionsController extends Controller
       $error = curl_error($ch);
       dd($error);
     } else {
-      $gptRequest->request = $request;
-      $gptRequest->response = json_decode($response);
-      $gptRequest->progressStatus = 2;
-      $gptRequest->save();
+      $vehicleInspection->request = $request;
+      $vehicleInspection->response = json_decode($response);
+      $vehicleInspection->progressStatus = 2;
+      $vehicleInspection->save();
     }
     curl_close($ch);
 
-    return redirect('/vehicle-inspections/view/' . $gptRequest->id)
+    return redirect('/vehicle-inspections/view/' . $vehicleInspection->id)
       ->with('success', 'Записът беше пуснат за анализ.');
   }
 
   public function delete(int $id)
   {
-    /* @var $gptRequest GptRequest */
-    $gptRequest = GptRequest::where('id', $id)->firstOrFail();
+    /* @var $vehicleInspection VehicleInspection */
+    $vehicleInspection = VehicleInspection::where('id', $id)->firstOrFail();
 
     $storageDisk = Storage::disk('public');
-    $storageDisk->deleteDirectory('uploads/vehicle-inspections/' . $gptRequest->id);
+    $storageDisk->deleteDirectory('uploads/vehicle-inspections/' . $vehicleInspection->id);
 
-    $gptRequest->delete();
+    $vehicleInspection->delete();
 
     return redirect('/vehicle-inspections')
       ->with('success', 'Успешно изтрихте записа.');

@@ -24,7 +24,12 @@
         <div class="card">
           <div class="card-body pb-5">
             <h4 class="card-title mb-4">Прикачване на изображения</h4>
-            <input type="file" class="form-control " id="f-photos" name="photos[]" accept="image/*" multiple/>
+            <input type="file" class="form-control @if($errors->has('photos')) is-invalid @endif" id="f-photos" name="photos[]" accept="image/*" multiple/>
+            @if($errors->has('photos'))
+              <div class="invalid-feedback">
+                {{ $errors->first('photos') }}
+              </div>
+            @endif
           </div>
         </div>
       </div>

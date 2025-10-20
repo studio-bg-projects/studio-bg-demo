@@ -4,14 +4,15 @@
   @include('ambulance-patrol.partials.navbar')
   @include('ambulance-patrol.partials.scripts')
 
-  <script async src="https://maps.googleapis.com/maps/api/js?key={{ $googleMapsKey }}&loading=async&callback=initMap"></script>
 
   <script>
-    function initMap() {
+    window.initMap = function () {
       MyMap.init();
       AmbulancePatrol.init();
     }
   </script>
+
+  <script async src="https://maps.googleapis.com/maps/api/js?key={{ $googleMapsKey }}&loading=async&callback=initMap"></script>
 
   <div id="start-intro">
     <div class="alert alert-subtle-info fs-9 py-2 px-3" role="alert">
@@ -23,7 +24,7 @@
     </div>
 
     <script>
-      function addFew(total) {
+      window.addFew = function (total) {
         for (let i = 1; i <= total; i++) {
           AmbulancePatrol.createAmbulances();
         }

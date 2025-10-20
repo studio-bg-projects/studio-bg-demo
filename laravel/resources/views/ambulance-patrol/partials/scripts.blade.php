@@ -1,5 +1,6 @@
 <script>
   let MyMap = {};
+  window.MyMap = MyMap;
 
   MyMap.style = [
     {
@@ -221,13 +222,6 @@
 
     return new google.maps.LatLng(point1.lat + (point2.lat - point1.lat) * m, point1.lng + (point2.lng - point1.lng) * m);
   };
-
-  ////
-
-  function googleMapsApiIsLoaded() {
-    MyMap.loaded();
-  }
-
 </script>
 
 <script>
@@ -417,10 +411,13 @@
       };
     }
   };
+
+  window.TimePolygon = TimePolygon;
 </script>
 
 <script>
   let AmbulancePatrol = {};
+  window.AmbulancePatrol = AmbulancePatrol;
 
   AmbulancePatrol.map = null;
 

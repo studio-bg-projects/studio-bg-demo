@@ -4,15 +4,15 @@
   @include('vehicle-inspections.partials.navbar')
 
   <h1 class="h4 mb-5">
-    Преглед на анализ
-    {{ !empty($gptRequest->responseContent->summary) ? ' - ' . $gptRequest->responseContent->summary : '' }}
+    Преглед на инспекция
+    {{ !empty($vehicleInspection->responseContent->summary) ? ' - ' . $vehicleInspection->responseContent->summary : '' }}
   </h1>
 
   <div class="row">
-    @foreach($gptRequest->uploads as $uploads)
+    @foreach($vehicleInspection->files as $file)
       <div class="col text-center mb-5">
-        <a href="{{ $uploads->urls->analize }}" target="_blank" data-gallery="uploads-preview">
-          <img src="{{ $uploads->urls->preview }}" alt="" style="height: 150px;"/>
+        <a href="{{ Storage::url('uploads/vehicle-inspections/' . $vehicleInspection->id . '/' . $file) }}" target="_blank" data-gallery="uploads-preview">
+          <img src="{{ Storage::url('uploads/vehicle-inspections/' . $vehicleInspection->id . '/' . $file) }}" alt="" style="height: 150px;"/>
         </a>
       </div>
     @endforeach
@@ -20,12 +20,12 @@
 
   <hr/>
 
-  @if ($gptRequest->progressStatus === 0)
+  @if ($vehicleInspection->progressStatus === 0)
     <pre class="alert alert-outline-danger" id="js-response-error" style="display: none;"></pre>
-    <div class="alert alert-outline-primary">Заявката за анализ на изображенията беше пусната. Моля, изчакайте!</div>
+    <div class="alert alert-outline-primary">Заявката за инспекция на изображенията беше пусната. Моля, изчакайте!</div>
     <script type="module">
       $.ajax({
-        url: '{{ url('/vehicle-inspections/process/' . $gptRequest->id) }}',
+        url: '{{ url('/vehicle-inspections/process/' . $vehicleInspection->id) }}',
         success: function () {
           setTimeout(() => document.location = document.location, 2000);
         },
@@ -37,12 +37,12 @@
 
       setTimeout(() => document.location = '?', 1000);
     </script>
-  @elseif ($gptRequest->progressStatus === 1)
-    <div class="alert alert-outline-primary">В момента се извършва визуален анализ. Моля, изчакайте ({{ app('request')->input('i') + 1 }})!</div>
+  @elseif ($vehicleInspection->progressStatus === 1)
+    <div class="alert alert-outline-primary">В момента се извършва визуалена инспекция. Моля, изчакайте ({{ app('request')->input('i') + 1 }})!</div>
     <script type="module">
       setTimeout(() => document.location = '?i=' + {{ app('request')->input('i') + 1 }}, 1000);
     </script>
-  @elseif ($gptRequest->progressStatus === 2)
+  @elseif ($vehicleInspection->progressStatus === 2)
     <div class="card mb-5">
       <div class="card-body">
         <div class="row g-4 g-xl-1 g-xxl-3 justify-content-between">
@@ -53,7 +53,7 @@
               </div>
               <div>
                 <p class="fw-bold mb-1">Тип превозно средство</p>
-                <h4 class="fw-bolder text-nowrap">{{ !empty($gptRequest->responseContent->vehicle->type) ? $gptRequest->responseContent->vehicle->type : '-' }}</h4>
+                <h4 class="fw-bolder text-nowrap">{{ !empty($vehicleInspection->responseContent->vehicle->type) ? $vehicleInspection->responseContent->vehicle->type : '-' }}</h4>
               </div>
             </div>
           </div>
@@ -64,7 +64,7 @@
               </div>
               <div>
                 <p class="fw-bold mb-1">Регистрационен номер</p>
-                <h4 class="fw-bolder text-nowrap">{{ !empty($gptRequest->responseContent->plate) ? $gptRequest->responseContent->plate : '-' }}</h4>
+                <h4 class="fw-bolder text-nowrap">{{ !empty($vehicleInspection->responseContent->plate) ? $vehicleInspection->responseContent->plate : '-' }}</h4>
               </div>
             </div>
           </div>
@@ -75,7 +75,7 @@
               </div>
               <div>
                 <p class="fw-bold mb-1">Модел превозно средство</p>
-                <h4 class="fw-bolder text-nowrap">{{ !empty($gptRequest->responseContent->vehicle->model) ? $gptRequest->responseContent->vehicle->model : '-' }}</h4>
+                <h4 class="fw-bolder text-nowrap">{{ !empty($vehicleInspection->responseContent->vehicle->model) ? $vehicleInspection->responseContent->vehicle->model : '-' }}</h4>
               </div>
             </div>
           </div>
@@ -87,8 +87,8 @@
               <div>
                 <p class="fw-bold mb-1">Ремарке</p>
                 <h4 class="fw-bolder text-nowrap">
-                  {{ !empty($gptRequest->responseContent->trailer->type) ? $gptRequest->responseContent->trailer->type : '-' }}
-                  {{ !empty($gptRequest->responseContent->trailer->model) ? $gptRequest->responseContent->trailer->model : '-' }}
+                  {{ !empty($vehicleInspection->responseContent->trailer->type) ? $vehicleInspection->responseContent->trailer->type : '-' }}
+                  {{ !empty($vehicleInspection->responseContent->trailer->model) ? $vehicleInspection->responseContent->trailer->model : '-' }}
                 </h4>
               </div>
             </div>
@@ -101,9 +101,9 @@
       <div class="col-md-6 d-flex align-items-stretch">
         <div class="card w-100">
           <div class="card-body">
-            <h2 class="h4 mb-5">Проблеми по превозното средство ({{ !empty($gptRequest->responseContent->vehicle->type) ? $gptRequest->responseContent->vehicle->type : '-' }})</h2>
+            <h2 class="h4 mb-5">Проблеми по превозното средство ({{ !empty($vehicleInspection->responseContent->vehicle->type) ? $vehicleInspection->responseContent->vehicle->type : '-' }})</h2>
 
-            @if (!empty($gptRequest->responseContent->vehicle->problems) || !empty($gptRequest->responseContent->vehicle->scratches))
+            @if (!empty($vehicleInspection->responseContent->vehicle->problems) || !empty($vehicleInspection->responseContent->vehicle->scratches))
               <table class="table fs-9">
                 <thead>
                 <tr>
@@ -114,7 +114,7 @@
                 </tr>
                 </thead>
                 <tbody class="list">
-                @foreach($gptRequest->responseContent->vehicle->problems ?? [] as $problem)
+                @foreach($vehicleInspection->responseContent->vehicle->problems ?? [] as $problem)
                   <tr class="btn-reveal-trigger position-static">
                     <td class="align-middle white-space-nowrap py-2">
                       {{ $problem->part ?? '-' }}
@@ -146,7 +146,7 @@
                     </td>
                   </tr>
                 @endforeach
-                @foreach($gptRequest->responseContent->vehicle->scratches ?? [] as $scratch)
+                @foreach($vehicleInspection->responseContent->vehicle->scratches ?? [] as $scratch)
                   <tr class="btn-reveal-trigger position-static">
                     <td class="align-middle white-space-nowrap py-2">
                       Драскотина / Пукнатина
@@ -183,9 +183,9 @@
       <div class="col-md-6 d-flex align-items-stretch">
         <div class="card w-100">
           <div class="card-body">
-            <h2 class="h4 mb-5">Проблеми по ремаркето ({{ !empty($gptRequest->responseContent->trailer->type) ? 'Тип: ' . $gptRequest->responseContent->trailer->type : '-' }})</h2>
+            <h2 class="h4 mb-5">Проблеми по ремаркето ({{ !empty($vehicleInspection->responseContent->trailer->type) ? 'Тип: ' . $vehicleInspection->responseContent->trailer->type : '-' }})</h2>
 
-            @if (!empty($gptRequest->responseContent->trailer->problems))
+            @if (!empty($vehicleInspection->responseContent->trailer->problems))
               <table class="table fs-9">
                 <thead>
                 <tr>
@@ -194,7 +194,7 @@
                 </tr>
                 </thead>
                 <tbody class="list">
-                @foreach($gptRequest->responseContent->trailer->problems ?? [] as $problem)
+                @foreach($vehicleInspection->responseContent->trailer->problems ?? [] as $problem)
                   <tr class="btn-reveal-trigger position-static">
                     <td class="align-middle white-space-nowrap py-2">
                       {{ $problem->summary ?? '-' }}
@@ -226,18 +226,18 @@
   <hr/>
 
   <div class="fs-9 text-muted mb-3">
-    @if (!empty($gptRequest->responseContent->version))
+    @if (!empty($vehicleInspection->responseContent->version))
       Версия на модела:
-      <code class="fs-9">studio-bg-{{ $gptRequest->responseContent->version ?? '-' }}</code>
+      <code class="fs-9">studio-bg-{{ $vehicleInspection->responseContent->version ?? '-' }}</code>
     @endif
 
-    @if ($gptRequest->response)
+    @if ($vehicleInspection->response)
       |
       <a data-bs-toggle="collapse" href="#responseBlock" role="button" aria-expanded="false" aria-controls="responseBlock">
         Debug
       </a>
       <div class="collapse" id="responseBlock">
-        @dump($gptRequest->response)
+        @dump($vehicleInspection->response)
       </div>
     @endif
   </div>
