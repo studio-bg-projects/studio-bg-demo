@@ -38,7 +38,7 @@ class VehicleInspectionsController extends Controller
       }
 
       $validPhotos = collect($uploadedPhotos)
-        ->filter(fn ($file) => $file instanceof \Illuminate\Http\UploadedFile && $file->isValid())
+        ->filter(fn($file) => $file instanceof \Illuminate\Http\UploadedFile && $file->isValid())
         ->filter(function ($file) {
           $mimeType = $file->getMimeType();
 
