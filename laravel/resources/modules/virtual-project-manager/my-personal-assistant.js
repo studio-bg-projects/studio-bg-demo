@@ -31,15 +31,11 @@ export class MyPersonalAssistant {
   }
 
   loadState() {
-    this.tasks = JSON.parse(localStorage.getItem('tasks')) || {};
-    const storedId = parseInt(localStorage.getItem('lastTaskId'), 10);
-    this.lastId = Number.isInteger(storedId) ? storedId : Object.keys(this.tasks).length;
+    this.tasks = {};
+    this.lastId = 0;
   }
 
-  saveState() {
-    localStorage.setItem('tasks', JSON.stringify(this.tasks));
-    localStorage.setItem('lastTaskId', this.lastId.toString());
-  }
+  saveState() {}
 
   setToos(tools) {
     this.toolls = tools;

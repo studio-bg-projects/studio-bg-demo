@@ -52,18 +52,7 @@
       <div id="audio-visualizer" style="width: 100%; height: calc(100vh - 500px);"></div>
       <pre id="action-log"></pre>
     </div>
-    <div class="col" id="tasks-list">
-      <div class="list-group">
-        @for ($i = 1; $i <= 10; $i++)
-          <div class="list-group-item">
-            <div class="d-flex justify-content-between align-items-center">
-              Task here
-              <span class="badge-phoenix badge-phoenix-primary badge">123</span>
-            </div>
-          </div>
-        @endfor
-      </div>
-    </div>
+    <div class="col" id="tasks-list"></div>
   </div>
 
   <script type="module">
