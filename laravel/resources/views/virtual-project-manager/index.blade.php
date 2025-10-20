@@ -56,6 +56,7 @@
     </div>
   </div>
 
+  <div id="start-conv-message" class="text-body-tertiary text-center fs-4" style="display: none"></div>
   <div id="audio-visualizer" style="width: 100%; height: calc(100vh - 500px);"></div>
   <pre id="action-log"></pre>
 
@@ -128,75 +129,87 @@
       }
 
       savePreferences();
-      projectManagerApp.startConnectionAndMicrophone();
-      window.aduioVisualizer.start();
-      $preferencesCard.fadeOut();
+
+      $preferencesCard.hide();
+      $('#start-conv-message')
+        .text(`${$name.val().trim()}, you can now start the conversation with your AI assistant!`)
+        .fadeIn();
+
+      initTheAssistant();
     });
   </script>
 
   <script type="module">
-    window.projectManagerApp = new MyPersonalAssistant({
-      model: 'gpt-realtime-mini',
-      sessionUrl: @json(url('/virtual-project-manager/session')),
-      csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-      audioControlsNode: document.getElementById('audio-controls'),
-      logNode: document.getElementById('action-log'),
-      tools: [
-        {
-          type: 'function',
-          name: 'getAllTasks',
-          description: 'Връща наличните задачи'
-        },
-        {
-          type: 'function',
-          name: 'changePriority',
-          description: 'Смяна на приоритета на задача',
-          parameters: {
-            type: 'object',
-            properties: {
-              id: {type: 'integer', description: 'ID-то на задачата която ще и променим приоритета'},
-              priority: {type: 'integer', description: 'Задаване на стойност на приоритета за дадена задача'}
-            }
-          }
-        },
-        {
-          type: 'function',
-          name: 'addTask',
-          description: 'Добавяне на нова задача',
-          parameters: {
-            type: 'object',
-            properties: {
-              text: {type: 'string', description: 'Текст на задачата'},
-              priority: {type: 'integer', description: 'Приоритет на новата задача'}
-            }
-          }
-        },
-        {
-          type: 'function',
-          name: 'deleteTask',
-          description: 'Изтриване на задача',
-          parameters: {
-            type: 'object',
-            properties: {
-              id: {type: 'integer', description: 'ID-то на задачата която ще бъде изтрита'}
-            }
-          }
-        }
-      ],
-      instructions: `
-      Ти си Project Manager, аз съм Алекс. Ще ми помагаш да си планирам задачите. Ще взимаш мнение и участие в планирането. Ще ми даваш съвети и активно ще ме разпитваш за дтайли, за да съм сигурен, че създавам правилни задачи.
-      Аз съм програмист и искам да планирам нещата, точно и ясно.
-      **Искам ти да започнеш разговора и да ме питаш как съм!**
-    `
-    });
+    window.initTheAssistant = function () {
+      const name = $('#f-name').val().trim();
 
-    const visualizerNode = document.getElementById('audio-visualizer');
-    window.aduioVisualizer = new MicBallVisualizer(visualizerNode, {
-      colorInner: '#22d3ee',
-      colorOuter: '#8b5cf6',
-      minRadius: 52,
-      maxRadius: 118,
-      glow: true
-    });
+      const projectManagerApp = new MyPersonalAssistant({
+        model: 'gpt-realtime-mini',
+        sessionUrl: @json(url('/virtual-project-manager/session')),
+        csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        audioControlsNode: document.getElementById('audio-controls'),
+        logNode: document.getElementById('action-log'),
+        tools: [
+          {
+            type: 'function',
+            name: 'getAllTasks',
+            description: 'Връща наличните задачи'
+          },
+          {
+            type: 'function',
+            name: 'changePriority',
+            description: 'Смяна на приоритета на задача',
+            parameters: {
+              type: 'object',
+              properties: {
+                id: {type: 'integer', description: 'ID-то на задачата която ще и променим приоритета'},
+                priority: {type: 'integer', description: 'Задаване на стойност на приоритета за дадена задача'}
+              }
+            }
+          },
+          {
+            type: 'function',
+            name: 'addTask',
+            description: 'Добавяне на нова задача',
+            parameters: {
+              type: 'object',
+              properties: {
+                text: {type: 'string', description: 'Текст на задачата'},
+                priority: {type: 'integer', description: 'Приоритет на новата задача'}
+              }
+            }
+          },
+          {
+            type: 'function',
+            name: 'deleteTask',
+            description: 'Изтриване на задача',
+            parameters: {
+              type: 'object',
+              properties: {
+                id: {type: 'integer', description: 'ID-то на задачата която ще бъде изтрита'}
+              }
+            }
+          }
+        ],
+        instructions: `
+          Ти си Project Manager, аз съм ${name}. Ще ми помагаш да си планирам задачите. Ще взимаш мнение и участие в планирането. Ще ми даваш съвети и активно ще ме разпитваш за дтайли, за да съм сигурен, че създавам правилни задачи.
+          Аз съм програмист и искам да планирам нещата, точно и ясно.
+        `
+      });
+
+      const visualizerNode = document.getElementById('audio-visualizer');
+      const audioVisualizer = new MicBallVisualizer(visualizerNode, {
+        colorInner: '#22d3ee',
+        colorOuter: '#8b5cf6',
+        minRadius: 52,
+        maxRadius: 118,
+        glow: true
+      });
+
+      //
+
+      projectManagerApp.startConnectionAndMicrophone();
+      audioVisualizer.start();
+    }
   </script>
 @endsection
