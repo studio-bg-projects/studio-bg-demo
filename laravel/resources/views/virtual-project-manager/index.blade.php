@@ -124,61 +124,119 @@
   </script>
 
   <script type="module">
+    const behaviourConfigs = {
+      normal: {
+        persona: 'Sam',
+        voice: 'alloy',
+        description: 'Keep a friendly, collaborative tone. Offer encouragement while making sure the plan stays realistic and organised.'
+      },
+      focused: {
+        persona: 'Ray',
+        voice: 'cedar',
+        description: 'Be concise, direct, and structured. Quickly get to the heart of the task details and push for actionable next steps.'
+      },
+      crazy: {
+        persona: 'Karen',
+        voice: 'coral',
+        description: 'Explode with hysterical urgency. Sound frantic, demanding answers right now, peppering speech with excited exclamations, intense curiosity, and playful panic while still guiding the planning process.'
+      }
+    };
+
+    const languageConfigs = {
+      english: {
+        label: 'English',
+        instructions: 'Always respond entirely in English, including task names, summaries, and follow-up questions.'
+      },
+      bulgarian: {
+        label: 'Bulgarian',
+        instructions: 'Always respond entirely in Bulgarian. Translate any task details you reference or create unless explicitly told otherwise.'
+      },
+      german: {
+        label: 'German',
+        instructions: 'Always respond entirely in German. Make sure technical terms are clear for a software development context.'
+      }
+    };
+
+    function selectBehaviour(behaviourKey) {
+      return behaviourConfigs[behaviourKey] || behaviourConfigs.normal;
+    }
+
+    function selectLanguage(languageKey) {
+      return languageConfigs[languageKey] || languageConfigs.english;
+    }
+
+    function buildInstructions(preferences, behaviour, language) {
+      return [
+        `You are ${behaviour.persona}, an AI project manager helping ${preferences.name} plan software development work.`,
+        behaviour.description,
+        `Maintain awareness of ${preferences.name}'s goals and ask targeted follow-up questions to clarify requirements, edge cases, and priorities.`,
+        'Provide concise action items, highlight risks, and suggest next steps that keep the project moving forward.',
+        language.instructions,
+        'Reference the available tools when you need to inspect, update, create, or remove tasks, and explain why you are invoking them.'
+      ].join('\n');
+    }
+
     window.initTheAssistant = function () {
-      const name = $('#f-name').val().trim();
+      const preferences = {
+        name: $('#f-name').val().trim(),
+        assistantBehaviour: $('#f-assistantBehaviour').val(),
+        language: $('#f-language').val()
+      };
+
+      const behaviour = selectBehaviour(preferences.assistantBehaviour);
+      const language = selectLanguage(preferences.language);
+
+      console.log('behaviour', behaviour, behaviour.voice);
 
       const projectManagerApp = new MyPersonalAssistant({
-        model: 'gpt-realtime-mini',
         sessionUrl: @json(url('/virtual-project-manager/session')),
         csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         audioControlsNode: document.getElementById('audio-controls'),
         logNode: document.getElementById('action-log'),
+        voice: behaviour.voice,
         tools: [
           {
             type: 'function',
             name: 'getAllTasks',
-            description: 'Връща наличните задачи'
+            description: 'Retrieve the list of available tasks so you can review the current backlog.'
           },
           {
             type: 'function',
             name: 'changePriority',
-            description: 'Смяна на приоритета на задача',
+            description: 'Update the priority of a specific task when the plan needs to be adjusted.',
             parameters: {
               type: 'object',
               properties: {
-                id: {type: 'integer', description: 'ID-то на задачата която ще и променим приоритета'},
-                priority: {type: 'integer', description: 'Задаване на стойност на приоритета за дадена задача'}
+                id: {type: 'integer', description: 'Identifier of the task whose priority should change.'},
+                priority: {type: 'integer', description: 'New priority value that should be applied to the task.'}
               }
             }
           },
           {
             type: 'function',
             name: 'addTask',
-            description: 'Добавяне на нова задача',
+            description: 'Create a new task for the plan when fresh work items are identified.',
             parameters: {
               type: 'object',
               properties: {
-                text: {type: 'string', description: 'Текст на задачата'},
-                priority: {type: 'integer', description: 'Приоритет на новата задача'}
+                text: {type: 'string', description: 'The task description capturing the planned work.'},
+                priority: {type: 'integer', description: 'Priority value assigned to the new task.'}
               }
             }
           },
           {
             type: 'function',
             name: 'deleteTask',
-            description: 'Изтриване на задача',
+            description: 'Remove a task from the backlog when it is no longer needed.',
             parameters: {
               type: 'object',
               properties: {
-                id: {type: 'integer', description: 'ID-то на задачата която ще бъде изтрита'}
+                id: {type: 'integer', description: 'Identifier of the task that should be removed.'}
               }
             }
           }
         ],
-        instructions: `
-          Ти си Project Manager, аз съм ${name}. Ще ми помагаш да си планирам задачите. Ще взимаш мнение и участие в планирането. Ще ми даваш съвети и активно ще ме разпитваш за дтайли, за да съм сигурен, че създавам правилни задачи.
-          Аз съм програмист и искам да планирам нещата, точно и ясно.
-        `
+        instructions: buildInstructions(preferences, behaviour, language)
       });
 
       const visualizerNode = document.getElementById('audio-visualizer');
