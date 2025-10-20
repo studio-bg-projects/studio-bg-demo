@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Helpers\FilterAndSort;
 use App\Models\GptRequest;
-use App\Models\Upload;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Intervention\Image\Laravel\Facades\Image;
@@ -31,7 +31,22 @@ class VehicleInspectionsController extends Controller
     if ($request->isMethod('post')) {
       $gptRequest->fill($request->all());
 
-      $uploadsCount = ''; // @todo - да се провери дали има поне един файл и не повече от 10
+      $uploadedPhotos = $request->file('photos', []);
+
+      if (!is_array($uploadedPhotos)) {
+        $uploadedPhotos = $uploadedPhotos ? [$uploadedPhotos] : [];
+      }
+
+      $validPhotos = collect($uploadedPhotos)
+        ->filter(fn ($file) => $file instanceof \Illuminate\Http\UploadedFile && $file->isValid())
+        ->filter(function ($file) {
+          $mimeType = $file->getMimeType();
+
+          return is_string($mimeType) && str_starts_with($mimeType, 'image/');
+        })
+        ->values();
+
+      $uploadsCount = $validPhotos->count();
 
       if ($uploadsCount <= 0) {
         $errors->add('fileGroupId', 'Трябва да прикачите поне едно изображение');
@@ -41,13 +56,56 @@ class VehicleInspectionsController extends Controller
         $errors->add('fileGroupId', 'Към момента не може да качвате повече от 10 изображения');
       }
 
-      // @todo Да се качат всички снимки и да се запишат в $gptRequest->files. При качването им да се запаметят в storage папката и да се ресайзнат до 1000x1000 пискела всеки да се кнвертират в jpg формат
-
       if ($errors->isEmpty()) {
         $gptRequest->save();
 
-        return redirect('/vehicle-inspections/view/' . $gptRequest->id)
-          ->with('success', 'Успешно създадохте нов запис.');
+        $files = [];
+        $storageDisk = Storage::disk('public');
+        $baseDirectory = 'uploads/vehicle-inspections/' . $gptRequest->id;
+
+        $storageDisk->deleteDirectory($baseDirectory);
+
+        try {
+          foreach ($validPhotos as $file) {
+            $image = Image::read($file->getRealPath());
+            $image->scale(width: 1000, height: 1000);
+
+            $filename = (string)Str::uuid() . '.jpg';
+            $relativePath = $baseDirectory . '/' . $filename;
+
+            $stored = $storageDisk->put($relativePath, (string)$image->toJpeg());
+
+            if (!$stored) {
+              throw new \RuntimeException('Unable to store the processed image.');
+            }
+
+            $files[] = [
+              'groupType' => 'vehicle-inspections',
+              'groupId' => $gptRequest->id,
+              'name' => $filename,
+              'urls' => [
+                'preview' => $storageDisk->url($relativePath),
+                'analize' => $storageDisk->url($relativePath),
+              ],
+            ];
+          }
+
+          $gptRequest->files = [
+            'uploads' => $files,
+          ];
+          $gptRequest->save();
+
+          return redirect('/vehicle-inspections/view/' . $gptRequest->id)
+            ->with('success', 'Успешно създадохте нов запис.');
+        } catch (\Throwable $exception) {
+          $storageDisk->deleteDirectory($baseDirectory);
+
+          if ($gptRequest->exists) {
+            $gptRequest->delete();
+          }
+
+          $errors->add('fileGroupId', 'Възникна грешка при обработката на изображенията. Моля, опитайте отново.');
+        }
       }
     } else {
       $gptRequest->fileGroupId = Str::random(50);
@@ -189,7 +247,8 @@ class VehicleInspectionsController extends Controller
     /* @var $gptRequest GptRequest */
     $gptRequest = GptRequest::where('id', $id)->firstOrFail();
 
-    // @todo remove files
+    $storageDisk = Storage::disk('public');
+    $storageDisk->deleteDirectory('uploads/vehicle-inspections/' . $gptRequest->id);
 
     $gptRequest->delete();
 
