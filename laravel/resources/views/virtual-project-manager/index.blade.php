@@ -12,13 +12,13 @@
           <h2 class="h5 pb-2 border-bottom border-dashed">Setup your assistant</h2>
         </div>
 
-        <div class="col-12 col-md-6 col-xl-4">
+        <div class="col-12 col-lg-4">
           <label class="app-form-label required" for="f-name">Your name</label>
           <input class="form-control" id="f-name" type="text" placeholder="Alex Gavazov..." required/>
           <div class="invalid-feedback">Please enter your name.</div>
         </div>
 
-        <div class="col-12 col-md-6 col-xl-4">
+        <div class="col-12 col-lg-4">
           <label class="app-form-label" for="f-assistantBehaviour">Assistant behaviour</label>
           <select class="form-select" id="f-assistantBehaviour">
             <option value="normal">Sam - Normal person</option>
@@ -27,7 +27,7 @@
           </select>
         </div>
 
-        <div class="col-12 col-md-6 col-xl-4">
+        <div class="col-12 col-lg-4">
           <label class="app-form-label" for="f-language">Language</label>
           <select class="form-select" id="f-language">
             <option value="english">English</option>
@@ -46,9 +46,25 @@
     </div>
   </div>
 
-  <div id="start-conv-message" class="text-body-tertiary text-center fs-4" style="display: none"></div>
-  <div id="audio-visualizer" style="width: 100%; height: calc(100vh - 500px);"></div>
-  <pre id="action-log"></pre>
+  <div class="row">
+    <div class="col">
+      <div id="start-conv-message" class="text-body-tertiary text-center fs-4" style="display: none"></div>
+      <div id="audio-visualizer" style="width: 100%; height: calc(100vh - 500px);"></div>
+      <pre id="action-log"></pre>
+    </div>
+    <div class="col" id="tasks-list">
+      <div class="list-group">
+        @for ($i = 1; $i <= 10; $i++)
+          <div class="list-group-item">
+            <div class="d-flex justify-content-between align-items-center">
+              Task here
+              <span class="badge-phoenix badge-phoenix-primary badge">123</span>
+            </div>
+          </div>
+        @endfor
+      </div>
+    </div>
+  </div>
 
   <script type="module">
     const storageKey = 'vpmUserPreferences';
@@ -115,10 +131,15 @@
       savePreferences();
 
       $preferencesCard.hide();
-      $('#start-conv-message')
-        .text(`${$name.val().trim()}, you can now start the conversation with your AI assistant!`)
-        .fadeIn();
 
+      // Start message
+      const $startConvMessage = $('#start-conv-message')
+      $startConvMessage
+        .html(`${$name.val().trim()}, you could start the conversation by asking <b>"What are my tasks for today?"</b>!`)
+        .fadeIn();
+      setTimeout(() => $startConvMessage.fadeOut(), 15000);
+
+      // Go go
       initTheAssistant();
     });
   </script>
