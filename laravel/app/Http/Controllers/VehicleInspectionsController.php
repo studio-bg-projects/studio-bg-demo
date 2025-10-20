@@ -143,8 +143,8 @@ class VehicleInspectionsController extends Controller
 
     // Fill
     // @todo move out from here
-    $vehicleInspection->systemMessage = file_get_contents(storage_path('ai-prompts/system-message.md'));
-    $vehicleInspection->responseFormat = file_get_contents(storage_path('ai-prompts/response-format.json'));
+    $vehicleInspection->systemMessage = file_get_contents(storage_path('ai-prompts/vehicle-inspections/system-message.md'));
+    $vehicleInspection->responseFormat = file_get_contents(storage_path('ai-prompts/vehicle-inspections/response-format.json'));
 
     // Files
     $photos = [];

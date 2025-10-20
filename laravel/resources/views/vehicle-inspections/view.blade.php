@@ -35,7 +35,7 @@
         }
       });
 
-      // setTimeout(() => document.location = '?', 1000);
+      setTimeout(() => document.location = '?', 1000);
     </script>
   @elseif ($vehicleInspection->progressStatus === 1)
     <div class="alert alert-outline-primary">В момента се извършва визуалена инспекция. Моля, изчакайте ({{ app('request')->input('i') + 1 }})!</div>
