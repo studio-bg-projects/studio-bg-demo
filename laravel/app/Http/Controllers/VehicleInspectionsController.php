@@ -166,7 +166,7 @@ class VehicleInspectionsController extends Controller
     // Request
     $request = [
 //      'model' => 'gpt-4o-mini',
-      'model' => 'gpt-5',
+      'model' => 'gpt-5-pro',
 //      'temperature' => 2,
 //      'max_output_tokens' => 2048,
 //      'top_p' => 1,
