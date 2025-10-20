@@ -128,42 +128,34 @@
       normal: {
         persona: 'Sam',
         voice: 'alloy',
-        description:
-          'Keep a friendly, collaborative tone. Offer encouragement while making sure the plan stays realistic and organised.'
+        description: 'Keep a friendly, collaborative tone. Offer encouragement while making sure the plan stays realistic and organised.'
       },
       focused: {
         persona: 'Ray',
         voice: 'cedar',
-        description:
-          'Be concise, direct, and structured. Quickly get to the heart of the task details and push for actionable next steps.'
+        description: 'Be concise, direct, and structured. Quickly get to the heart of the task details and push for actionable next steps.'
       },
       crazy: {
         persona: 'Karen',
         voice: 'coral',
-        description:
-          'Explode with hysterical urgency. Sound frantic, demanding answers right now, peppering speech with excited exclamations, intense curiosity, and playful panic while still guiding the planning process.'
+        description: 'Explode with hysterical urgency. Sound frantic, demanding answers right now, peppering speech with excited exclamations, intense curiosity, and playful panic while still guiding the planning process.'
       }
     };
 
     const languageConfigs = {
       english: {
         label: 'English',
-        instructions:
-          'Always respond entirely in English, including task names, summaries, and follow-up questions.'
+        instructions: 'Always respond entirely in English, including task names, summaries, and follow-up questions.'
       },
       bulgarian: {
         label: 'Bulgarian',
-        instructions:
-          'Always respond entirely in Bulgarian. Translate any task details you reference or create unless explicitly told otherwise.'
+        instructions: 'Always respond entirely in Bulgarian. Translate any task details you reference or create unless explicitly told otherwise.'
       },
       german: {
         label: 'German',
-        instructions:
-          'Always respond entirely in German. Make sure technical terms are clear for a software development context.'
+        instructions: 'Always respond entirely in German. Make sure technical terms are clear for a software development context.'
       }
     };
-
-    const DEFAULT_VOICE = 'ash';
 
     function selectBehaviour(behaviourKey) {
       return behaviourConfigs[behaviourKey] || behaviourConfigs.normal;
@@ -194,13 +186,14 @@
       const behaviour = selectBehaviour(preferences.assistantBehaviour);
       const language = selectLanguage(preferences.language);
 
+      console.log('behaviour', behaviour, behaviour.voice);
+
       const projectManagerApp = new MyPersonalAssistant({
-        model: 'gpt-realtime-mini',
         sessionUrl: @json(url('/virtual-project-manager/session')),
         csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         audioControlsNode: document.getElementById('audio-controls'),
         logNode: document.getElementById('action-log'),
-        voice: behaviour.voice || DEFAULT_VOICE,
+        voice: behaviour.voice,
         tools: [
           {
             type: 'function',

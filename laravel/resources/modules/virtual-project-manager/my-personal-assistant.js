@@ -7,6 +7,7 @@ export class MyPersonalAssistant {
     this.logNode = options.logNode;
     this.tools = options.tools || [];
     this.instructions = options.instructions || '';
+    this.voice = options.voice || 'ash';
 
     this.loadState();
 
@@ -109,7 +110,7 @@ export class MyPersonalAssistant {
       body: JSON.stringify({
         model: this.model,
         instructions: this.instructions,
-        voice: 'ash'
+        voice: this.voice
       })
     });
     if (!response.ok) {
