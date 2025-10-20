@@ -10,16 +10,15 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Intervention\Image\Laravel\Facades\Image;
 
-class VehiclesInspectionController extends Controller
+class VehicleInspectionsController extends Controller
 {
   use FilterAndSort;
-
 
   public function index()
   {
     $gptRequests = GptRequest::orderBy('id', 'desc')->get();
 
-    return viewOrJson('erp.smart-parking.visual-detector.index', [
+    return view('vehicle-inspections.index', [
       'gptRequests' => $gptRequests,
     ]);
   }
@@ -32,7 +31,7 @@ class VehiclesInspectionController extends Controller
     if ($request->isMethod('post')) {
       $gptRequest->fill($request->all());
 
-      $uploadsCount = Upload::where(['groupType' => 'visual-detector', 'groupId' => $gptRequest->fileGroupId])->count();
+      $uploadsCount = ''; // @todo - да се провери дали има поне един файл и не повече от 10
 
       if ($uploadsCount <= 0) {
         $errors->add('fileGroupId', 'Трябва да прикачите поне едно изображение');
@@ -42,17 +41,19 @@ class VehiclesInspectionController extends Controller
         $errors->add('fileGroupId', 'Към момента не може да качвате повече от 10 изображения');
       }
 
+      // @todo Да се качат всички снимки и да се запишат в $gptRequest->files. При качването им да се запаметят в storage папката и да се ресайзнат до 1000x1000 пискела всеки да се кнвертират в jpg формат
+
       if ($errors->isEmpty()) {
         $gptRequest->save();
 
-        return redirect('/erp/smart-parking/visual-detector/view/' . $gptRequest->id)
+        return redirect('/vehicle-inspections/view/' . $gptRequest->id)
           ->with('success', 'Успешно създадохте нов запис.');
       }
     } else {
       $gptRequest->fileGroupId = Str::random(50);
     }
 
-    return view('vehicles-inspection.index', [
+    return view('vehicle-inspections.create', [
       'gptRequest' => $gptRequest,
       'errors' => $errors,
     ]);
@@ -64,7 +65,7 @@ class VehiclesInspectionController extends Controller
     $gptRequest = GptRequest::where('id', $id)->firstOrFail();
 
     // View
-    return viewOrJson('vehicles-inspection.view', [
+    return view('vehicle-inspections.view', [
       'gptRequest' => $gptRequest,
       'response' => [],
     ]);
@@ -82,7 +83,7 @@ class VehiclesInspectionController extends Controller
     $gptRequest->progressStatus = 0;
     $gptRequest->save();
 
-    return redirect('/erp/smart-parking/visual-detector/view/' . $gptRequest->id)
+    return redirect('/vehicle-inspections/view/' . $gptRequest->id)
       ->with('success', 'Записът е нулиран.');
   }
 
@@ -179,7 +180,7 @@ class VehiclesInspectionController extends Controller
     }
     curl_close($ch);
 
-    return redirect('/erp/smart-parking/visual-detector/view/' . $gptRequest->id)
+    return redirect('/vehicle-inspections/view/' . $gptRequest->id)
       ->with('success', 'Записът беше пуснат за анализ.');
   }
 
@@ -188,9 +189,11 @@ class VehiclesInspectionController extends Controller
     /* @var $gptRequest GptRequest */
     $gptRequest = GptRequest::where('id', $id)->firstOrFail();
 
+    // @todo remove files
+
     $gptRequest->delete();
 
-    return redirect('/erp/smart-parking/visual-detector')
+    return redirect('/vehicle-inspections')
       ->with('success', 'Успешно изтрихте записа.');
   }
 }

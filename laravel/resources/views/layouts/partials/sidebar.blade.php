@@ -47,13 +47,13 @@
 
     <li class="nav-item">
       <div class="nav-item-wrapper">
-        <a class="nav-link label-1 {{ Request::is('vehicles-inspection') || Request::is('vehicles-inspection/*') ? 'active' : '' }}" href="{{ url('/vehicles-inspection') }}">
+        <a class="nav-link label-1 {{ Request::is('vehicle-inspections') || Request::is('vehicle-inspections/*') ? 'active' : '' }}" href="{{ url('/vehicle-inspections') }}">
           <div class="d-flex align-items-center">
             <span class="nav-link-icon fs-8">
               <i class="fa-regular fa-car-burst"></i>
             </span>
             <span class="nav-link-text-wrapper">
-              <span class="nav-link-text">AI Vehicles Inspection</span>
+              <span class="nav-link-text">AI Vehicle Inspections</span>
             </span>
           </div>
         </a>
