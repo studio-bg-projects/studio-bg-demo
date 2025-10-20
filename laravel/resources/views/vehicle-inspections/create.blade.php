@@ -40,8 +40,8 @@
     <div class="row justify-content-end">
       <div class="col-12 col-xl-8">
         <button class="btn btn-primary w-100" type="submit">
-          <i class="fas fa-plus me-2"></i>
-          Add
+          <i class="fa-regular fa-sparkles me-2"></i>
+          AI Analysis
         </button>
       </div>
     </div>

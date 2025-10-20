@@ -117,10 +117,10 @@ class VehicleInspectionsController extends Controller
     ]);
   }
 
-  public function reset(int $id)
+  public function reset(int $vehicleInspectionId)
   {
     /* @var $vehicleInspection VehicleInspection */
-    $vehicleInspection = VehicleInspection::where('id', $id)->firstOrFail();
+    $vehicleInspection = VehicleInspection::where('id', $vehicleInspectionId)->firstOrFail();
 
     $vehicleInspection->request = null;
     $vehicleInspection->response = null;
@@ -133,13 +133,13 @@ class VehicleInspectionsController extends Controller
       ->with('success', 'The record has been reset.');
   }
 
-  public function process(int $id)
+  public function process(int $vehicleInspectionId)
   {
     $apiUrl = 'https://api.openai.com/v1/responses';
     $apiKey = config('services.openai.api_key') ?? env('OPENAI_API_KEY');
 
     /* @var $vehicleInspection VehicleInspection */
-    $vehicleInspection = VehicleInspection::where('id', $id)->firstOrFail();
+    $vehicleInspection = VehicleInspection::where('id', $vehicleInspectionId)->firstOrFail();
 
     // Fill
     // @todo move out from here
@@ -227,10 +227,10 @@ class VehicleInspectionsController extends Controller
       ->with('success', 'The record has been submitted for analysis.');
   }
 
-  public function delete(int $id)
+  public function delete(int $vehicleInspectionId)
   {
     /* @var $vehicleInspection VehicleInspection */
-    $vehicleInspection = VehicleInspection::where('id', $id)->firstOrFail();
+    $vehicleInspection = VehicleInspection::where('id', $vehicleInspectionId)->firstOrFail();
 
     $storageDisk = Storage::disk('public');
     $storageDisk->deleteDirectory('uploads/vehicle-inspections/' . $vehicleInspection->id);

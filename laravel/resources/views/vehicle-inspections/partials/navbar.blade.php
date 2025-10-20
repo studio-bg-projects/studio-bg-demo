@@ -37,9 +37,9 @@
       @endif
     @else
       <li class="nav-item">
-        <a href="{{ url('/vehicle-inspections/reset/' . $vehicleInspection->id) }}" class="nav-link px-2 fw-bold" >
-            <i class="fa-regular fa-microchip-ai"></i>
-            Reset Inspection
+        <a href="{{ url('/vehicle-inspections/reset/' . $vehicleInspection->id) }}" class="nav-link px-2 fw-bold">
+          <i class="fa-regular fa-microchip-ai"></i>
+          Reset Inspection
         </a>
       </li>
       <li class="nav-item">

@@ -11,7 +11,7 @@
           </th>
 
           <th class="nosort border-top border-translucent">
-            Number
+            License Plate
           </th>
         </tr>
         </thead>

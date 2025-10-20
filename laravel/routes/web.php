@@ -16,7 +16,7 @@ Route::post('/virtual-project-manager/session', [\App\Http\Controllers\VirtualPr
 Route::get('/vehicle-inspections', [\App\Http\Controllers\VehicleInspectionsController::class, 'index']);
 Route::get('/vehicle-inspections/create', [\App\Http\Controllers\VehicleInspectionsController::class, 'create']);
 Route::post('/vehicle-inspections/create', [\App\Http\Controllers\VehicleInspectionsController::class, 'create']);
-Route::get('/vehicle-inspections/process/{id}', [\App\Http\Controllers\VehicleInspectionsController::class, 'process']);
-Route::get('/vehicle-inspections/reset/{id}', [\App\Http\Controllers\VehicleInspectionsController::class, 'reset']);
-Route::get('/vehicle-inspections/view/{id}', [\App\Http\Controllers\VehicleInspectionsController::class, 'view']);
-Route::get('/vehicle-inspections/delete/{id}', [\App\Http\Controllers\VehicleInspectionsController::class, 'delete']);
+Route::get('/vehicle-inspections/process/{vehicleInspectionId}', [\App\Http\Controllers\VehicleInspectionsController::class, 'process']);
+Route::get('/vehicle-inspections/reset/{vehicleInspectionId}', [\App\Http\Controllers\VehicleInspectionsController::class, 'reset']);
+Route::get('/vehicle-inspections/view/{vehicleInspectionId}', [\App\Http\Controllers\VehicleInspectionsController::class, 'view']);
+Route::get('/vehicle-inspections/delete/{vehicleInspectionId}', [\App\Http\Controllers\VehicleInspectionsController::class, 'delete']);
