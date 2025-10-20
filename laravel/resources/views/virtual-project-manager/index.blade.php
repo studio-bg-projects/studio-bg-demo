@@ -12,23 +12,13 @@
           <h2 class="h5 pb-2 border-bottom border-dashed">Setup your assistant</h2>
         </div>
 
-        <div class="col-12 col-md-6 col-xl-3">
+        <div class="col-12 col-md-6 col-xl-4">
           <label class="app-form-label required" for="f-name">Your name</label>
           <input class="form-control" id="f-name" type="text" placeholder="Alex Gavazov..." required/>
           <div class="invalid-feedback">Please enter your name.</div>
         </div>
 
-        <div class="col-12 col-md-6 col-xl-3">
-          <label class="app-form-label" for="f-role">Your role</label>
-          <select class="form-select" id="f-role">
-            <option value="engineer">Engineer</option>
-            <option value="designer" disabled>Designer (coming soon)</option>
-            <option value="qa" disabled>QA (coming soon)</option>
-            <option value="other" disabled>Other (coming soon)</option>
-          </select>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-3">
+        <div class="col-12 col-md-6 col-xl-4">
           <label class="app-form-label" for="f-assistantBehaviour">Assistant behaviour</label>
           <select class="form-select" id="f-assistantBehaviour">
             <option value="normal">Sam - Normal person</option>
@@ -37,12 +27,12 @@
           </select>
         </div>
 
-        <div class="col-12 col-md-6 col-xl-3">
+        <div class="col-12 col-md-6 col-xl-4">
           <label class="app-form-label" for="f-language">Language</label>
           <select class="form-select" id="f-language">
             <option value="english">English</option>
             <option value="bulgarian">Bulgarian</option>
-            <option value="german">German (not tested)</option>
+            <option value="german">German (not tested at all)</option>
           </select>
         </div>
 
@@ -63,7 +53,6 @@
   <script type="module">
     const storageKey = 'vpmUserPreferences';
     const $name = $('#f-name');
-    const $role = $('#f-role');
     const $assistantBehaviour = $('#f-assistantBehaviour');
     const $language = $('#f-language');
     const $startButton = $('#js-start-btn');
@@ -72,7 +61,6 @@
     function getPreferences() {
       return {
         name: $name.val().trim(),
-        role: $role.val(),
         assistantBehaviour: $assistantBehaviour.val(),
         language: $language.val()
       };
@@ -95,9 +83,6 @@
           $name.val(preferences.name);
           $name.removeClass('is-invalid');
         }
-        if (preferences.role) {
-          $role.val(preferences.role);
-        }
         if (preferences.assistantBehaviour) {
           $assistantBehaviour.val(preferences.assistantBehaviour);
         }
@@ -118,7 +103,6 @@
       savePreferences();
     });
 
-    $role.on('change', savePreferences);
     $assistantBehaviour.on('change', savePreferences);
     $language.on('change', savePreferences);
 
