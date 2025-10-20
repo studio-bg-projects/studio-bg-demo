@@ -3,7 +3,7 @@
 @section('content')
   @include('virtual-project-manager.partials.navbar')
 
-  <h1 class="h3 mb-3">AI Virtual Project Manager</h1>
+  <h1 class="h4 mb-5">AI Virtual Project Manager</h1>
 
   <div class="card" id="js-user-preferences">
     <div class="card-body">
