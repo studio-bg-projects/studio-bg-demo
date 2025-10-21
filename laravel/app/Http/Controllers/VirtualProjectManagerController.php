@@ -18,7 +18,7 @@ class VirtualProjectManagerController extends Controller
   public function session(Request $request): JsonResponse
   {
     $instructions = $request->input('instructions');
-//     $model = $request->input('model', 'gpt-realtime-mini');
+    // $model = $request->input('model', 'gpt-realtime-mini');
     $model = $request->input('model', 'gpt-realtime');
     $voice = $request->input('voice', 'ash');
 
