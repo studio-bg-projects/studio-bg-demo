@@ -24,3 +24,5 @@ Route::get('/vehicle-inspections/process/{vehicleInspectionId}', [\App\Http\Cont
 Route::get('/vehicle-inspections/reset/{vehicleInspectionId}', [\App\Http\Controllers\VehicleInspectionsController::class, 'reset']);
 Route::get('/vehicle-inspections/view/{vehicleInspectionId}', [\App\Http\Controllers\VehicleInspectionsController::class, 'view']);
 Route::get('/vehicle-inspections/delete/{vehicleInspectionId}', [\App\Http\Controllers\VehicleInspectionsController::class, 'delete']);
+
+Route::get('/test', [\App\Http\Controllers\TestController::class, 'index']);
