@@ -33,10 +33,6 @@ class LogVisit
       return false;
     }
 
-    if ($request->is('storage/*') || $request->is('telescope/*')) {
-      return false;
-    }
-
     return true;
   }
 

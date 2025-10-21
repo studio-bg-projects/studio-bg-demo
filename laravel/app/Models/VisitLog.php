@@ -19,7 +19,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon $createdAt
  * @property Carbon $updatedAt
  */
-class VisitLog extends Model
+class VisitLog extends BaseModel
 {
   use HasFactory;
 
