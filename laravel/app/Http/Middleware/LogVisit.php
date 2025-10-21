@@ -40,7 +40,8 @@ class LogVisit
   {
     try {
       VisitLog::create([
-        'ipAddress' => $request->getClientIp() ?? '0.0.0.0',
+        //'ipAddress' => $request->getClientIp() ?? '0.0.0.0',
+        'ipAddress' => $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $request->getClientIp() ?? '0.0.0.0', // @todo make it better
         'path' => ltrim($request->getPathInfo(), '/'),
         'requestMethod' => strtoupper($request->getMethod()),
         'referrer' => $request->headers->get('referer'),
